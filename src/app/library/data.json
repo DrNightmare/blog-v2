@@ -1,0 +1,284 @@
+[
+    {
+        "index": 1,
+        "title": "Immune",
+        "author": "Philipp Dettmer",
+        "genre": "Science and Technology"
+    },
+    {
+        "index": 2,
+        "title": "Jaya: An Illustrated Retelling of the Mahabharata",
+        "author": "Devdutt Pattanaik",
+        "genre": "Uncategorized"
+    },
+    {
+        "index": 3,
+        "title": "Leonardo da Vinci",
+        "author": "Walter Isaacson",
+        "genre": "Biographies"
+    },
+    {
+        "index": 4,
+        "title": "Elon Musk",
+        "author": "Ashlee Vance",
+        "genre": "Biographies"
+    },
+    {
+        "index": 5,
+        "title": "Origin",
+        "author": "Dan Brown",
+        "genre": "Fiction"
+    },
+    {
+        "index": 6,
+        "title": "The Arrival",
+        "author": "Shaun Tan",
+        "genre": "Fiction"
+    },
+    {
+        "index": 7,
+        "title": "User Friendly",
+        "author": "Cliff Kuang, Robert Fabricant",
+        "genre": "Science and Technology"
+    },
+    {
+        "index": 8,
+        "title": "Rabbits",
+        "author": "Terry Miles",
+        "genre": "Fiction"
+    },
+    {
+        "index": 9,
+        "title": "Masala Lab",
+        "author": "Krish Ashok",
+        "genre": "Science and Technology"
+    },
+    {
+        "index": 10,
+        "title": "Things to Make and Do in the Fourth Dimension",
+        "author": "Matt Parker",
+        "genre": "Science and Technology"
+    },
+    {
+        "index": 11,
+        "title": "Forbidden Lore: Revival",
+        "author": "Unknown",
+        "genre": "Fiction"
+    },
+    {
+        "index": 12,
+        "title": "What If?",
+        "author": "Randall Munroe",
+        "genre": "Science and Technology"
+    },
+    {
+        "index": 13,
+        "title": "The World According to Rick",
+        "author": "Unknown",
+        "genre": "Fiction"
+    },
+    {
+        "index": 14,
+        "title": "Moonflower Murders",
+        "author": "Anthony Horowitz",
+        "genre": "Fiction"
+    },
+    {
+        "index": 15,
+        "title": "India Automated",
+        "author": "Pranjal Sharma",
+        "genre": "Science and Technology"
+    },
+    {
+        "index": 16,
+        "title": "Deep Work",
+        "author": "Cal Newport",
+        "genre": "Psychology and Self-Development"
+    },
+    {
+        "index": 17,
+        "title": "Heads You Win",
+        "author": "Jeffrey Archer",
+        "genre": "Fiction"
+    },
+    {
+        "index": 18,
+        "title": "Dark Matter",
+        "author": "Blake Crouch",
+        "genre": "Fiction"
+    },
+    {
+        "index": 19,
+        "title": "Recursion",
+        "author": "Blake Crouch",
+        "genre": "Fiction"
+    },
+    {
+        "index": 20,
+        "title": "The Name of the Rose",
+        "author": "Umberto Eco",
+        "genre": "Fiction"
+    },
+    {
+        "index": 21,
+        "title": "Weapons of Math Destruction",
+        "author": "Cathy O'Neil",
+        "genre": "Science and Technology"
+    },
+    {
+        "index": 22,
+        "title": "Temple",
+        "author": "Matthew Reilly",
+        "genre": "Fiction"
+    },
+    {
+        "index": 23,
+        "title": "You Look Like a Thing and I Love You",
+        "author": "Janelle Shane",
+        "genre": "Science and Technology"
+    },
+    {
+        "index": 24,
+        "title": "Homo Deus",
+        "author": "Yuval Noah Harari",
+        "genre": "Psychology and Self-Development"
+    },
+    {
+        "index": 25,
+        "title": "One Piece (Volume 31)",
+        "author": "Eiichiro Oda",
+        "genre": "Uncategorized"
+    },
+    {
+        "index": 26,
+        "title": "Stories of Your Life and Others",
+        "author": "Ted Chiang",
+        "genre": "Fiction"
+    },
+    {
+        "index": 27,
+        "title": "The Complete Cosmicomics",
+        "author": "Italo Calvino",
+        "genre": "Fiction"
+    },
+    {
+        "index": 28,
+        "title": "Invisible Cities",
+        "author": "Italo Calvino",
+        "genre": "Fiction"
+    },
+    {
+        "index": 29,
+        "title": "Exhalation",
+        "author": "Ted Chiang",
+        "genre": "Fiction"
+    },
+    {
+        "index": 30,
+        "title": "How to Finish Everything You Start",
+        "author": "Jan Yager",
+        "genre": "Psychology and Self-Development"
+    },
+    {
+        "index": 31,
+        "title": "Writing An Interpreter In Go",
+        "author": "Thorsten Ball",
+        "genre": "Uncategorized"
+    },
+    {
+        "index": 32,
+        "title": "Measure What Matters: The Simple Idea that Drives 10x Growth",
+        "author": "John Doerr",
+        "genre": "Psychology and Self-Development"
+    },
+    {
+        "index": 33,
+        "title": "Zero to Sold: How to Start, Run, and Sell a Bootstrapped Business",
+        "author": "Arvid Kahl",
+        "genre": "Psychology and Self-Development"
+    },
+    {
+        "index": 34,
+        "title": "The Making of Prince of Persia",
+        "author": "Jordan Mechner",
+        "genre": "Uncategorized"
+    },
+    {
+        "index": 35,
+        "title": "Mother of Learning: ARC 1",
+        "author": "nobody103, Domagoj Kurmaic",
+        "genre": "Fiction"
+    },
+    {
+        "index": 36,
+        "title": "Mother of Learning: ARC 2",
+        "author": "nobody103, Domagoj Kurmaic",
+        "genre": "Fiction"
+    },
+    {
+        "index": 37,
+        "title": "Mother of Learning: ARC 3",
+        "author": "nobody103, Domagoj Kurmaic",
+        "genre": "Fiction"
+    },
+    {
+        "index": 38,
+        "title": "Mother of Learning: ARC 4",
+        "author": "nobody103, Domagoj Kurmaic",
+        "genre": "Fiction"
+    },
+    {
+        "index": 39,
+        "title": "Quantum Computing for the Quantum Curious",
+        "author": "Ciaran Hughes, Joshua Isaacson, Anastasia Perry, Ranbel F. Sun, Jessica Turner",
+        "genre": "Science and Technology"
+    },
+    {
+        "index": 40,
+        "title": "The Great Mental Models Volume 1: General Thinking Concepts",
+        "author": "Shane Parrish, Rhiannon Beaubien",
+        "genre": "Psychology and Self-Development"
+    },
+    {
+        "index": 41,
+        "title": "The Art of War",
+        "author": "Sun Tzu",
+        "genre": "Fiction"
+    },
+    {
+        "index": 42,
+        "title": "I Contain Multitudes: The Microbes Within Us and a Grander View of Life",
+        "author": "Ed Yong",
+        "genre": "Science and Technology"
+    },
+    {
+        "index": 43,
+        "title": "Are Prisons Obsolete?",
+        "author": "Angela Y. Davis",
+        "genre": "Science and Technology"
+    },
+    {
+        "index": 44,
+        "title": "Conjectures and Refutations: The Growth of Scientific Knowledge",
+        "author": "Karl Popper",
+        "genre": "Science and Technology"
+    },
+    {
+        "index": 45,
+        "title": "The Inevitable: Understanding the 12 Technological Forces That Will Shape Our Future",
+        "author": "Kevin Kelly",
+        "genre": "Science and Technology"
+    },
+    {
+        "index": 46,
+        "title": "The Ascent Of Man",
+        "author": "Jacob Bronowski",
+        "genre": "Science and Technology"
+    },
+    {
+        "index": 47,
+        "title": "Whole Earth Discipline",
+        "author": "Stewart Brand",
+        "genre": "Science and Technology"
+    }
+]

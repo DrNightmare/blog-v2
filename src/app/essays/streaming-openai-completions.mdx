@@ -1,0 +1,124 @@
+---
+title: Streaming chat completions from OpenAI
+date: '2023-05-07'
+tags: ['gpt', 'openai']
+draft: false
+summary: 'How to stream responses from OpenAI chat completions in NodeJS/Typescript, without any dependencies'
+---
+
+### Intro
+
+I have been playing around with OpenAI's APIs around GPT a lot lately. One major problem I ran into was when attempting to stream responses from their chat completions API for a personal project of mine. While this seems to be something straightforward, most solutions I found online did not work as of the time of writing.
+
+Enabling streaming allows us to receive partial responses from an API as they are generated, instead of waiting for the entire response to be generated before receiving it. This is great for end users, as they can start looking at data before the entire response content is generated.
+
+### The code
+
+After a lot of tweaking and refering to multiple blogs and forum posts, I managed to get this working using Node's `fetch()` API, without using any third party libraries.
+
+**Note: I used Node v18 for running this code snippet**, and it worked out of the box. If you're using an older version, you might need to install the `node-fetch` library and import `fetch` to make it work. Refer to [this link](https://stackoverflow.com/a/48433898) on StackOverflow.
+
+Here is the entire code in Typescript, I have added comments wherever I felt they would be useful:
+
+```ts:stream-gpt.ts
+async function* getStreamedCompletion(
+  prompt: string
+): AsyncGenerator<any, void, unknown> {
+  const response = await makeChatCompletionRequest(prompt);
+
+  // Get a readable stream from the response
+  const reader = response.body!.getReader();
+
+  try {
+    while (true) {
+      // Read a chunk of data from the readable stream
+      const { done, value } = await reader.read();
+
+      // If the stream is done, break out of the loop
+      if (done) break;
+
+      // Convert the chunk of data to a string
+      const text = await new Response(value).text();
+
+      // Filter out the lines that don't start with "data: "
+      const lines = text
+        .split("\n")
+        .filter((line: string) => line.trim().startsWith("data: "));
+
+      for (const line of lines) {
+        const message = line.replace(/^data: /, "");
+
+        // If the message includes "[DONE]", break out of the loop
+        // this is specified in OpenAI's API doc
+        if (message.includes("[DONE]")) {
+          break;
+        }
+
+        // Parse the token from the message and yield it
+        const token = parseTokenFromMessage(message);
+        if (token) {
+          yield token;
+        }
+      }
+    }
+  } finally {
+    // Release the lock on the readable stream
+    reader.releaseLock();
+  }
+}
+
+function parseTokenFromMessage(message: string): string | undefined {
+  try {
+    const json = JSON.parse(message.trim());
+    const token = json.choices[0].delta.content;
+    return token;
+  } catch (error) {
+    console.log(`Failed to parse message: ${message}, error: ${error}`);
+    return undefined;
+  }
+}
+
+async function makeChatCompletionRequest(prompt: string) {
+  const messages = [{ role: "user", content: prompt }];
+
+  const body = {
+    model: "gpt-3.5-turbo",
+    messages,
+    stream: true,
+  };
+  return fetch("https://api.openai.com/v1/chat/completions", {
+    method: "POST",
+    body: JSON.stringify(body),
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${OPENAI_API_KEY}`,
+    },
+  });
+}
+```
+
+While the `getStreamedCompletion` function might look overwhelming, on going through it, you will realize that most of the logic is around parsing response tokens.
+
+### Usage
+
+Note that you'll have to set the `OPENAI_API_KEY` variable, you can get your API key [here](https://platform.openai.com/account/api-keys).
+
+Keeping the underlying implementation as a generator enables us to use this simple piece of code to pass in any prompt and receive the streamed tokens:
+
+```ts:stream-gpt.ts
+async function main() {
+  const prompt = `Complete the following sentence: Jack and Jill`;
+  const stream = getStreamedCompletion(prompt);
+  for await (const token of stream) {
+    console.log(token);
+  }
+}
+
+main()
+  .then(() => console.log("Done"))
+  .catch((err) => console.log(err));
+```
+
+The entire code is also availabe as [a Github gist here](https://gist.github.com/DrNightmare/d7842db4d30ba71d2a2d14e90f44142b).
+
+Happy streaming!
