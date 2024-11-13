@@ -16,7 +16,7 @@ export async function generateStaticParams(): Promise<EssayParam[]> {
 }
 
 function Code({ children, ...props }) {
-    let codeHTML = highlight(children)
+    const codeHTML = highlight(children)
     return <code dangerouslySetInnerHTML={{ __html: codeHTML }} {...props} />
 }
 
@@ -30,7 +30,7 @@ const components = {
     code: Code,
 }
 
-export default async function Essay({ params }: { params: EssayParam }) {
+export default async function Essay({ params }: { params: Promise<EssayParam> }) {
     const { slug } = await params;
     const essay = essays.find(essay => essay.slug === slug);
     if (!essay) {
