@@ -23,7 +23,7 @@ const groupByGenre = (books: Book[]) => {
     return genres;
 };
 
-const BookList = ({ title, books }) => (
+const BookList = ({ title, books }: { title: string; books: Book[] }) => (
     <div className="mt-4">
         <p className="text-xl font-semibold mb-2">{title} <span className="text-sea-blue text-xl font-normal">{books.length}</span></p>
         {books.map((book, index) => (
