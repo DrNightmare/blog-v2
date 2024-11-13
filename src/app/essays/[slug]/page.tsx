@@ -4,10 +4,15 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 import CustomLink from "@/components/CustomLink";
 import Pre from "@/components/CustomPre";
 import { highlight } from "sugar-high";
+import { JSX, ReactNode } from "react";
 
 type EssayParam = {
     slug: string;
 };
+
+interface CodeProps extends React.HTMLAttributes<HTMLElement> {
+    children?: ReactNode;
+}
 
 const essays = getEssays();
 
@@ -15,20 +20,20 @@ export async function generateStaticParams(): Promise<EssayParam[]> {
     return essays.map(essay => ({ slug: essay.slug }));
 }
 
-function Code({ children, ...props }) {
-    const codeHTML = highlight(children)
+function Code({ children, ...props }: CodeProps) {
+    const codeHTML = highlight(children as string)
     return <code dangerouslySetInnerHTML={{ __html: codeHTML }} {...props} />
 }
 
 const components = {
-    a: (props) => (
+    a: (props: any) => (
         <CustomLink {...props}>
             {props.children}
         </CustomLink>
     ),
     pre: Pre,
     code: Code,
-}
+};
 
 export default async function Essay({ params }: { params: Promise<EssayParam> }) {
     const { slug } = await params;
