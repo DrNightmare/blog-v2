@@ -1,6 +1,5 @@
 "use client"
-import { useState, useRef, ReactNode, useEffect } from 'react'
-import { highlight } from 'sugar-high'
+import { useState, useRef, ReactNode } from 'react'
 
 interface Props {
   children: ReactNode
