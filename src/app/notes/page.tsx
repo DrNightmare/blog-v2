@@ -1,3 +1,4 @@
+import { MDXRemote } from "next-mdx-remote/rsc";
 import { getNotes } from "../utils";
 
 export default function Notes() {
@@ -9,12 +10,12 @@ export default function Notes() {
                 <div className="flex flex-col prose">
                     <span className="text-3xl text-center">Notes <span className="text-sea-blue text-2xl">{notes.length}</span></span>
                     <span className="mb-6 text-center">A collection of initial thoughts, brainstorming, and in-progress learnings.</span>
-                    {notes.map((note, index) => (
+                    {notes.toReversed().map((note, index) => (
                         <div className="not-prose my-2" key={note.slug}>
                             <div className="mb-2">
                                 <p className="text-lg font-medium text-crimson">{note.metadata.title}</p>
                                 <span className="text-sm font-thin text-gray-600">{note.metadata.date}</span>
-                                <p className="text-md font-thin text-gray-600">{note.content}</p>
+                                <article className="prose"><MDXRemote source={note.content} /></article>
                             </div>
                             {index < notes.length - 1 && <hr />}
                         </div>
