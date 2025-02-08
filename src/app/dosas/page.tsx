@@ -140,7 +140,7 @@ const DosaClicker = () => {
     <div className="min-h-screen w-full flex items-center justify-center bg-gray-50">
       <Card className="w-96">
         <CardHeader>
-          <CardTitle className="text-2xl text-center">Dosa Empire</CardTitle>
+          <CardTitle className="text-2xl text-center">Dosaverse</CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="grid grid-cols-2 gap-4">
