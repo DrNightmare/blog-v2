@@ -1,0 +1,38 @@
+[
+  {
+    "id": "1742414125365",
+    "description": "Implemented a teleport mechanic for my 3D game in Unity. Learnt about coroutines",
+    "tags": [
+      "unity",
+      "gamedev"
+    ],
+    "timestamp": "2025-03-18T21:25"
+  },
+  {
+    "id": "1742413985253",
+    "description": "Built this activity logger in my blog using Cursor, didn't write any code myself",
+    "tags": [
+      "cursor"
+    ],
+    "timestamp": "2025-03-19T19:53:05.253Z"
+  },
+  {
+    "id": "1742413085066",
+    "description": "Implemented string multiplication",
+    "tags": [
+      "python",
+      "interview"
+    ],
+    "timestamp": "2025-03-19T22:00"
+  },
+  {
+    "id": "1742413038506",
+    "description": "Learnt about bitwise operators",
+    "tags": [
+      "python",
+      "interview",
+      "bit-manipulation"
+    ],
+    "timestamp": "2025-03-19T19:37:18.506Z"
+  }
+]

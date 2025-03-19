@@ -8,8 +8,9 @@ export default function Navbar() {
         <li><Link href="/essays">Essays</Link></li>
         <li><Link href="/notes">Notes</Link></li>
         <li><Link href="/library">Library</Link></li>
+        <li><Link href="/activities">Activities</Link></li>
         <li><Link href="/about">About</Link></li>
       </ul>
-      </div>
+    </div>
   );
 }
