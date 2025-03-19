@@ -130,6 +130,140 @@ export default function ActivityLogger() {
     })
     .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
 
+  const groupActivitiesByDate = (activities: Activity[]) => {
+    const groups: { [key: string]: Activity[] } = {};
+    
+    activities.forEach(activity => {
+      const date = new Date(activity.timestamp);
+      const dateKey = format(date, 'yyyy-MM-dd');
+      if (!groups[dateKey]) {
+        groups[dateKey] = [];
+      }
+      groups[dateKey].push(activity);
+    });
+
+    // Sort activities within each group by time
+    Object.values(groups).forEach(group => {
+      group.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
+    });
+
+    return groups;
+  };
+
+  const HistoryView = () => {
+    const groupedActivities = groupActivitiesByDate(filteredActivities);
+    const sortedDates = Object.keys(groupedActivities).sort((a, b) => b.localeCompare(a));
+
+    return (
+      <div className="space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Filter by Tag
+            </label>
+            <select
+              value={filterTag}
+              onChange={(e) => setFilterTag(e.target.value)}
+              className="mt-1 block w-full rounded-md border-gray-300 p-2 focus:border-sea-blue focus:ring-sea-blue"
+            >
+              <option value="">All Tags</option>
+              {Array.from(new Set(activities.flatMap(a => a.tags))).map(tag => (
+                <option key={tag} value={tag}>
+                  {tag}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Start Date
+            </label>
+            <input
+              type="date"
+              value={filterStartDate}
+              onChange={(e) => setFilterStartDate(e.target.value)}
+              className="mt-1 block w-full rounded-md border-gray-300 p-2 focus:border-sea-blue focus:ring-sea-blue"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              End Date
+            </label>
+            <input
+              type="date"
+              value={filterEndDate}
+              onChange={(e) => setFilterEndDate(e.target.value)}
+              className="mt-1 block w-full rounded-md border-gray-300 p-2 focus:border-sea-blue focus:ring-sea-blue"
+            />
+          </div>
+        </div>
+
+        <div className="space-y-8">
+          {sortedDates.map(dateKey => {
+            const date = new Date(dateKey);
+            return (
+              <div key={dateKey} className="space-y-2">
+                <h3 className="font-medium text-base text-sea-blue">
+                  {format(date, 'MMMM d, yyyy')}
+                </h3>
+                <div className="space-y-3">
+                  {groupedActivities[dateKey].map(activity => (
+                    <div
+                      key={activity.id}
+                      className="group relative flex gap-3"
+                    >
+                      <span className="text-sm text-gray-500 shrink-0 w-16">
+                        {format(new Date(activity.timestamp), 'h:mm a')}
+                      </span>
+                      <div className="flex-grow">
+                        <p className="text-gray-900">{activity.description}</p>
+                        {activity.tags.length > 0 && (
+                          <div className="mt-1 flex flex-wrap gap-1.5">
+                            {activity.tags.map(tag => (
+                              <span
+                                key={tag}
+                                className={`border border-gray-300 text-gray-600 px-1.5 py-0.5 rounded-full text-xs ${
+                                  SHOW_EDITOR ? 'flex items-center gap-1 group cursor-pointer hover:border-sea-blue' : ''
+                                }`}
+                              >
+                                {tag}
+                                {SHOW_EDITOR && (
+                                  <button
+                                    type="button"
+                                    onClick={() => handleDeleteActivityTag(activity.id, tag)}
+                                    className="text-gray-400 group-hover:text-sea-blue ml-0.5"
+                                    title="Remove tag"
+                                  >
+                                    ×
+                                  </button>
+                                )}
+                              </span>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                      {SHOW_EDITOR && (
+                        <button
+                          onClick={() => handleDeleteActivity(activity.id)}
+                          className="opacity-0 group-hover:opacity-100 text-gray-400 hover:text-sea-blue shrink-0 mt-1"
+                          title="Delete activity"
+                        >
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                            <path fillRule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm4 0a1 1 0 012 0v6a1 1 0 11-2 0V8z" clipRule="evenodd" />
+                          </svg>
+                        </button>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    );
+  };
+
   if (isLoading) {
     return <div className="text-center py-4">Loading activities...</div>;
   }
@@ -137,99 +271,6 @@ export default function ActivityLogger() {
   if (error) {
     return <div className="text-center py-4 text-red-600">{error}</div>;
   }
-
-  const HistoryView = () => (
-    <div className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Filter by Tag
-          </label>
-          <select
-            value={filterTag}
-            onChange={(e) => setFilterTag(e.target.value)}
-            className="mt-1 block w-full rounded-md border-gray-300 p-2 focus:border-sea-blue focus:ring-sea-blue"
-          >
-            <option value="">All Tags</option>
-            {Array.from(new Set(activities.flatMap(a => a.tags))).map(tag => (
-              <option key={tag} value={tag}>
-                {tag}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Start Date
-          </label>
-          <input
-            type="date"
-            value={filterStartDate}
-            onChange={(e) => setFilterStartDate(e.target.value)}
-            className="mt-1 block w-full rounded-md border-gray-300 p-2 focus:border-sea-blue focus:ring-sea-blue"
-          />
-        </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            End Date
-          </label>
-          <input
-            type="date"
-            value={filterEndDate}
-            onChange={(e) => setFilterEndDate(e.target.value)}
-            className="mt-1 block w-full rounded-md border-gray-300 p-2 focus:border-sea-blue focus:ring-sea-blue"
-          />
-        </div>
-      </div>
-
-      <div className="space-y-6">
-        {filteredActivities.map(activity => (
-          <div
-            key={activity.id}
-            className="border-b border-gray-200 pb-6 relative"
-          >
-            {SHOW_EDITOR && (
-              <button
-                onClick={() => handleDeleteActivity(activity.id)}
-                className="absolute top-0 right-0 text-gray-400 hover:text-sea-blue"
-                title="Delete activity"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm4 0a1 1 0 012 0v6a1 1 0 11-2 0V8z" clipRule="evenodd" />
-                </svg>
-              </button>
-            )}
-            <p className="text-gray-500 text-sm">
-              {format(new Date(activity.timestamp), 'PPpp')}
-            </p>
-            <p className="mt-2">{activity.description}</p>
-            <div className="mt-2 flex flex-wrap gap-2">
-              {activity.tags.map(tag => (
-                <span
-                  key={tag}
-                  className={`border border-gray-300 text-gray-700 px-2 py-0.5 rounded-full text-sm ${
-                    SHOW_EDITOR ? 'flex items-center gap-1 group cursor-pointer hover:border-sea-blue' : ''
-                  }`}
-                >
-                  {tag}
-                  {SHOW_EDITOR && (
-                    <button
-                      type="button"
-                      onClick={() => handleDeleteActivityTag(activity.id, tag)}
-                      className="text-gray-400 group-hover:text-sea-blue ml-1"
-                      title="Remove tag"
-                    >
-                      ×
-                    </button>
-                  )}
-                </span>
-              ))}
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
 
   return (
     <div className="max-w-4xl mx-auto p-4">
