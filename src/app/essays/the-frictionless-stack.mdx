@@ -1,0 +1,33 @@
+---
+title: Automating the boring parts - The Frictionless Stack
+date: '2025-10-12'
+tags: ['engineering', 'software', 'automation']
+draft: false
+summary: 'What if engineering just worked? A thought experiment'
+---
+
+Automating the boring parts: what if we actually did it? We spend a huge chunk of time at work doing stuff like updating Jira tickets, setting up dev environments, handling VCS commands, scheduling grooming sessions. What if a system managed all of that, and engineers focus on the thing that they are supposed to do: engineering?
+
+For this thought experiment, I had a condition: the kind of optimisations I think about, should be achievable today, with tools accessible to an average tech startup. Nothing too futuristic. It's worth noting that the below concept isn't the full extent of what could be.
+
+This is written in the form of a fictional **day in the life of a software engineer** format. The protagonist is me.
+
+<br />
+
+The sprint begins. There is no meeting or kickoff call. The Jira board is already populated. All the stories are labeled, scoped and assigned. Priorites are pre-calculated with impact and effort estimates.
+
+Arvind picks up the top priority ticket. It comes tagged with *Design required*. On clicking **Start design**, a Confluence doc with a predefined system design template opens, this is auto linked to the Jira ticket. Arvind writes details about tradeoffs, finalises the approach and submits.
+
+A few moments later: corresponding Git branches are auto created on relevant repos, tied to the same ticket. Clicking on **Start work** spins up a preconfigured Codespace. The repo, services and any required databases boot instantly. Environment variables are also loaded from dev configs.
+
+Inside the IDE, Arvind begins coding. The AI assistant handles scaffolding, test generation and docstrings. The design is fixed, so Arvind's job is mostly eye-balling the generated code and ensuring it fits the chosen architecture, making small corrections as needed. Hooks ensure linting and style guides are followed, and tests are run automatically.
+
+Once the feature is complete, a PR opens automatically. Reviewers perform their job, but there is little discussion required, since everything follows the preapproved design. Actions run integration tests, and there is a preview deployment ready for testing on UAT. The link appears on the Jira ticket, ready for QA.
+
+After QA signs off, the code is merged to master. This triggers a pipeline: tests, dependency scans, changelog generation and a Slack approval step for production deploy. On approval, the system deploys to production, with the Jira ticket closing itself.
+
+Every merged PR generates auto formatted release notes that are pushed into Confluence docs. At the end of the sprint, an automated summary compiles: velocity and completion metrics, resolved issues, notable blockers. The team skims through this in a few mins, instead of an hour of "sprint retro".
+
+Arvind keeps repeating this until the end of his workday, at which point the shutdown ritual begins: a bot commits the day's work log to his journal app, into a private Git repo. Optional music crossfades to lo-fi to wind down.
+
+"Is this better, or worse?" he contemplates, as he makes his way back home along with thousands of other engineers, stuck in their own optimised loops and unoptimised traffic.
