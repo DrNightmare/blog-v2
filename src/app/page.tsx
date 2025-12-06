@@ -7,12 +7,12 @@ export default function Home() {
 
         {/* Hero Section */}
         <div className="space-y-4">
-          <h1 className="text-4xl sm:text-6xl font-bold text-slate-900 tracking-tight">
+          <h2 className="text-2xl sm:text-4xl font-bold text-slate-900 tracking-tight">
             Hi, I'm Arvind.
-          </h1>
+          </h2>
           <p className="text-xl sm:text-2xl text-slate-600 font-light leading-relaxed max-w-2xl">
-            Senior Backend Engineer at <span className="text-indigo-600 font-medium">Refyne</span>.
-            Building scalable systems and writing about it.
+            Staff Engineer at <span className="text-indigo-600 font-medium">Refyne</span>.
+            I enjoy solving complex problems, building elegant systems, and exploring the intersection of art and code.
           </p>
         </div>
 
