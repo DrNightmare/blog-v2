@@ -1,25 +1,43 @@
-import CustomLink from "@/components/CustomLink";
+import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="items-center justify-items-center min-h-full font-[family-name:var(--font-geist-sans)]">
-      <main className="flex gap-8 items-center justify-center sm:items-start">
-        <div className="flex flex-col prose px-4 sm:px-0">
-          <span className="text-3xl text-center">Arvind Prakash</span>
-          <span className="mb-6 text-center">Currently a senior backend engineer at <CustomLink href='https://www.refyne.co.in/' target='_blank'>Refyne</CustomLink></span>
+    <div className="min-h-[80vh] flex flex-col justify-center items-center font-[family-name:var(--font-geist-sans)] px-4">
+      <main className="max-w-3xl w-full text-center sm:text-left space-y-8">
 
-          <span>
-            Check out my <CustomLink href='/essays' target={undefined}>essays</CustomLink>. These are mostly technical posts, but expect anything ;)
-          </span>
-          <br />
-          <span>
-            I also maintain a list of <CustomLink href='/notes' target={undefined}>notes</CustomLink> here. These are things that I might have thought about but didn't bother to dig deep into, and probably things that I intend to write about in the future.
-          </span>
-          <br />
-          <span>
-            If you would like to know more about me and my interests, check out my <CustomLink href='/about' target={undefined}>about page</CustomLink>.
-          </span>
+        {/* Hero Section */}
+        <div className="space-y-4">
+          <h1 className="text-4xl sm:text-6xl font-bold text-slate-900 tracking-tight">
+            Hi, I'm Arvind.
+          </h1>
+          <p className="text-xl sm:text-2xl text-slate-600 font-light leading-relaxed max-w-2xl">
+            Senior Backend Engineer at <span className="text-indigo-600 font-medium">Refyne</span>.
+            Building scalable systems and writing about it.
+          </p>
         </div>
+
+        {/* Links / CTA */}
+        <div className="flex flex-col sm:flex-row gap-4 pt-4 justify-center sm:justify-start">
+          <Link
+            href="/essays"
+            className="px-6 py-3 rounded-xl bg-slate-100 text-slate-700 font-medium hover:bg-indigo-50 hover:text-indigo-600 transition-colors"
+          >
+            Read Essays
+          </Link>
+          <Link
+            href="/notes"
+            className="px-6 py-3 rounded-xl bg-white border border-slate-200 text-slate-600 font-medium hover:border-indigo-200 hover:text-indigo-600 transition-colors"
+          >
+            Browse Notes
+          </Link>
+          <Link
+            href="/about"
+            className="px-6 py-3 rounded-xl text-slate-500 hover:text-slate-800 transition-colors"
+          >
+            More about me →
+          </Link>
+        </div>
+
       </main>
     </div>
   );

@@ -14,22 +14,34 @@ export default function Notes() {
     const notes = getNotes();
 
     return (
-        <div>
-            <main className="flex gap-8 items-center justify-center sm:items-start">
-                <div className="flex flex-col prose px-4 sm:px-0">
-                    <span className="text-3xl text-center">Notes <span className="text-sea-blue text-2xl">{notes.length}</span></span>
-                    <span className="mb-6 text-center">A collection of initial thoughts, brainstorming, and in-progress learnings.</span>
-                    {notes.slice().reverse().map((note, index) => (
-                        <div className="not-prose my-2" key={note.slug}>
-                            <div className="mb-5">
-                                <p className="text-lg font-medium text-crimson">{note.metadata.title}</p>
-                                <span className="text-sm font-thin text-gray-600">{note.metadata.date}</span>
-                                <article className="prose"><MDXRemote source={note.content} components={components} /></article>
+        <div className="min-h-screen py-12 px-4 sm:px-6">
+            <main className="max-w-3xl mx-auto">
+                <div className="text-center mb-12">
+                    <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-4">
+                        Notes
+                    </h1>
+                    <p className="text-lg text-slate-600 max-w-2xl mx-auto">
+                        A collection of initial thoughts, brainstorming, and in-progress learnings.
+                        <span className="ml-2 inline-flex items-center justify-center bg-indigo-100 text-indigo-700 text-xs font-bold px-2 py-1 rounded-full">
+                            {notes.length}
+                        </span>
+                    </p>
+                </div>
+
+                <div className="space-y-8">
+                    {notes.slice().reverse().map((note) => (
+                        <div key={note.slug} className="bg-white rounded-2xl border border-slate-200 p-8 shadow-sm hover:shadow-md transition-shadow">
+                            <div className="flex items-center justify-between mb-6">
+                                <h2 className="text-2xl font-bold text-slate-900">{note.metadata.title}</h2>
+                                <time className="text-sm text-slate-400 font-medium bg-slate-50 px-3 py-1 rounded-full">
+                                    {note.metadata.date}
+                                </time>
                             </div>
-                            {index < notes.length - 1 && <hr />}
+                            <article className="prose prose-slate prose-lg max-w-none prose-a:text-indigo-600 prose-a:no-underline hover:prose-a:underline">
+                                <MDXRemote source={note.content} components={components} />
+                            </article>
                         </div>
-                    )
-                    )}
+                    ))}
                 </div>
             </main >
         </div >

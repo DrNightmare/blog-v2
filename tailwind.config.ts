@@ -11,8 +11,13 @@ const config: Config = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
-        crimson: "#5F023E",
-        'sea-blue': '#04A5BB'
+        // Softer Theme Colors
+        primary: {
+          DEFAULT: '#4f46e5', // Indigo-600
+          hover: '#4338ca',   // Indigo-700
+        },
+        surface: '#ffffff',
+        'background-soft': '#f8fafc', // Slate-50
       },
     },
   },

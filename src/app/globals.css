@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 :root {
-  --background: #f6f5f1;
-  --foreground: #171717;
+  --background: #f8fafc;
+  --foreground: #0f172a;
 
   --sh-class: #4c97f8;
   --sh-identifier: #6caedd;
@@ -43,9 +43,10 @@ p {
 /* below section to make link underlines on hover */
 .custom-link {
   position: relative;
-  color: #7a1841;
+  color: #4f46e5;
   text-decoration: none;
-  font-weight: bold;
+  font-weight: 600;
+  /* semibold */
 }
 
 .custom-link::before {
@@ -54,11 +55,12 @@ p {
   display: block;
   width: 100%;
   height: 2px;
-  bottom: 0;
+  bottom: -2px;
+  /* Slight gap */
   left: 0;
-  background-color: #7a1841;
+  background-color: #4f46e5;
   transform: scaleX(0);
-  transition: transform 0.3s ease;
+  transition: transform 0.2s ease-in-out;
 }
 
 .custom-link:hover::before {
