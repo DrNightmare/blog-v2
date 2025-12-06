@@ -6,8 +6,8 @@ import { ReactNode } from 'react';
 
 const CustomLink = ({ href, target, children }: { href?: string; target?: string; children: ReactNode }) => {
   return href && (
-    <Link href={href} legacyBehavior>
-      <a className={styles.customLink} target={target}>{children}</a>
+    <Link href={href} className={styles.customLink} target={target}>
+      {children}
     </Link>
   );
 };
