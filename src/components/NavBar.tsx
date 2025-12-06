@@ -7,12 +7,12 @@ export default function Navbar() {
   const pathname = usePathname();
 
   return (
-    <nav className="sticky top-0 z-50 w-full backdrop-blur-md bg-white/70 border-b border-slate-200/50">
+    <nav className="sticky top-0 z-50 w-full backdrop-blur-md bg-surface/70 border-b border-border/50">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col sm:flex-row items-center justify-between h-auto sm:h-16 py-4 sm:py-0">
           {/* Logo / Name */}
           <div className="flex-shrink-0 mb-4 sm:mb-0">
-            <Link href="/" className="font-bold text-xl tracking-tight text-slate-800 hover:text-indigo-600 transition-colors">
+            <Link href="/" className="font-bold text-xl tracking-tight text-text-main hover:text-primary transition-colors">
               Arvind Prakash
             </Link>
           </div>
@@ -38,8 +38,8 @@ function NavLink({ href, children, activePath }: { href: string; children: React
     <Link
       href={href}
       className={`text-sm font-medium transition-colors ${isActive
-          ? 'text-primary font-semibold'
-          : 'text-slate-600 hover:text-indigo-600'
+        ? 'text-primary font-semibold'
+        : 'text-text-secondary hover:text-primary'
         }`}
     >
       {children}
