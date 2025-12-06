@@ -11,13 +11,27 @@ const config: Config = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
-        // Softer Theme Colors
+        surface: "var(--surface)",
+
+        // Semantic Tokens
         primary: {
-          DEFAULT: '#4f46e5', // Indigo-600
-          hover: '#4338ca',   // Indigo-700
+          DEFAULT: "var(--primary)",
+          hover: "var(--primary-hover)",
+          light: "var(--primary-light)",
+          subtle: "var(--primary-subtle)",
         },
-        surface: '#ffffff',
-        'background-soft': '#f8fafc', // Slate-50
+
+        text: {
+          main: "var(--text-main)",
+          secondary: "var(--text-secondary)",
+          muted: "var(--text-muted)",
+          subtle: "var(--text-subtle)",
+        },
+
+        border: {
+          DEFAULT: "var(--border)",
+          light: "var(--border-light)",
+        },
       },
     },
   },

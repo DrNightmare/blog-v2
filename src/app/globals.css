@@ -3,9 +3,41 @@
 @tailwind utilities;
 
 :root {
+  /* Base Colors */
   --background: #f8fafc;
+  /* Slate-50 */
   --foreground: #0f172a;
+  /* Slate-900 */
+  --surface: #ffffff;
+  /* White */
 
+  /* Typography */
+  --text-main: #1e293b;
+  /* Slate-800 */
+  --text-secondary: #475569;
+  /* Slate-600 */
+  --text-muted: #64748b;
+  /* Slate-500 */
+  --text-subtle: #94a3b8;
+  /* Slate-400 */
+
+  /* Primary Brand Colors */
+  --primary: #4f46e5;
+  /* Indigo-600 */
+  --primary-hover: #4338ca;
+  /* Indigo-700 */
+  --primary-light: #e0e7ff;
+  /* Indigo-100 */
+  --primary-subtle: #eef2ff;
+  /* Indigo-50 */
+
+  /* Borders */
+  --border: #e2e8f0;
+  /* Slate-200 */
+  --border-light: #f1f5f9;
+  /* Slate-100 */
+
+  /* Syntax Highlighting (Keep as is) */
   --sh-class: #4c97f8;
   --sh-identifier: #6caedd;
   --sh-keyword: #f47067;
@@ -43,7 +75,7 @@ p {
 /* below section to make link underlines on hover */
 .custom-link {
   position: relative;
-  color: #4f46e5;
+  color: var(--primary);
   text-decoration: none;
   font-weight: 600;
   /* semibold */
@@ -58,7 +90,7 @@ p {
   bottom: -2px;
   /* Slight gap */
   left: 0;
-  background-color: #4f46e5;
+  background-color: var(--primary);
   transform: scaleX(0);
   transition: transform 0.2s ease-in-out;
 }

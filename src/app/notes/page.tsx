@@ -17,12 +17,12 @@ export default function Notes() {
         <div className="min-h-screen py-12 px-4 sm:px-6">
             <main className="max-w-3xl mx-auto">
                 <div className="text-center mb-12">
-                    <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-4">
+                    <h1 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
                         Notes
                     </h1>
-                    <p className="text-lg text-slate-600 max-w-2xl mx-auto">
+                    <p className="text-lg text-text-secondary max-w-2xl mx-auto">
                         A collection of initial thoughts, brainstorming, and in-progress learnings.
-                        <span className="ml-2 inline-flex items-center justify-center bg-indigo-100 text-indigo-700 text-xs font-bold px-2 py-1 rounded-full">
+                        <span className="ml-2 inline-flex items-center justify-center bg-primary-light text-primary text-xs font-bold px-2 py-1 rounded-full">
                             {notes.length}
                         </span>
                     </p>
@@ -30,14 +30,14 @@ export default function Notes() {
 
                 <div className="space-y-8">
                     {notes.slice().reverse().map((note) => (
-                        <div key={note.slug} className="bg-white rounded-2xl border border-slate-200 p-8 shadow-sm hover:shadow-md transition-shadow">
+                        <div key={note.slug} className="bg-surface rounded-2xl border border-border p-8 shadow-sm hover:shadow-md transition-shadow">
                             <div className="flex items-center justify-between mb-6">
-                                <h2 className="text-2xl font-bold text-slate-900">{note.metadata.title}</h2>
-                                <time className="text-sm text-slate-400 font-medium bg-slate-50 px-3 py-1 rounded-full">
+                                <h2 className="text-2xl font-bold text-foreground">{note.metadata.title}</h2>
+                                <time className="text-sm text-text-subtle font-medium bg-border-light px-3 py-1 rounded-full">
                                     {note.metadata.date}
                                 </time>
                             </div>
-                            <article className="prose prose-slate prose-lg max-w-none prose-a:text-indigo-600 prose-a:no-underline hover:prose-a:underline">
+                            <article className="prose prose-slate prose-lg max-w-none prose-a:text-primary prose-a:no-underline hover:prose-a:underline">
                                 <MDXRemote source={note.content} components={components} />
                             </article>
                         </div>
