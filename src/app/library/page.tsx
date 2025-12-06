@@ -56,8 +56,8 @@ export default async function Library() {
 const BookList = ({ title, books }: { title: string; books: Book[] }) => (
     <div className="bg-surface rounded-2xl border border-border p-6 sm:p-8 shadow-sm">
         <div className="flex items-center gap-3 mb-6 pb-4 border-b border-border-light">
-            <h2 className="text-xl font-bold text-text-main">{title}</h2>
-            <span className="text-xs font-medium bg-border-light text-text-secondary px-2 py-1 rounded-full">
+            <h2 className="text-xl font-bold text-foreground">{title}</h2>
+            <span className="text-xs font-bold bg-primary-light text-primary px-2 py-1 rounded-full">
                 {books.length}
             </span>
         </div>

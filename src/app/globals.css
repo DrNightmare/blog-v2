@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  /* Base Colors */
+  /* Base Colors (Start-up Minimal / Slate) */
   --background: #f8fafc;
   /* Slate-50 */
   --foreground: #0f172a;
@@ -11,7 +11,7 @@
   --surface: #ffffff;
   /* White */
 
-  /* Typography */
+  /* Typography (Crisp Cool Grays) */
   --text-main: #1e293b;
   /* Slate-800 */
   --text-secondary: #475569;
@@ -21,7 +21,7 @@
   --text-subtle: #94a3b8;
   /* Slate-400 */
 
-  /* Primary Brand Colors */
+  /* Primary Brand Colors (Electric Indigo) */
   --primary: #4f46e5;
   /* Indigo-600 */
   --primary-hover: #4338ca;
@@ -55,7 +55,7 @@
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), sans-serif;
 }
 
 p {
