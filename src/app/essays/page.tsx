@@ -7,7 +7,7 @@ export default function Essays() {
     return (
         <div>
             <main className="flex gap-8 items-center justify-center sm:items-start">
-                <div className="flex flex-col prose">
+                <div className="flex flex-col prose px-4 sm:px-0">
                     <span className="text-3xl text-center">
                         Essays <span className="text-sea-blue text-2xl">{essays.length}</span>
                     </span>

@@ -2,8 +2,8 @@ import Link from 'next/link';
 
 export default function Navbar() {
   return (
-    <div className="flex items-end justify-end p-8 pb-20 sm:p-10">
-      <ul className="flex space-x-4">
+    <div className="flex flex-col items-center p-4 sm:flex-row sm:justify-end sm:p-10">
+      <ul className="flex flex-wrap justify-center space-x-4 gap-y-2">
         <li><Link href="/">Home</Link></li>
         <li><Link href="/essays">Essays</Link></li>
         <li><Link href="/notes">Notes</Link></li>

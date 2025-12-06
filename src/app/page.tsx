@@ -4,7 +4,7 @@ export default function Home() {
   return (
     <div className="items-center justify-items-center min-h-full font-[family-name:var(--font-geist-sans)]">
       <main className="flex gap-8 items-center justify-center sm:items-start">
-        <div className="flex flex-col prose">
+        <div className="flex flex-col prose px-4 sm:px-0">
           <span className="text-3xl text-center">Arvind Prakash</span>
           <span className="mb-6 text-center">Currently a senior backend engineer at <CustomLink href='https://www.refyne.co.in/' target='_blank'>Refyne</CustomLink></span>
 
@@ -18,10 +18,6 @@ export default function Home() {
           <br />
           <span>
             If you would like to know more about me and my interests, check out my <CustomLink href='/about' target={undefined}>about page</CustomLink>.
-          </span>
-          <br />
-          <span>
-            This site currently looks good on big screens, but it's not yet fixed for mobiles/smaller screens. It's WIP!
           </span>
         </div>
       </main>

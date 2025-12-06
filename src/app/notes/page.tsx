@@ -16,7 +16,7 @@ export default function Notes() {
     return (
         <div>
             <main className="flex gap-8 items-center justify-center sm:items-start">
-                <div className="flex flex-col prose">
+                <div className="flex flex-col prose px-4 sm:px-0">
                     <span className="text-3xl text-center">Notes <span className="text-sea-blue text-2xl">{notes.length}</span></span>
                     <span className="mb-6 text-center">A collection of initial thoughts, brainstorming, and in-progress learnings.</span>
                     {notes.slice().reverse().map((note, index) => (
