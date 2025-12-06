@@ -22,7 +22,7 @@ export default function Navbar() {
             <NavLink href="/essays" activePath={pathname}>Essays</NavLink>
             <NavLink href="/notes" activePath={pathname}>Notes</NavLink>
             <NavLink href="/library" activePath={pathname}>Library</NavLink>
-            <NavLink href="/activities" activePath={pathname}>Activities</NavLink>
+
             <NavLink href="/about" activePath={pathname}>About</NavLink>
           </div>
         </div>
