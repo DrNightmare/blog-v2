@@ -33,11 +33,11 @@ export default function Notes() {
                         <div key={note.slug} className="bg-surface rounded-2xl border border-border p-8 shadow-sm hover:shadow-md transition-shadow">
                             <div className="flex items-center justify-between mb-6">
                                 <h2 className="text-2xl font-bold text-foreground">{note.metadata.title}</h2>
-                                <time className="text-sm text-text-subtle font-medium bg-border-light px-3 py-1 rounded-full">
+                                <time className="text-sm text-text-subtle font-medium bg-border-light px-3 py-1 rounded-full dark:bg-slate-800 dark:text-slate-400">
                                     {note.metadata.date}
                                 </time>
                             </div>
-                            <article className="prose prose-slate prose-lg max-w-none prose-a:text-primary prose-a:no-underline hover:prose-a:underline">
+                            <article className="prose prose-slate prose-lg max-w-none prose-a:text-primary prose-a:no-underline hover:prose-a:underline dark:prose-invert">
                                 <MDXRemote source={note.content} components={components} />
                             </article>
                         </div>

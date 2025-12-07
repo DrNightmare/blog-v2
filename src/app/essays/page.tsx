@@ -23,7 +23,7 @@ export default function Essays() {
                     {essays.map((essay) => (
                         <Link key={essay.slug} href={`/essays/${essay.slug}`} className="group relative flex flex-col p-6 bg-surface rounded-2xl border border-border shadow-sm hover:shadow-md hover:border-primary-light transition-all duration-200">
                             <div className="mb-2">
-                                <time className="text-sm text-text-subtle font-medium">
+                                <time className="text-sm text-text-subtle font-medium bg-border-light px-3 py-1 rounded-full dark:bg-slate-800 dark:text-slate-400">
                                     {essay.metadata.date}
                                 </time>
                             </div>

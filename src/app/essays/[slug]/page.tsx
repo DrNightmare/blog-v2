@@ -45,7 +45,7 @@ export default async function Essay({ params }: { params: Promise<EssayParam> })
     return (
         <div className="flex justify-center m-5">
             <div className="flex-col">
-                <article className="prose">
+                <article className="prose dark:prose-invert">
                     <div className="justify-self-center">
                         <h1>{essay.metadata.title}</h1>
                     </div>

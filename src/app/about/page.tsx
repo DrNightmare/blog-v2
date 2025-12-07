@@ -11,7 +11,7 @@ export default function About() {
         </div>
 
         <div className="bg-surface rounded-2xl border border-border p-8 shadow-sm">
-          <article className="prose prose-slate prose-lg max-w-none prose-a:text-primary prose-a:no-underline hover:prose-a:underline">
+          <article className="prose prose-slate prose-lg max-w-none prose-a:text-primary prose-a:no-underline hover:prose-a:underline dark:prose-invert">
             <AboutContent />
           </article>
         </div>
