@@ -4,6 +4,8 @@ import "./globals.css";
 import Navbar from "@/components/NavBar";
 import Footer from "@/components/Footer";
 
+import CommandPalette from "@/components/CommandPalette";
+
 import Providers from "@/components/Providers";
 
 const geistSans = localFont({
@@ -33,6 +35,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} flex flex-col min-h-screen overflow-y-scroll antialiased`}
       >
         <Providers>
+          <CommandPalette />
           <Navbar />
           {children}
           <Footer />
