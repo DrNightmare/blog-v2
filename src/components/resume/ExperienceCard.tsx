@@ -25,9 +25,9 @@ export default function ExperienceCard({ role, company, location, date, descript
             </div>
 
             <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-4">
-                <h4 className="text-md font-medium text-text-secondary">
-                    {role}
-                </h4>
+                <span className="inline-flex items-center rounded-full bg-primary-light px-3 py-1 text-xs font-medium text-primary capitalize mb-1 sm:mb-0">
+                    {role.toLowerCase()}
+                </span>
                 <span className="text-sm text-text-muted">
                     {location}
                 </span>

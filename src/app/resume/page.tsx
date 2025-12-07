@@ -115,22 +115,60 @@ export default function ResumePage() {
                     />
                 </Section>
 
-                <Section title="Programming Skills">
-                    <div className="flex flex-wrap">
-                        <SkillBadge>C</SkillBadge>
-                        <SkillBadge>C++</SkillBadge>
-                        <SkillBadge>Java</SkillBadge>
-                        <SkillBadge>Python</SkillBadge>
-                        <SkillBadge>ReactJS</SkillBadge>
-                        <SkillBadge>NextJS</SkillBadge>
-                        <SkillBadge>MongoDB</SkillBadge>
-                        <SkillBadge>NodeJS</SkillBadge>
-                        <SkillBadge>NestJS</SkillBadge>
-                        <SkillBadge>Unity</SkillBadge>
-                        <SkillBadge>C#</SkillBadge>
-                        <SkillBadge>Godot</SkillBadge>
-                        <SkillBadge>AWS</SkillBadge>
-                        <SkillBadge>Docker</SkillBadge>
+                <Section title="Technical Skills">
+                    <div className="space-y-4">
+                        <div>
+                            <h3 className="text-sm font-semibold text-text-secondary uppercase tracking-wide mb-2">Languages</h3>
+                            <div className="flex flex-wrap">
+                                <SkillBadge>Python</SkillBadge>
+                                <SkillBadge>Java</SkillBadge>
+                                <SkillBadge>JavaScript / TypeScript</SkillBadge>
+                                <SkillBadge>C++</SkillBadge>
+                                <SkillBadge>C</SkillBadge>
+                                <SkillBadge>C#</SkillBadge>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h3 className="text-sm font-semibold text-text-secondary uppercase tracking-wide mb-2">Frontend & Mobile</h3>
+                            <div className="flex flex-wrap">
+                                <SkillBadge>ReactJS</SkillBadge>
+                                <SkillBadge>NextJS</SkillBadge>
+                                <SkillBadge>HTML/CSS</SkillBadge>
+                                <SkillBadge>Tailwind CSS</SkillBadge>
+                                <SkillBadge>Android (Native)</SkillBadge>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h3 className="text-sm font-semibold text-text-secondary uppercase tracking-wide mb-2">Backend & Database</h3>
+                            <div className="flex flex-wrap">
+                                <SkillBadge>NodeJS</SkillBadge>
+                                <SkillBadge>NestJS</SkillBadge>
+                                <SkillBadge>Spring Boot</SkillBadge>
+                                <SkillBadge>MongoDB</SkillBadge>
+                                <SkillBadge>PostgreSQL</SkillBadge>
+                                <SkillBadge>Redis</SkillBadge>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h3 className="text-sm font-semibold text-text-secondary uppercase tracking-wide mb-2">Cloud & DevOps</h3>
+                            <div className="flex flex-wrap">
+                                <SkillBadge>AWS</SkillBadge>
+                                <SkillBadge>Docker</SkillBadge>
+                                <SkillBadge>Kubernetes</SkillBadge>
+                                <SkillBadge>CI/CD</SkillBadge>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h3 className="text-sm font-semibold text-text-secondary uppercase tracking-wide mb-2">Game Development</h3>
+                            <div className="flex flex-wrap">
+                                <SkillBadge>Unity</SkillBadge>
+                                <SkillBadge>Godot</SkillBadge>
+                            </div>
+                        </div>
                     </div>
                 </Section>
             </div>
