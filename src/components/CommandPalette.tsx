@@ -31,6 +31,7 @@ export default function CommandPalette() {
             { id: 'notes', name: 'Notes', href: '/notes', section: 'Navigation' },
             { id: 'library', name: 'Library', href: '/library', section: 'Navigation' },
             { id: 'about', name: 'About', href: '/about', section: 'Navigation' },
+            { id: 'resume', name: 'Resume', href: '/resume', section: 'Navigation' },
         ];
 
         const themeCommands: Command[] = [
@@ -143,8 +144,8 @@ export default function CommandPalette() {
                             <li
                                 key={command.id}
                                 className={`cursor-pointer select-none px-4 py-4 sm:px-6 ${index === selectedIndex
-                                        ? 'bg-primary/10 text-primary'
-                                        : 'text-text-secondary hover:bg-slate-50 dark:hover:bg-white/5'
+                                    ? 'bg-primary/10 text-primary'
+                                    : 'text-text-secondary hover:bg-slate-50 dark:hover:bg-white/5'
                                     }`}
                                 onClick={() => handleSelect(command)}
                                 onMouseEnter={() => setSelectedIndex(index)}
