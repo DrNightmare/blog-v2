@@ -1,24 +1,19 @@
 'use client';
 
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
+import { useTheme } from 'next-themes';
 import { useCommandPalette } from '@/hooks/useCommandPalette';
+import { useColorScheme } from '@/hooks/useColorScheme';
+import { colorSchemes } from '@/config/colorSchemes';
 
 type Command = {
     id: string;
     name: string;
-    href: string;
     section: string;
+    href?: string;
+    action?: () => void;
 };
-
-const commands: Command[] = [
-    { id: 'home', name: 'Home', href: '/', section: 'Navigation' },
-    { id: 'essays', name: 'Essays', href: '/essays', section: 'Navigation' },
-    { id: 'notes', name: 'Notes', href: '/notes', section: 'Navigation' },
-    { id: 'library', name: 'Library', href: '/library', section: 'Navigation' },
-    { id: 'about', name: 'About', href: '/about', section: 'Navigation' },
-    // Placeholder for future extensibility (e.g. recent posts)
-];
 
 export default function CommandPalette() {
     const { isOpen, setIsOpen } = useCommandPalette();
@@ -26,10 +21,42 @@ export default function CommandPalette() {
     const [selectedIndex, setSelectedIndex] = useState(0);
     const inputRef = useRef<HTMLInputElement>(null);
     const router = useRouter();
+    const { setTheme } = useTheme();
+    const { setColorScheme } = useColorScheme();
 
-    const filteredCommands = commands.filter((command) =>
-        command.name.toLowerCase().includes(query.toLowerCase())
-    );
+    const commands: Command[] = useMemo(() => {
+        const navCommands: Command[] = [
+            { id: 'home', name: 'Home', href: '/', section: 'Navigation' },
+            { id: 'essays', name: 'Essays', href: '/essays', section: 'Navigation' },
+            { id: 'notes', name: 'Notes', href: '/notes', section: 'Navigation' },
+            { id: 'library', name: 'Library', href: '/library', section: 'Navigation' },
+            { id: 'about', name: 'About', href: '/about', section: 'Navigation' },
+        ];
+
+        const themeCommands: Command[] = [
+            { id: 'theme-light', name: 'Switch to Light Mode', action: () => setTheme('light'), section: 'Theme' },
+            { id: 'theme-dark', name: 'Switch to Dark Mode', action: () => setTheme('dark'), section: 'Theme' },
+            { id: 'theme-system', name: 'Switch to System Theme', action: () => setTheme('system'), section: 'Theme' },
+        ];
+
+        const colorCommands: Command[] = colorSchemes.map(scheme => ({
+            id: `scheme-${scheme.id}`,
+            name: `Change color to ${scheme.name}`,
+            action: () => setColorScheme(scheme),
+            section: 'Colors'
+        }));
+
+        return [...navCommands, ...themeCommands, ...colorCommands];
+    }, [setTheme, setColorScheme]);
+
+    const filteredCommands = useMemo(() => {
+        if (!query) return commands;
+        const lowerQuery = query.toLowerCase();
+        return commands.filter((command) =>
+            command.name.toLowerCase().includes(lowerQuery) ||
+            command.section.toLowerCase().includes(lowerQuery)
+        );
+    }, [query, commands]);
 
     // Reset state when opening
     useEffect(() => {
@@ -69,7 +96,11 @@ export default function CommandPalette() {
 
     const handleSelect = (command: Command) => {
         setIsOpen(false);
-        router.push(command.href);
+        if (command.action) {
+            command.action();
+        } else if (command.href) {
+            router.push(command.href);
+        }
     };
 
     if (!isOpen) return null;
