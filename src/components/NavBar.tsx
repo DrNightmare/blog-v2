@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 import ThemeToggle from './ThemeToggle';
+import ColorSchemeSelector from './ColorSchemeSelector';
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -27,7 +28,8 @@ export default function Navbar() {
               <NavLink href="/library" activePath={pathname}>Library</NavLink>
               <NavLink href="/about" activePath={pathname}>About</NavLink>
             </div>
-            <div className="pl-6 border-l border-border/50">
+            <div className="flex items-center gap-2 pl-6 border-l border-border/50">
+              <ColorSchemeSelector />
               <ThemeToggle />
             </div>
           </div>

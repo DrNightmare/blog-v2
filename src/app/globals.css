@@ -89,6 +89,35 @@
   --sh-comment: #71717a;
 }
 
+/* Color Scheme Overrides for Dark Mode */
+[data-color-scheme="emerald"].dark {
+  --primary: #34d399;
+  --primary-hover: #6ee7b7;
+  --primary-light: #064e3b;
+  --primary-subtle: #065f46;
+}
+
+[data-color-scheme="amber"].dark {
+  --primary: #fbbf24;
+  --primary-hover: #fcd34d;
+  --primary-light: #78350f;
+  --primary-subtle: #92400e;
+}
+
+[data-color-scheme="cyan"].dark {
+  --primary: #22d3ee;
+  --primary-hover: #67e8f9;
+  --primary-light: #164e63;
+  --primary-subtle: #155e75;
+}
+
+[data-color-scheme="purple"].dark {
+  --primary: #c084fc;
+  --primary-hover: #d8b4fe;
+  --primary-light: #581c87;
+  --primary-subtle: #6b21a8;
+}
+
 body {
   color: var(--foreground);
   background: var(--background);

@@ -64,7 +64,7 @@ const BookList = ({ title, books }: { title: string; books: Book[] }) => (
 
         <div className="grid gap-4 sm:grid-cols-2">
             {books.map((book) => (
-                <div key={book.index} className="flex flex-col p-4 rounded-xl bg-surface hover:bg-primary-subtle transition-colors">
+                <div key={book.index} className="flex flex-col p-4 rounded-xl bg-surface hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
                     <p className="font-semibold text-foreground mb-1">
                         {book.title}
                     </p>
