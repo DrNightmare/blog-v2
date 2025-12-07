@@ -1,4 +1,4 @@
-import ThemeToggle from './ThemeToggle';
+
 
 export default function Footer() {
     return (
@@ -10,7 +10,6 @@ export default function Footer() {
                     </p>
 
                     <div className="flex items-center space-x-6">
-                        <ThemeToggle />
 
                         {/* GitHub */}
                         <a href="https://github.com/DrNightmare" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-colors">
