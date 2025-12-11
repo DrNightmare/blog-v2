@@ -64,7 +64,7 @@ export default function ResumePage() {
                         role="VOLUNTEER"
                         company="Zariya"
                         location="Bangalore, India"
-                        date="Feb. 2017 – Present"
+                        date="Feb. 2017 – Apr. 2017"
                         descriptions={[
                             "Contribute to a non‑profit supporting women in India facing violence by connecting survivors with legal and counseling experts.",
                             "Built the organization’s “About Us” webpage using Bootstrap; actively manage cases in Bangalore."
