@@ -1,5 +1,4 @@
-import { promises as fs } from 'fs';
-import path from 'path';
+import booksData from './data.json';
 
 type Book = {
     index: number;
@@ -8,6 +7,9 @@ type Book = {
     genre?: string;
     progressPercentage?: number;
 };
+
+// Type assertion for imported JSON
+const books: Book[] = booksData as Book[];
 
 const groupByGenre = (books: Book[]) => {
     const genres: Record<string, Book[]> = {};
@@ -23,10 +25,9 @@ const groupByGenre = (books: Book[]) => {
     return genres;
 };
 
-export default async function Library() {
-    const file = await fs.readFile(path.join(process.cwd(), 'src', 'app', 'library', 'data.json'), 'utf8');
-    const books: Book[] = JSON.parse(file);
-    const booksByGenre = groupByGenre(books);
+const booksByGenre = groupByGenre(books);
+
+export default function Library() {
 
     return (
         <div className="min-h-screen py-12 px-4 sm:px-6">
