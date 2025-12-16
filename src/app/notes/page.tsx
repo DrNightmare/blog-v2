@@ -19,7 +19,7 @@ type PageProps = {
 
 export default async function Notes({ searchParams }: PageProps) {
     const params = await searchParams;
-    const allNotes = getNotes().slice().reverse();
+    const allNotes = (await getNotes()).slice().reverse();
     const totalNotes = allNotes.length;
     const totalPages = Math.ceil(totalNotes / NOTES_PER_PAGE);
 

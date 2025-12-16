@@ -14,9 +14,8 @@ interface CodeProps extends React.HTMLAttributes<HTMLElement> {
     children?: ReactNode;
 }
 
-const essays = getEssays();
-
 export async function generateStaticParams(): Promise<EssayParam[]> {
+    const essays = await getEssays();
     return essays.map(essay => ({ slug: essay.slug }));
 }
 
@@ -37,6 +36,7 @@ const components = {
 
 export default async function Essay({ params }: { params: Promise<EssayParam> }) {
     const { slug } = await params;
+    const essays = await getEssays();
     const essay = essays.find(essay => essay.slug === slug);
     if (!essay) {
         return notFound();

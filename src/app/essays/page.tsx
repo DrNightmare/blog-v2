@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { getEssays } from "../utils";
 
-export default function Essays() {
-    const essays = getEssays().sort((a, b) => new Date(b.metadata.date).getTime() - new Date(a.metadata.date).getTime());
+export default async function Essays() {
+    const essays = (await getEssays()).sort((a, b) => new Date(b.metadata.date).getTime() - new Date(a.metadata.date).getTime());
 
     return (
         <div className="min-h-screen py-12 px-4 sm:px-6">

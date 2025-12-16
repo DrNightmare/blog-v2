@@ -1,35 +1,41 @@
-import { readdirSync, readFileSync } from "fs";
+import { readdir, readFile } from "fs/promises";
 import matter from "gray-matter";
 import path from "path";
+import { cache } from "react";
 
-function getMDXFiles(dir: string) {
-    return readdirSync(dir).filter((file) => path.extname(file) === '.mdx');
+async function getMDXFiles(dir: string) {
+    const files = await readdir(dir);
+    return files.filter((file) => path.extname(file) === '.mdx');
 }
 
-function getMDXData(dir: string) {
+async function getMDXData(dir: string) {
+    const mdxFiles = await getMDXFiles(dir);
 
-    const mdxFiles = getMDXFiles(dir);
+    const results = await Promise.all(
+        mdxFiles.map(async (fileName) => {
+            const filePath = path.join(dir, fileName);
+            const fileContent = await readFile(filePath, 'utf-8');
 
-    return mdxFiles.map((fileName) => {
-        const filePath = path.join(dir, fileName);
-        const fileContent = readFileSync(filePath, 'utf-8')
+            const { data: metadata, content } = matter(fileContent);
 
-        const { data: metadata, content } = matter(fileContent)
+            const slug = path.basename(fileName, path.extname(fileName));
 
-        const slug = path.basename(fileName, path.extname(fileName));
+            return {
+                metadata,
+                slug,
+                content,
+            };
+        })
+    );
 
-        return {
-            metadata,
-            slug,
-            content,
-        };
-    })
+    return results;
 }
 
-export function getEssays() {
+// Cache the results to avoid re-reading files during the same request
+export const getEssays = cache(async () => {
     return getMDXData(path.join(process.cwd(), 'src', 'app', 'essays'));
-}
+});
 
-export function getNotes() {
+export const getNotes = cache(async () => {
     return getMDXData(path.join(process.cwd(), 'src', 'app', 'notes'));
-}
+});
