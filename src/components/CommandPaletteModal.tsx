@@ -32,6 +32,7 @@ export default function CommandPaletteModal({ isOpen, setIsOpen }: Props) {
             { id: 'home', name: 'Home', href: '/', section: 'Navigation' },
             { id: 'essays', name: 'Essays', href: '/essays', section: 'Navigation' },
             { id: 'notes', name: 'Notes', href: '/notes', section: 'Navigation' },
+            { id: 'projects', name: 'Projects', href: '/projects', section: 'Navigation' },
             { id: 'library', name: 'Library', href: '/library', section: 'Navigation' },
             { id: 'about', name: 'About', href: '/about', section: 'Navigation' },
             { id: 'resume', name: 'Resume', href: '/resume', section: 'Navigation' },

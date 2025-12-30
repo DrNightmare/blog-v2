@@ -25,6 +25,7 @@ export default function Navbar() {
             <div className="flex space-x-6 sm:space-x-8">
               <NavLink href="/essays" activePath={pathname}>Essays</NavLink>
               <NavLink href="/notes" activePath={pathname}>Notes</NavLink>
+              <NavLink href="/projects" activePath={pathname}>Projects</NavLink>
               <NavLink href="/library" activePath={pathname}>Library</NavLink>
               <NavLink href="/about" activePath={pathname}>About</NavLink>
             </div>

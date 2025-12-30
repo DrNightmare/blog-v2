@@ -25,6 +25,12 @@ export default function Home() {
             Read Essays
           </Link>
           <Link
+            href="/projects"
+            className="px-6 py-3 rounded-xl bg-indigo-600 text-white font-medium hover:bg-indigo-700 transition-colors"
+          >
+            Browse Projects
+          </Link>
+          <Link
             href="/notes"
             className="px-6 py-3 rounded-xl bg-white border border-slate-200 text-slate-600 font-medium hover:border-indigo-200 hover:text-indigo-600 transition-colors"
           >
