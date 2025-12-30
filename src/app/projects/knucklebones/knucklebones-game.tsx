@@ -159,17 +159,17 @@ export default function KnucklebonesGame() {
             {/* Game Status / Current Roll */}
             <div className="flex items-center justify-center h-28 my-2 w-full relative z-10">
                 {state.gameOver ? (
-                    <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/80 dark:bg-slate-950/80 backdrop-blur-sm rounded-xl border border-slate-200 dark:border-slate-800 p-6 animate-in zoom-in duration-300 shadow-xl">
-                        <div className="text-4xl font-black mb-4 tracking-tight">
-                            {state.winner === 'player' ? <span className="text-green-500 drop-shadow-sm">YOU WIN!</span> :
-                                state.winner === 'cpu' ? <span className="text-red-500 drop-shadow-sm">YOU LOST</span> :
+                    <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm rounded-xl border border-slate-200 dark:border-slate-800 p-4 animate-in fade-in zoom-in duration-300 shadow-lg max-w-sm mx-auto">
+                        <div className="text-xl font-bold mb-3 tracking-tight">
+                            {state.winner === 'player' ? <span className="text-green-500">YOU WIN!</span> :
+                                state.winner === 'cpu' ? <span className="text-red-500">YOU LOST</span> :
                                     <span className="text-slate-500">DRAW</span>}
                         </div>
                         <button
                             onClick={handleRestart}
-                            className="bg-primary hover:bg-primary-hover text-white px-8 py-3 rounded-full font-bold shadow-lg transition-transform hover:scale-105 active:scale-95 flex items-center gap-2"
+                            className="bg-primary hover:bg-primary-hover text-white px-5 py-2 rounded-lg text-sm font-bold shadow-sm transition-all hover:scale-105 active:scale-95 flex items-center gap-2"
                         >
-                            <span>↻</span> Play Again
+                            <span className="text-xs">↻</span> Play Again
                         </button>
                     </div>
                 ) : (
