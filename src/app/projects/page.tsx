@@ -3,6 +3,13 @@ import Link from "next/link";
 export default function Projects() {
     const projects = [
         {
+            slug: "knucklebones",
+            title: "Knucklebones",
+            summary: "A dice game of risk and reward. Place dice to match your own or destroy your opponent's.",
+            date: "Dec 31, 2024",
+            type: "Game"
+        },
+        {
             slug: "scoundrel",
             title: "Scoundrel",
             summary: "A solitaire card dungeon crawler. Navigate the room, equip weapons, and slay monsters to clear the deck.",
