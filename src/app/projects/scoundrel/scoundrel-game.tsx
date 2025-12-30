@@ -25,12 +25,14 @@ const CardView = ({
     card,
     onClick,
     disabled = false,
-    className
+    className,
+    style
 }: {
     card: Card;
     onClick?: () => void;
     disabled?: boolean;
     className?: string;
+    style?: React.CSSProperties;
 }) => {
     const isRed = card.suit === 'hearts' || card.suit === 'diamonds';
 
@@ -42,6 +44,7 @@ const CardView = ({
         <button
             onClick={onClick}
             disabled={disabled}
+            style={style}
             className={`
         relative w-24 h-36 md:w-32 md:h-48 
         bg-white dark:bg-slate-800 
@@ -79,6 +82,43 @@ export default function ScoundrelGame() {
     const [state, dispatch] = useReducer(gameReducer, null, getInitialState);
     const [useWeapon, setUseWeapon] = React.useState(true);
 
+    // --- Game Juice State ---
+    const [floats, setFloats] = useState<{ id: number; text: string; color: string; x: number; y: number }[]>([]);
+    const [prevHp, setPrevHp] = useState(state?.hp ?? 20);
+    const [prevWeaponId, setPrevWeaponId] = useState<string | undefined>(undefined);
+
+    // Juice Effect: HP Changes
+    useEffect(() => {
+        if (!state) return;
+        const diff = state.hp - prevHp;
+        if (diff !== 0) {
+            const id = Date.now();
+            const text = diff > 0 ? `+${diff}` : `${diff}`;
+            const color = diff > 0 ? 'text-green-500' : 'text-red-500';
+            // Randomize position slightly around center/top
+            const x = 50 + (Math.random() * 20 - 10);
+            const y = 30 + (Math.random() * 10 - 5);
+
+            setFloats(prev => [...prev, { id, text, color, x, y }]);
+            setTimeout(() => setFloats(prev => prev.filter(f => f.id !== id)), 1000);
+            setPrevHp(state.hp);
+        }
+    }, [state?.hp, prevHp, state]);
+
+    // Juice Effect: Weapon Equip
+    useEffect(() => {
+        if (!state) return;
+        if (state.weapon && state.weapon.card.id !== prevWeaponId) {
+            const id = Date.now();
+            setFloats(prev => [...prev, { id, text: 'Equipped!', color: 'text-blue-500', x: 80, y: 30 }]);
+            setTimeout(() => setFloats(prev => prev.filter(f => f.id !== id)), 1000);
+            setPrevWeaponId(state.weapon.card.id);
+        } else if (!state.weapon) {
+            setPrevWeaponId(undefined);
+        }
+    }, [state?.weapon, prevWeaponId, state]);
+
+
     if (!mounted) return null;
 
     // Handlers
@@ -92,18 +132,33 @@ export default function ScoundrelGame() {
 
     const handleRestart = () => {
         dispatch({ type: 'START_GAME' });
+        setPrevHp(20);
+        setFloats([]);
     };
 
     return (
-        <div className="flex flex-col items-center max-w-2xl mx-auto p-4 md:p-8 min-h-[600px]">
+        <div className="relative flex flex-col items-center max-w-2xl mx-auto p-4 md:p-8 min-h-[600px]">
+
+            {/* Floating Text Overlay */}
+            <div className="absolute inset-0 pointer-events-none z-50 overflow-hidden">
+                {floats.map(f => (
+                    <div
+                        key={f.id}
+                        className={`absolute text-2xl font-bold animate-float-up ${f.color}`}
+                        style={{ left: `${f.x}%`, top: `${f.y}%` }}
+                    >
+                        {f.text}
+                    </div>
+                ))}
+            </div>
 
             {/* HEADER: STATUS */}
             <div className="w-full flex justify-between items-end mb-8 border-b pb-4 border-slate-200 dark:border-slate-700">
 
                 {/* HP Status */}
-                <div className="text-center">
+                <div className="text-center relative">
                     <div className="text-xs uppercase tracking-wider text-slate-500 font-semibold mb-1">Health</div>
-                    <div className={`text-3xl font-bold ${state.hp <= 5 ? 'text-red-600 animate-pulse' : 'text-slate-800 dark:text-slate-200'}`}>
+                    <div className={`text-3xl font-bold transition-transform duration-100 ${state.hp <= 5 ? 'text-red-600 animate-pulse' : 'text-slate-800 dark:text-slate-200'}`}>
                         {state.hp} <span className="text-lg text-slate-400 font-normal">/ {state.maxHp}</span>
                     </div>
                 </div>
@@ -117,7 +172,6 @@ export default function ScoundrelGame() {
                 </div>
 
                 {/* Weapon Slot */}
-                {/* Weapon Slot */}
                 <div className="text-center relative flex flex-col items-center w-24">
                     <div className="text-xs uppercase tracking-wider text-slate-500 font-semibold mb-1">Weapon</div>
 
@@ -125,7 +179,7 @@ export default function ScoundrelGame() {
                     <div className="h-20 flex flex-col items-center justify-start">
                         {state.weapon ? (
                             <>
-                                <div className="font-bold text-lg text-blue-600 dark:text-blue-400">
+                                <div className="font-bold text-lg text-blue-600 dark:text-blue-400 animate-pop-in">
                                     {state.weapon.card.rank <= 10 ? state.weapon.card.rank : ['J', 'Q', 'K', 'A'][state.weapon.card.rank - 11]}
                                     {getSuitSymbol(state.weapon.card.suit)}
                                 </div>
@@ -168,15 +222,17 @@ export default function ScoundrelGame() {
 
             {/* ROOM GRID */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-                {state.room.map((card) => (
+                {state.room.map((card, index) => (
                     <CardView
                         key={card.id}
                         card={card}
                         onClick={() => handleCardClick(card.id)}
                         disabled={state.gameOver || state.gameWon}
+                        className="animate-pop-in"
+                        style={{ animationDelay: `${index * 50}ms` }}
                     />
                 ))}
-                {/* Fillers for empty spots if any, to keep layout stable? optional */}
+                {/* Fillers */}
                 {state.room.length < 4 && !state.gameOver && !state.gameWon && Array.from({ length: 4 - state.room.length }).map((_, i) => (
                     <div key={i} className="w-24 h-36 md:w-32 md:h-48 border-2 border-dashed border-slate-200 dark:border-slate-800 rounded-xl opacity-50" />
                 ))}
