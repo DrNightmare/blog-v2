@@ -117,27 +117,30 @@ export default function ScoundrelGame() {
                 </div>
 
                 {/* Weapon Slot */}
-                <div className="text-center relative">
+                {/* Weapon Slot */}
+                <div className="text-center relative flex flex-col items-center w-24">
                     <div className="text-xs uppercase tracking-wider text-slate-500 font-semibold mb-1">Weapon</div>
-                    {state.weapon ? (
-                        <div className="flex flex-col items-center">
-                            <div className="font-bold text-lg text-blue-600 dark:text-blue-400">
-                                {state.weapon.card.rank <= 10 ? state.weapon.card.rank : ['J', 'Q', 'K', 'A'][state.weapon.card.rank - 11]}
-                                {getSuitSymbol(state.weapon.card.suit)}
-                            </div>
-                            {state.weapon.lastSlainValue !== null && (
-                                <div className="text-xs text-slate-400 mt-1">
-                                    Last kill: {state.weapon.lastSlainValue}
-                                </div>
-                            )}
-                        </div>
-                    ) : (
-                        <div className="text-slate-400 italic text-sm py-2">Fists</div>
-                    )}
 
-                    {/* Weapon Toggle */}
-                    {state.weapon && (
-                        <label className="flex items-center justify-center gap-2 mt-2 cursor-pointer select-none">
+                    {/* Fixed height container for Weapon/Fists */}
+                    <div className="h-20 flex flex-col items-center justify-start">
+                        {state.weapon ? (
+                            <>
+                                <div className="font-bold text-lg text-blue-600 dark:text-blue-400">
+                                    {state.weapon.card.rank <= 10 ? state.weapon.card.rank : ['J', 'Q', 'K', 'A'][state.weapon.card.rank - 11]}
+                                    {getSuitSymbol(state.weapon.card.suit)}
+                                </div>
+                                <div className={`text-xs text-slate-400 mt-1 ${state.weapon.lastSlainValue !== null ? '' : 'invisible'}`}>
+                                    Last kill: {state.weapon.lastSlainValue ?? '0'}
+                                </div>
+                            </>
+                        ) : (
+                            <div className="text-slate-400 italic text-sm py-2">Fists</div>
+                        )}
+                    </div>
+
+                    {/* Weapon Toggle - Fixed height container */}
+                    <div className="h-6 mt-1 flex items-center justify-center">
+                        <label className={`flex items-center justify-center gap-2 cursor-pointer select-none ${state.weapon ? '' : 'invisible'}`}>
                             <input
                                 type="checkbox"
                                 checked={useWeapon}
@@ -146,7 +149,7 @@ export default function ScoundrelGame() {
                             />
                             <span className="text-[10px] uppercase text-slate-500 font-bold tracking-wide">Use Weapon</span>
                         </label>
-                    )}
+                    </div>
                 </div>
             </div>
 
