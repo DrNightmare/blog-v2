@@ -1,4 +1,4 @@
-import ScoundrelGame from './scoundrel-game';
+import ScoundrelContainer from './scoundrel-container';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -14,7 +14,7 @@ export default function ScoundrelPage() {
                 <p className="text-slate-500 dark:text-slate-400">A minimal dungeon crawler.</p>
             </div>
 
-            <ScoundrelGame />
+            <ScoundrelContainer />
         </main>
     );
 }
