@@ -254,7 +254,7 @@ export default function ScoundrelGame() {
             </div>
 
             {/* CONTROLS */}
-            <div className="flex gap-4 mt-auto">
+            <div className="flex flex-wrap justify-center gap-4 mt-auto">
                 {(state.gameOver || state.gameWon) ? (
                     <button
                         onClick={handleRestart}
@@ -263,18 +263,28 @@ export default function ScoundrelGame() {
                         Start New Run
                     </button>
                 ) : (
-                    <button
-                        onClick={handleFlee}
-                        disabled={!state.canFlee || state.room.length !== 4}
-                        className={`
-                    px-6 py-2 rounded-md font-medium transition
-                    ${(state.canFlee && state.room.length === 4)
-                                ? 'bg-amber-100 text-amber-900 hover:bg-amber-200 border border-amber-300'
-                                : 'bg-slate-100 text-slate-400 cursor-not-allowed border border-slate-200'}
-                `}
-                    >
-                        Flee Room
-                    </button>
+                    <>
+                        <button
+                            onClick={handleFlee}
+                            disabled={!state.canFlee || state.room.length !== 4}
+                            className={`
+                                px-6 py-2 rounded-md font-medium transition
+                                ${(state.canFlee && state.room.length === 4)
+                                    ? 'bg-amber-100 text-amber-900 hover:bg-amber-200 border border-amber-300'
+                                    : 'bg-slate-100 text-slate-400 cursor-not-allowed border border-slate-200'}
+                            `}
+                        >
+                            Flee Room
+                        </button>
+
+                        <button
+                            onClick={handleRestart}
+                            className="px-4 py-2 rounded-md font-medium text-slate-500 hover:text-red-600 hover:bg-red-50 transition border border-transparent hover:border-red-100"
+                            title="Reset Game"
+                        >
+                            Reset
+                        </button>
+                    </>
                 )}
             </div>
 

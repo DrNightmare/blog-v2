@@ -5,16 +5,6 @@ import { ReactNode, useState, useEffect } from 'react';
 import GameStateProvider from './GameStateProvider';
 
 export default function Providers({ children }: { children: ReactNode }) {
-    const [mounted, setMounted] = useState(false);
-
-    useEffect(() => {
-        setMounted(true);
-    }, []);
-
-    if (!mounted) {
-        return <>{children}</>;
-    }
-
     return (
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <GameStateProvider>

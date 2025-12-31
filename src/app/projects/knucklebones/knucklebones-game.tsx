@@ -128,15 +128,29 @@ export default function KnucklebonesGame() {
                     ))}
                 </div>
 
-                {/* Turn Indicator */}
-                <div className={`
-                    text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full border
-                    ${state.gameOver ? 'opacity-0' : 'opacity-100'}
-                    ${state.turn === 'player'
-                        ? 'bg-indigo-50 text-indigo-600 border-indigo-100 dark:bg-indigo-900/30 dark:text-indigo-400 dark:border-indigo-900'
-                        : 'bg-slate-100 text-slate-500 border-slate-200 dark:bg-slate-800 dark:text-slate-400 dark:border-slate-700'}
-                 `}>
-                    {state.turn === 'player' ? 'Your Turn' : 'Opponent Thinking...'}
+                <div className="flex items-center gap-3">
+                    {/* Turn Indicator */}
+                    <div className={`
+                        text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full border
+                        ${state.gameOver ? 'opacity-0' : 'opacity-100'}
+                        ${state.turn === 'player'
+                            ? 'bg-indigo-50 text-indigo-600 border-indigo-100 dark:bg-indigo-900/30 dark:text-indigo-400 dark:border-indigo-900'
+                            : 'bg-slate-100 text-slate-500 border-slate-200 dark:bg-slate-800 dark:text-slate-400 dark:border-slate-700'}
+                     `}>
+                        {state.turn === 'player' ? 'Your Turn' : 'Opponent Thinking...'}
+                    </div>
+
+                    {/* Manual Reset */}
+                    <button
+                        onClick={handleRestart}
+                        className="text-slate-400 hover:text-red-500 p-1 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                        title="Reset Game"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+                            <path d="M3 3v5h5" />
+                        </svg>
+                    </button>
                 </div>
             </div>
 
