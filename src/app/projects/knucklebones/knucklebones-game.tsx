@@ -55,13 +55,27 @@ const Die = ({ value, className }: { value: number; className?: string }) => {
     );
 };
 
+import { useGameState } from '@/components/GameStateProvider';
+
 export default function KnucklebonesGame() {
     const [mounted, setMounted] = useState(false);
     useEffect(() => setMounted(true), []);
 
-    const [state, dispatch] = useReducer(gameReducer, null, getInitialState);
+    const { loadState, saveState, resetState } = useGameState();
+    const GAME_ID = 'knucklebones';
+
+    const [state, dispatch] = useReducer(gameReducer, null, () => {
+        const defaultState = getInitialState();
+        return loadState(GAME_ID, defaultState);
+    });
+
     const [aiThinking, setAiThinking] = useState(false);
     const [difficulty, setDifficulty] = useState<Difficulty>('Easy');
+
+    // Persist state changes
+    useEffect(() => {
+        saveState(GAME_ID, state);
+    }, [state, saveState]);
 
     // AI Turn Effect
     useEffect(() => {
@@ -82,6 +96,7 @@ export default function KnucklebonesGame() {
     };
 
     const handleRestart = () => {
+        resetState(GAME_ID);
         dispatch({ type: 'START_GAME' });
     };
 

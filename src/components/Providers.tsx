@@ -2,6 +2,7 @@
 
 import { ThemeProvider } from 'next-themes';
 import { ReactNode, useState, useEffect } from 'react';
+import GameStateProvider from './GameStateProvider';
 
 export default function Providers({ children }: { children: ReactNode }) {
     const [mounted, setMounted] = useState(false);
@@ -16,7 +17,9 @@ export default function Providers({ children }: { children: ReactNode }) {
 
     return (
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            {children}
+            <GameStateProvider>
+                {children}
+            </GameStateProvider>
         </ThemeProvider>
     );
 }

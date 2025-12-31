@@ -75,12 +75,26 @@ const CardView = ({
     );
 };
 
+import { useGameState } from '@/components/GameStateProvider';
+
 export default function ScoundrelGame() {
     const [mounted, setMounted] = useState(false);
     useEffect(() => setMounted(true), []);
 
-    const [state, dispatch] = useReducer(gameReducer, null, getInitialState);
+    const { loadState, saveState, resetState } = useGameState();
+    const GAME_ID = 'scoundrel';
+
+    const [state, dispatch] = useReducer(gameReducer, null, () => {
+        const defaultState = getInitialState();
+        return loadState(GAME_ID, defaultState);
+    });
+
     const [useWeapon, setUseWeapon] = React.useState(true);
+
+    // Persist state changes
+    useEffect(() => {
+        saveState(GAME_ID, state);
+    }, [state, saveState]);
 
     // --- Game Juice State ---
     const [floats, setFloats] = useState<{ id: number; text: string; color: string; x: number; y: number }[]>([]);
@@ -103,7 +117,7 @@ export default function ScoundrelGame() {
             setTimeout(() => setFloats(prev => prev.filter(f => f.id !== id)), 1000);
             setPrevHp(state.hp);
         }
-    }, [state?.hp, prevHp, state]);
+    }, [state.hp, prevHp, state]); // Removed optional chaining on state dependence as it's guaranteed by reducer
 
     // Juice Effect: Weapon Equip
     useEffect(() => {
@@ -116,7 +130,7 @@ export default function ScoundrelGame() {
         } else if (!state.weapon) {
             setPrevWeaponId(undefined);
         }
-    }, [state?.weapon, prevWeaponId, state]);
+    }, [state.weapon, prevWeaponId, state]);
 
 
     if (!mounted) return null;
@@ -131,6 +145,7 @@ export default function ScoundrelGame() {
     };
 
     const handleRestart = () => {
+        resetState(GAME_ID);
         dispatch({ type: 'START_GAME' });
         setPrevHp(20);
         setFloats([]);
