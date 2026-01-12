@@ -188,6 +188,15 @@ export default function HolidayOptimizerContainer() {
 
     return (
         <div className="w-full max-w-6xl mx-auto space-y-8">
+            <div className="max-w-4xl mx-auto mb-8 text-center pt-8">
+                <h1 className="text-4xl font-black text-slate-900 dark:text-white mb-2 tracking-tight">
+                    ANNUAL LEAVE SPACER
+                </h1>
+                <p className="text-slate-500 dark:text-slate-400">
+                    Maximize vacation quality with smart spacing
+                </p>
+            </div>
+
             {/* How it Works */}
             <div className="bg-indigo-50 dark:bg-indigo-900/10 p-5 rounded-xl border border-indigo-100 dark:border-indigo-500/20">
                 <h3 className="text-sm font-bold text-indigo-900 dark:text-indigo-200 mb-2 uppercase tracking-wide">How It Works</h3>

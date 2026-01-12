@@ -4,8 +4,8 @@ export default function Projects() {
     const projects = [
         {
             slug: "holiday-optimizer",
-            title: "Long Weekend Planner",
-            summary: "Smart leave planning tool that connects holidays to create longer breaks and spreads weekends throughout the year.",
+            title: "Annual Leave Spacer",
+            summary: "Smart vacation planner that maximizes break quality by prioritizing 4-5 day trips and ensuring they are evenly spaced throughout the year.",
             date: "Jan 12, 2026",
             type: "Tool"
         },
