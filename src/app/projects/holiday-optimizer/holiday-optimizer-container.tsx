@@ -7,7 +7,8 @@ import { OptimizerEngine, OptimizerConfig, DayType, OptimizedResult } from './op
 // Initial config defaults
 const DEFAULT_CONFIG: OptimizerConfig = {
     totalLeaves: 20,
-    startDateIdx: 0
+    startDateIdx: 0,
+    minGap: 14 // Minimum days between vacations
 };
 
 const YEAR = 2026;
@@ -191,8 +192,7 @@ export default function HolidayOptimizerContainer() {
             <div className="bg-indigo-50 dark:bg-indigo-900/10 p-5 rounded-xl border border-indigo-100 dark:border-indigo-500/20">
                 <h3 className="text-sm font-bold text-indigo-900 dark:text-indigo-200 mb-2 uppercase tracking-wide">How It Works</h3>
                 <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                    This planner helps you get the most out of your annual leave. It first looks for opportunities to <strong>bridge holidays</strong> in any direction — for example, if there's a Wednesday holiday, it finds the most efficient way to connect it to the nearest weekend to give you the longest possible break.
-                    Then, it spreads your remaining leaves throughout the year to create 3-day weekends, spaced as evenly as possible.
+                    This planner maximizes your vacation quality with <strong>smart spacing</strong>. It prioritizes 4-5 day breaks (optimal length) and ensures your vacations are spread at least {config.minGap} days apart, giving you breaks throughout the year instead of bunching them together.
                 </p>
             </div>
 
@@ -225,6 +225,22 @@ export default function HolidayOptimizerContainer() {
                             />
                             <p className="text-[10px] text-slate-400 mt-1">
                                 Ignore days before this date.
+                            </p>
+                        </div>
+                        <div>
+                            <label className="block text-xs font-bold uppercase text-slate-500 mb-1">
+                                Min Days Between Trips
+                            </label>
+                            <input
+                                type="number"
+                                min="7"
+                                max="30"
+                                className="w-full bg-slate-100 dark:bg-slate-800 border-none rounded-md px-3 py-2 font-mono text-sm"
+                                value={config.minGap}
+                                onChange={e => setConfig({ ...config, minGap: parseInt(e.target.value) || 14 })}
+                            />
+                            <p className="text-[10px] text-slate-400 mt-1">
+                                Ensures vacations are spread throughout the year
                             </p>
                         </div>
                     </div>

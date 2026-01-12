@@ -6,42 +6,60 @@ export enum DayType {
 
 export interface OptimizerConfig {
     totalLeaves: number;
-    startDateIdx: number; // 0 to 365
+    startDateIdx: number;
+    minGap: number; // Minimum days between vacation end and next vacation start
 }
 
 export interface OptimizedResult {
-    score: number; // Represents count of long weekends and bridges
+    score: number; // Total score achieved
     segments: ScheduleSegment[];
 }
 
 export interface ScheduleSegment {
     startIdx: number;
-    endIdx: number; // inclusive
+    endIdx: number;
     type: 'WORK' | 'STREAK' | 'VACATION' | 'MANDATORY';
     leavesUsed: number;
     scoreContribution: number;
 }
 
-interface Cluster {
-    start: number;
-    end: number;
-}
-
-interface BridgeOpportunity {
-    gapStart: number;
-    gapEnd: number;
-    gapSize: number;
-    totalStreak: number;
-    efficiency: number;
-}
-
 export class OptimizerEngine {
     private dayTypes: DayType[];
     private config: OptimizerConfig;
+    private workDays: number[]; // Prefix sum for O(1) cost calculation
+    private dp: number[][]; // DP[day][leaves] = max score
+    private choice: (null | { start: number; end: number })[][]; // For reconstruction
 
     constructor(dayTypes: DayType[], config: OptimizerConfig) {
         this.dayTypes = dayTypes;
         this.config = config;
+
+        // Build prefix sum array for work days
+        this.workDays = new Array(dayTypes.length + 1).fill(0);
+        for (let i = 0; i < dayTypes.length; i++) {
+            this.workDays[i + 1] = this.workDays[i] + (dayTypes[i] === DayType.WORK ? 1 : 0);
+        }
+
+        // Initialize DP table
+        this.dp = Array(dayTypes.length + 1).fill(null).map(() =>
+            Array(config.totalLeaves + 1).fill(-1)
+        );
+        this.choice = Array(dayTypes.length + 1).fill(null).map(() =>
+            Array(config.totalLeaves + 1).fill(null)
+        );
+    }
+
+    private getUtility(length: number): number {
+        if (length < 3) return 0;
+        if (length === 3) return 10;
+        if (length === 4) return 25;  // Big jump
+        if (length === 5) return 45;  // Massive jump
+        return 45 + (length - 5);     // Diminishing returns for 6+
+    }
+
+    private getCost(start: number, end: number): number {
+        // O(1) cost calculation using prefix sum
+        return this.workDays[end + 1] - this.workDays[start];
     }
 
     public solve(): OptimizedResult {
@@ -65,191 +83,153 @@ export class OptimizerEngine {
             }
         }
 
-        // Helpers
-        const isTaken = (idx: number) => takenIndices.has(idx);
-
-        const isFree = (idx: number): boolean => {
-            if (idx < 0 || idx >= this.dayTypes.length) return false;
-            return this.dayTypes[idx] === DayType.FREE || isTaken(idx);
-        };
-
-        const isWork = (idx: number): boolean => {
-            if (idx < 0 || idx >= this.dayTypes.length) return false;
-            return this.dayTypes[idx] === DayType.WORK && !isTaken(idx);
-        };
-
-        // PHASE 1: Bidirectional Bridge Opportunities
-
-        // Step 1: Find all FREE clusters (O(n) single pass)
-        const clusters: Cluster[] = [];
-        let inCluster = false;
-        let clusterStart = 0;
-
-        for (let i = startIdx; i < this.dayTypes.length; i++) {
-            if (isFree(i)) {
-                if (!inCluster) {
-                    clusterStart = i;
-                    inCluster = true;
-                }
-            } else {
-                if (inCluster) {
-                    clusters.push({ start: clusterStart, end: i - 1 });
-                    inCluster = false;
-                }
+        // Initialize DP base case (only from startIdx onward)
+        for (let day = 0; day <= startIdx; day++) {
+            for (let leaves = 0; leaves <= this.config.totalLeaves; leaves++) {
+                this.dp[day][leaves] = 0;
             }
         }
-        // Catch last cluster
-        if (inCluster) {
-            clusters.push({ start: clusterStart, end: this.dayTypes.length - 1 });
-        }
 
-        // Step 2: Identify bridge opportunities between clusters (O(m) where m = clusters)
-        const bridges: BridgeOpportunity[] = [];
+        // DP Phase: Fill the table from startIdx onward
+        for (let day = startIdx + 1; day <= this.dayTypes.length; day++) {
+            for (let leaves = 0; leaves <= leavesLeft; leaves++) {
+                // Option 1: Work today (copy from yesterday)
+                this.dp[day][leaves] = this.dp[day - 1][leaves];
+                this.choice[day][leaves] = null;
 
-        for (let i = 0; i < clusters.length - 1; i++) {
-            const gapStart = clusters[i].end + 1;
-            const gapEnd = clusters[i + 1].start - 1;
-            const gapSize = gapEnd - gapStart + 1;
+                // Option 2: End a vacation today
+                // Try all possible start dates (limit to 30 days back to allow long vacations)
+                const maxLookback = Math.min(30, day);
+                for (let lookback = 1; lookback <= maxLookback; lookback++) {
+                    const start = day - lookback;
 
-            // Only bridge gaps of size 1 or 2 (efficient bridges)
-            if (gapSize >= 1 && gapSize <= 2) {
-                // Check if gap contains only WORK days (no MANDATORY that are already taken)
-                let isValidGap = true;
-                for (let j = gapStart; j <= gapEnd; j++) {
-                    if (!isWork(j)) {
-                        isValidGap = false;
-                        break;
+                    // Crucial: Vacation cannot start before the planning start date
+                    if (start < startIdx) continue;
+
+                    const length = lookback;
+                    const cost = this.getCost(start, day - 1);
+
+                    // Can we afford it?
+                    if (cost > leaves) continue;
+
+                    const remainingLeaves = leaves - cost;
+
+                    // Apply cooldown: look back MIN_GAP days before vacation start
+                    const prevIdx = start - this.config.minGap;
+                    let prevScore = 0;
+
+                    if (prevIdx >= 0) {
+                        prevScore = this.dp[prevIdx][remainingLeaves];
+                        if (prevScore === -1) continue; // Invalid state
+                    }
+
+                    const vacationScore = this.getUtility(length) + prevScore;
+
+                    if (vacationScore > this.dp[day][leaves]) {
+                        this.dp[day][leaves] = vacationScore;
+                        this.choice[day][leaves] = { start, end: day - 1 };
                     }
                 }
-
-                if (isValidGap) {
-                    const totalStreak = clusters[i + 1].end - clusters[i].start + 1;
-                    const efficiency = totalStreak / gapSize;
-
-                    bridges.push({
-                        gapStart,
-                        gapEnd,
-                        gapSize,
-                        totalStreak,
-                        efficiency
-                    });
-                }
             }
         }
 
-        // Step 3: Sort by efficiency descending (O(b log b) where b = bridges)
-        bridges.sort((a, b) => b.efficiency - a.efficiency);
+        // Reconstruct solution using the leaf count that gave the best score
+        let bestLeaves = leavesLeft;
+        let maxScore = -1;
 
-        // Step 4: Greedily select best bridges (O(b))
-        for (const bridge of bridges) {
-            if (leavesLeft >= bridge.gapSize) {
-                // Take all days in the gap
-                for (let i = bridge.gapStart; i <= bridge.gapEnd; i++) {
-                    takenIndices.add(i);
-                    leavesLeft--;
+        // Find optimal leaf usage (sometimes using fewer leaves gives same score, but we want max score)
+        // Iterate backwards to prefer using MORE leaves if scores are tied
+        for (let l = leavesLeft; l >= 0; l--) {
+            if (this.dp[this.dayTypes.length][l] > maxScore) {
+                maxScore = this.dp[this.dayTypes.length][l];
+                bestLeaves = l;
+            }
+        }
+
+        const vacationSegments = this.reconstruct(bestLeaves, takenIndices);
+        segments.push(...vacationSegments);
+
+        // Sort segments by start index
+        segments.sort((a, b) => a.startIdx - b.startIdx);
+
+        // Count actual long weekends (3+ consecutive free days)
+        const longWeekendCount = this.countLongWeekends(takenIndices);
+        return { score: longWeekendCount, segments };
+    }
+
+    private countLongWeekends(takenIndices: Set<number>): number {
+        let count = 0;
+        let streak = 0;
+        const startIdx = this.config.startDateIdx;
+
+        for (let i = startIdx; i < this.dayTypes.length; i++) {
+            const isFree = this.dayTypes[i] === DayType.FREE || takenIndices.has(i);
+
+            if (isFree) {
+                streak++;
+            } else {
+                if (streak >= 3) {
+                    count++;
+                }
+                streak = 0;
+            }
+        }
+
+        // Check final streak
+        if (streak >= 3) {
+            count++;
+        }
+
+        return count;
+    }
+
+    private reconstruct(leavesLeft: number, takenIndices: Set<number>): ScheduleSegment[] {
+        const segments: ScheduleSegment[] = [];
+        let currentDay = this.dayTypes.length;
+        let currentLeaves = leavesLeft;
+        const startIdx = this.config.startDateIdx;
+
+        while (currentDay > startIdx) {
+            const choiceHere = this.choice[currentDay][currentLeaves];
+
+            if (!choiceHere) {
+                // No vacation ending here, move back
+                currentDay--;
+            } else {
+                // Found a vacation
+                const { start, end } = choiceHere;
+
+                // Skip if vacation starts before startIdx
+                if (start < startIdx) {
+                    currentDay--;
+                    continue;
+                }
+
+                const length = end - start + 1;
+                let leavesUsed = 0;
+
+                // Mark days as taken and count leaves used
+                for (let i = start; i <= end; i++) {
+                    if (this.dayTypes[i] === DayType.WORK && !takenIndices.has(i)) {
+                        takenIndices.add(i);
+                        leavesUsed++;
+                    }
                 }
 
                 segments.push({
-                    startIdx: bridge.gapStart,
-                    endIdx: bridge.gapEnd,
+                    startIdx: start,
+                    endIdx: end,
                     type: 'VACATION',
-                    leavesUsed: bridge.gapSize,
-                    scoreContribution: bridge.gapSize === 1 ? 2 : 3
+                    leavesUsed,
+                    scoreContribution: this.getUtility(length)
                 });
+
+                // Move to before this vacation with cooldown
+                currentDay = start - this.config.minGap;
+                currentLeaves -= leavesUsed;
             }
         }
 
-        // PHASE 2: Spaced Friday Extensions
-        const candidates: number[] = [];
-        const startDayOffset = 4; // Jan 1 2026 is Thu
-
-        for (let i = startIdx; i < this.dayTypes.length; i++) {
-            const currentDayOfWeek = (i + startDayOffset) % 7;
-
-            if (currentDayOfWeek === 5) { // Friday
-                if (isWork(i) && !isTaken(i)) {
-                    if (isFree(i + 1) && isFree(i + 2)) {
-                        candidates.push(i);
-                    }
-                }
-            }
-        }
-
-        const k = Math.min(candidates.length, leavesLeft);
-
-        if (k > 0) {
-            // Aggressive Cows / Binary Search for optimal gap
-            let low = 1;
-            let high = this.dayTypes.length - startIdx;
-            let bestGap = 1;
-
-            const canPlace = (minGap: number): boolean => {
-                let count = 1;
-                let lastPos = candidates[0];
-                for (let i = 1; i < candidates.length; i++) {
-                    if (candidates[i] - lastPos >= minGap) {
-                        count++;
-                        lastPos = candidates[i];
-                    }
-                    if (count >= k) return true;
-                }
-                return false;
-            };
-
-            if (k > 1) {
-                while (low <= high) {
-                    const mid = Math.floor((low + high) / 2);
-                    if (canPlace(mid)) {
-                        bestGap = mid;
-                        low = mid + 1;
-                    } else {
-                        high = mid - 1;
-                    }
-                }
-            }
-
-            // Select
-            let count = 0;
-            let lastPos = -Infinity;
-
-            for (let i = 0; i < candidates.length; i++) {
-                if (count >= k) break;
-                if (candidates[i] - lastPos >= bestGap) {
-                    leavesLeft--;
-                    takenIndices.add(candidates[i]);
-                    segments.push({
-                        startIdx: candidates[i],
-                        endIdx: candidates[i],
-                        type: 'VACATION',
-                        leavesUsed: 1,
-                        scoreContribution: 1
-                    });
-                    lastPos = candidates[i];
-                    count++;
-                }
-            }
-        }
-
-        // Final Score Calculation: Count distinct long weekend blocks within range
-        let longWeekendCount = 0;
-        let currentStreak = 0;
-
-        for (let i = startIdx; i < this.dayTypes.length; i++) {
-            if (isFree(i)) {
-                currentStreak++;
-            } else {
-                if (currentStreak >= 3) {
-                    longWeekendCount++;
-                }
-                currentStreak = 0;
-            }
-        }
-        if (currentStreak >= 3) {
-            longWeekendCount++;
-        }
-
-        segments.sort((a, b) => a.startIdx - b.startIdx);
-
-        return { score: longWeekendCount, segments };
+        return segments.reverse();
     }
 }
