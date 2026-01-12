@@ -3,6 +3,13 @@ import Link from "next/link";
 export default function Projects() {
     const projects = [
         {
+            slug: "holiday-optimizer",
+            title: "Long Weekend Planner",
+            summary: "Smart leave planning tool that connects holidays to create longer breaks and spreads weekends throughout the year.",
+            date: "Jan 12, 2026",
+            type: "Tool"
+        },
+        {
             slug: "knucklebones",
             title: "Knucklebones",
             summary: "A dice game of risk and reward. Place dice to match your own or destroy your opponent's.",
