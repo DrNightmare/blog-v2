@@ -191,8 +191,8 @@ export default function HolidayOptimizerContainer() {
             <div className="bg-indigo-50 dark:bg-indigo-900/10 p-5 rounded-xl border border-indigo-100 dark:border-indigo-500/20">
                 <h3 className="text-sm font-bold text-indigo-900 dark:text-indigo-200 mb-2 uppercase tracking-wide">How It Works</h3>
                 <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                    This planner helps you get the most out of your annual leave. It first looks for opportunities to <strong>bridge holidays</strong> — for example, if there's a Wednesday holiday, taking Thursday and Friday off gives you a 5-day break.
-                    Then, it spreads your remaining leaves throughout the year to create 3-day weekends, spaced as evenly as possible so you have breaks all year round.
+                    This planner helps you get the most out of your annual leave. It first looks for opportunities to <strong>bridge holidays</strong> in any direction — for example, if there's a Wednesday holiday, it finds the most efficient way to connect it to the nearest weekend to give you the longest possible break.
+                    Then, it spreads your remaining leaves throughout the year to create 3-day weekends, spaced as evenly as possible.
                 </p>
             </div>
 
