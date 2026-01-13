@@ -7,11 +7,11 @@ export default function Home() {
 
         {/* Hero Section */}
         <div className="space-y-4">
-          <h2 className="text-2xl sm:text-4xl font-bold text-slate-900 tracking-tight">
+          <h2 className="text-2xl sm:text-4xl font-bold text-foreground tracking-tight">
             Hi, I'm Arvind.
           </h2>
-          <p className="text-xl sm:text-2xl text-slate-600 font-light leading-relaxed max-w-2xl">
-            Staff Engineer at <span className="text-indigo-600 font-medium">Refyne</span>.
+          <p className="text-xl sm:text-2xl text-text-secondary font-light leading-relaxed max-w-2xl">
+            Staff Engineer at <span className="text-primary font-medium">Refyne</span>.
             I enjoy solving complex problems, building elegant systems, and exploring the intersection of art and code.
           </p>
         </div>
@@ -20,25 +20,25 @@ export default function Home() {
         <div className="flex flex-col sm:flex-row gap-4 pt-4 justify-center sm:justify-start">
           <Link
             href="/essays"
-            className="px-6 py-3 rounded-xl bg-slate-100 text-slate-700 font-medium hover:bg-indigo-50 hover:text-indigo-600 transition-colors"
+            className="px-6 py-3 rounded-xl bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-200 font-medium hover:bg-primary-subtle hover:text-primary transition-colors"
           >
             Read Essays
           </Link>
           <Link
             href="/projects"
-            className="px-6 py-3 rounded-xl bg-indigo-600 text-white font-medium hover:bg-indigo-700 transition-colors"
+            className="px-6 py-3 rounded-xl bg-primary text-white font-medium hover:bg-primary-hover transition-colors"
           >
             Browse Projects
           </Link>
           <Link
             href="/notes"
-            className="px-6 py-3 rounded-xl bg-white border border-slate-200 text-slate-600 font-medium hover:border-indigo-200 hover:text-indigo-600 transition-colors"
+            className="px-6 py-3 rounded-xl bg-surface border border-border text-text-secondary font-medium hover:border-primary-light hover:text-primary transition-colors"
           >
             Browse Notes
           </Link>
           <Link
             href="/about"
-            className="px-6 py-3 rounded-xl text-slate-500 hover:text-slate-800 transition-colors"
+            className="px-6 py-3 rounded-xl text-text-muted hover:text-text-main transition-colors"
           >
             More about me →
           </Link>
