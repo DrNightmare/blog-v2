@@ -34,6 +34,15 @@ const config: Config = {
           light: "var(--border-light)",
         },
       },
+      keyframes: {
+        shimmer: {
+          '0%': { backgroundPosition: '-200% 0' },
+          '100%': { backgroundPosition: '200% 0' },
+        },
+      },
+      animation: {
+        shimmer: 'shimmer 3s ease-in-out infinite',
+      },
       typography: (theme: any) => ({
         DEFAULT: {
           css: {

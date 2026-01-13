@@ -280,5 +280,25 @@
         "title": "Whole Earth Discipline",
         "author": "Stewart Brand",
         "genre": "Science and Technology"
+    },
+    {
+        "index": 48,
+        "title": "The Perfect Run: Book 1",
+        "author": "Maxime Durand",
+        "genre": "Fiction",
+        "progressPercentage": 35,
+        "currentlyReading": true
+    },
+    {
+        "index": 49,
+        "title": "The Perfect Run: Book 2",
+        "author": "Maxime Durand",
+        "genre": "Fiction"
+    },
+    {
+        "index": 50,
+        "title": "The Perfect Run: Book 3",
+        "author": "Maxime Durand",
+        "genre": "Fiction"
     }
 ]

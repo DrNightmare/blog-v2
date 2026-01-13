@@ -1,4 +1,5 @@
 import booksData from './data.json';
+import CurrentReadSpotlight from '@/components/CurrentReadSpotlight';
 
 type Book = {
     index: number;
@@ -6,6 +7,7 @@ type Book = {
     author: string;
     genre?: string;
     progressPercentage?: number;
+    currentlyReading?: boolean;
 };
 
 // Type assertion for imported JSON
@@ -26,6 +28,7 @@ const groupByGenre = (books: Book[]) => {
 };
 
 const booksByGenre = groupByGenre(books);
+const currentRead = books.find(book => book.currentlyReading);
 
 export default function Library() {
 
@@ -43,6 +46,14 @@ export default function Library() {
                         </span>
                     </p>
                 </div>
+
+                {/* Current Read Spotlight */}
+                {currentRead && (
+                    <CurrentReadSpotlight
+                        title={currentRead.title}
+                        author={currentRead.author}
+                    />
+                )}
 
                 <div className="space-y-12">
                     {Object.entries(booksByGenre).map(([genre, books]) => (
@@ -70,17 +81,6 @@ const BookList = ({ title, books }: { title: string; books: Book[] }) => (
                         {book.title}
                     </p>
                     <p className="text-sm text-text-secondary mb-2">{book.author}</p>
-                    {book.progressPercentage !== undefined && (
-                        <div className="mt-auto">
-                            <div className="w-full bg-border rounded-full h-1.5 mb-1">
-                                <div
-                                    className="bg-primary h-1.5 rounded-full"
-                                    style={{ width: `${book.progressPercentage}%` }}
-                                ></div>
-                            </div>
-                            <p className="text-xs text-text-subtle text-right">{book.progressPercentage}%</p>
-                        </div>
-                    )}
                 </div>
             ))}
         </div>
