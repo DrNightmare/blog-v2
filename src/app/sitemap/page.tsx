@@ -22,9 +22,7 @@ export default async function SitemapPage() {
                     </p>
                 </div>
 
-                <div className="bg-border-light/30 rounded-3xl p-4 sm:p-8 backdrop-blur-sm">
-                    <InteractiveSitemap root={sitemapData} />
-                </div>
+                <InteractiveSitemap root={sitemapData} />
             </main>
         </div>
     );
