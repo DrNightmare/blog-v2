@@ -45,7 +45,7 @@ const getFullStreakRange = (segment: any, dayData: Map<string, DayType>, dateLis
     };
 };
 
-export default function HolidayOptimizerContainer() {
+export default function VacationPlannerContainer() {
     const [config, setConfig] = useState<OptimizerConfig>(DEFAULT_CONFIG);
     const [startDateStr, setStartDateStr] = useState(`${YEAR}-01-01`);
     const [dayData, setDayData] = useState<Map<string, DayType>>(new Map());
@@ -190,7 +190,7 @@ export default function HolidayOptimizerContainer() {
         <div className="w-full max-w-6xl mx-auto space-y-8">
             <div className="max-w-4xl mx-auto mb-8 text-center pt-8">
                 <h1 className="text-4xl font-black text-slate-900 dark:text-white mb-2 tracking-tight">
-                    ANNUAL LEAVE SPACER
+                    VACATION PLANNER
                 </h1>
                 <p className="text-slate-500 dark:text-slate-400">
                     Maximize vacation quality with smart spacing

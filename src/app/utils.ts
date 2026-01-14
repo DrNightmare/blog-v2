@@ -49,8 +49,8 @@ export type SitemapNode = {
 export const getProjects = cache(async () => {
     return [
         {
-            slug: "holiday-optimizer",
-            title: "Annual Leave Spacer",
+            slug: "vacation-planner",
+            title: "Vacation Planner",
             summary: "Smart vacation planner that maximizes break quality by prioritizing 4-5 day trips and ensuring they are evenly spaced throughout the year.",
             date: "Jan 12, 2026",
             type: "Tool"
