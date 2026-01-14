@@ -144,6 +144,10 @@ export const getSitemapData = cache(async (): Promise<SitemapNode> => {
                 title: "Resume",
                 url: "/resume",
             },
+            {
+                title: "Travel",
+                url: "/travel",
+            },
         ],
     };
 });
