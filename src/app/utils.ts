@@ -119,10 +119,6 @@ export const getSitemapData = cache(async (): Promise<SitemapNode> => {
                 children: projectNodes,
             },
             {
-                title: "Activities",
-                url: "/activities",
-            },
-            {
                 title: "Library",
                 url: "/library",
             },
