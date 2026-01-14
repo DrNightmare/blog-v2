@@ -1,29 +1,8 @@
 import Link from "next/link";
+import { getProjects } from "../utils";
 
-export default function Projects() {
-    const projects = [
-        {
-            slug: "holiday-optimizer",
-            title: "Annual Leave Spacer",
-            summary: "Smart vacation planner that maximizes break quality by prioritizing 4-5 day trips and ensuring they are evenly spaced throughout the year.",
-            date: "Jan 12, 2026",
-            type: "Tool"
-        },
-        {
-            slug: "knucklebones",
-            title: "Knucklebones",
-            summary: "A dice game of risk and reward. Place dice to match your own or destroy your opponent's.",
-            date: "Dec 31, 2024",
-            type: "Game"
-        },
-        {
-            slug: "scoundrel",
-            title: "Scoundrel",
-            summary: "A solitaire card dungeon crawler. Navigate the room, equip weapons, and slay monsters to clear the deck.",
-            date: "Dec 30, 2024",
-            type: "Game"
-        }
-    ];
+export default async function Projects() {
+    const projects = await getProjects();
 
     return (
         <div className="min-h-screen py-12 px-4 sm:px-6">

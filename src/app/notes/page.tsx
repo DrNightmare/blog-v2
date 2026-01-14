@@ -48,7 +48,7 @@ export default async function Notes({ searchParams }: PageProps) {
 
                 <div className="space-y-8">
                     {paginatedNotes.map((note) => (
-                        <div key={note.slug} className="bg-surface rounded-2xl border border-border p-8 shadow-sm hover:shadow-md transition-shadow">
+                        <div key={note.slug} id={note.slug} className="bg-surface rounded-2xl border border-border p-8 shadow-sm hover:shadow-md transition-shadow">
                             <div className="flex items-center justify-between mb-6">
                                 <h2 className="text-2xl font-bold text-foreground">{note.metadata.title}</h2>
                                 <time className="text-sm text-text-subtle font-medium bg-border-light px-3 py-1 rounded-full dark:bg-slate-800 dark:text-slate-400">
