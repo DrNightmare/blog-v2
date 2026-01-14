@@ -46,8 +46,26 @@ export type SitemapNode = {
     children?: SitemapNode[];
 };
 
+// Cache the results to avoid re-reading files during the same request
 export const getProjects = cache(async () => {
+    // List of projects including external ones
     return [
+        {
+            slug: "speaktype",
+            title: "SpeakType",
+            summary: "Local-first Windows dictation app that leverages on-device Whisper to convert speech into clean text, inserting it into any editor via global hotkeys.",
+            date: "Jan 14, 2026",
+            type: "Github",
+            externalUrl: "https://github.com/DrNightmare/speaktype"
+        },
+        {
+            slug: "atlas",
+            title: "Atlas",
+            summary: "Your smart travel companion. Atlas organizes scattered travel documents into a single, intelligent timeline for stress-free check-ins.",
+            date: "Dec 28, 2025",
+            type: "Github",
+            externalUrl: "https://github.com/DrNightmare/Project-Atlas"
+        },
         {
             slug: "vacation-planner",
             title: "Vacation Planner",
@@ -95,7 +113,7 @@ export const getSitemapData = cache(async (): Promise<SitemapNode> => {
 
     const projectNodes: SitemapNode[] = projects.map(project => ({
         title: project.title,
-        url: `/projects/${project.slug}`
+        url: project.externalUrl || `/projects/${project.slug}`
     }));
 
     return {
