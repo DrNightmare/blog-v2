@@ -113,11 +113,6 @@ export default function InteractiveSitemap({ root }: InteractiveSitemapProps) {
                                         <div className="font-medium text-foreground group-hover:text-primary transition-colors">
                                             {item.title}
                                         </div>
-                                        {item.url && (
-                                            <div className="text-xs text-text-muted mt-1 truncate">
-                                                {item.url}
-                                            </div>
-                                        )}
                                     </Link>
                                 ))}
                             </div>
