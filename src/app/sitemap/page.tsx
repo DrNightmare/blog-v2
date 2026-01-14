@@ -13,11 +13,11 @@ export default async function SitemapPage() {
     return (
         <div className="min-h-screen py-12 px-4 sm:px-6">
             <main className="max-w-7xl mx-auto">
-                <div className="text-center mb-10">
-                    <h1 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
+                <div className="text-center mb-16">
+                    <h1 className="text-4xl sm:text-5xl font-extrabold text-foreground mb-6 tracking-tight">
                         Sitemap
                     </h1>
-                    <p className="text-lg text-text-secondary max-w-2xl mx-auto">
+                    <p className="text-xl text-text-secondary">
                         Explore the digital garden.
                     </p>
                 </div>
