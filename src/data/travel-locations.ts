@@ -6,6 +6,30 @@ export interface Location {
     date?: string;
 }
 
+export interface TravelRoute {
+    from: string;
+    to: string;
+    type: 'flight' | 'train' | 'road' | 'ferry';
+    description?: string;
+}
+
+export interface TravelActivity {
+    name: string;
+    lat: number;
+    lng: number;
+    type: 'surfing' | 'hiking' | 'food' | 'nature' | 'culture';
+    description?: string;
+}
+
+export const TRAVEL_ROUTES: TravelRoute[] = [
+    { from: "Oslo", to: "Bergen", type: "train", description: "Scenic train ride" },
+];
+
+export const TRAVEL_ACTIVITIES: TravelActivity[] = [
+    { name: "Surfing in Weligama", lat: 5.9728, lng: 80.4288, type: "surfing", description: "Great beginner waves" },
+    { name: "Ha Long Bay Cruise", lat: 20.9101, lng: 107.1839, type: "nature", description: "Limestone karsts" },
+];
+
 export const TRAVEL_LOCATIONS: Location[] = [
     {
         "name": "Bangalore",

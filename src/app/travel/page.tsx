@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import TravelMap from '@/components/TravelMap';
-import { TRAVEL_LOCATIONS } from '@/data/travel-locations';
+import { TRAVEL_LOCATIONS, TRAVEL_ROUTES, TRAVEL_ACTIVITIES } from '@/data/travel-locations';
 
 export const metadata: Metadata = {
     title: "Travel | Arvind Prakash",
@@ -20,7 +20,11 @@ export default function TravelPage() {
                     </p>
                 </div>
 
-                <TravelMap locations={TRAVEL_LOCATIONS} />
+                <TravelMap
+                    locations={TRAVEL_LOCATIONS}
+                    routes={TRAVEL_ROUTES}
+                    activities={TRAVEL_ACTIVITIES}
+                />
 
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                     {/* Stats or list view could go here later */}

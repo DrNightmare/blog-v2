@@ -3,13 +3,15 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
 import * as topojson from 'topojson-client';
-import { Location } from '@/data/travel-locations';
+import { Location, TravelRoute, TravelActivity } from '@/data/travel-locations';
 
 interface TravelMapProps {
     locations: Location[];
+    routes?: TravelRoute[];
+    activities?: TravelActivity[];
 }
 
-export default function TravelMap({ locations }: TravelMapProps) {
+export default function TravelMap({ locations, routes = [], activities = [] }: TravelMapProps) {
     const containerRef = useRef<HTMLDivElement>(null);
     const svgRef = useRef<SVGSVGElement>(null);
     const [tooltip, setTooltip] = useState<{ x: number; y: number; content: string } | null>(null);
@@ -59,25 +61,107 @@ export default function TravelMap({ locations }: TravelMapProps) {
         svg.call(zoom);
 
         // Draw Countries
-        g.selectAll("path")
+        g.selectAll("path.country")
             .data(mapData.features)
             .enter().append("path")
+            .attr("class", "country")
             .attr("d", path as any)
             .attr("fill", "currentColor")
             .attr("class", "text-slate-200 dark:text-slate-800 stroke-white dark:stroke-slate-900 stroke-[0.5]")
             .style("transition", "fill 0.3s ease");
 
-        // Draw Pins
+        // --- Draw Routes ---
+        const locationMap = new Map(locations.map(l => [l.name, l]));
+
+        routes.forEach(route => {
+            const start = locationMap.get(route.from);
+            const end = locationMap.get(route.to);
+
+            if (start && end) {
+                const routePath = {
+                    type: "LineString",
+                    coordinates: [
+                        [start.lng, start.lat],
+                        [end.lng, end.lat]
+                    ]
+                };
+
+                const isFlight = route.type === 'flight';
+
+                // Route Path
+                g.append("path")
+                    .datum(routePath)
+                    .attr("d", path as any)
+                    .attr("fill", "none")
+                    .attr("stroke", isFlight ? "#6366f1" : "#f59e0b")
+                    .attr("stroke-width", 1.5)
+                    .attr("stroke-dasharray", isFlight ? "4,4" : "none")
+                    .attr("class", "opacity-60 transition-opacity duration-300") // Removed pointer-events-none
+                    .style("cursor", "pointer") // Add cursor pointer
+                    .on("mouseenter", (event) => {
+                        const [tx, ty] = d3.pointer(event, svgRef.current);
+                        setTooltip({
+                            x: event.pageX,
+                            y: event.pageY,
+                            content: route.description || `${route.from} → ${route.to}`
+                        });
+                        d3.select(event.currentTarget).attr("stroke-width", 3).attr("class", "opacity-100");
+                    })
+                    .on("mouseleave", (event) => {
+                        setTooltip(null);
+                        d3.select(event.currentTarget).attr("stroke-width", 1.5).attr("class", "opacity-60 transition-opacity duration-300");
+                    });
+            }
+        });
+
+
+        // --- Draw Activities ---
+        activities.forEach(activity => {
+            const coords = projection([activity.lng, activity.lat]);
+            if (coords) {
+                const [x, y] = coords;
+                const activityGroup = g.append("g")
+                    .attr("transform", `translate(${x}, ${y})`)
+                    .style("cursor", "pointer");
+
+                // Activity Marker (Diamond shape)
+                activityGroup.append("path")
+                    .attr("d", d3.symbol().type(d3.symbolDiamond).size(60))
+                    .attr("fill", "#10b981") // Emerald Green
+                    .attr("stroke", "white")
+                    .attr("stroke-width", 1)
+                    .on("mouseenter", (event) => {
+                        const [tx, ty] = d3.pointer(event, svgRef.current);
+
+                        // Smart tooltip: Only show type if it's not likely part of the name
+                        const content = activity.name.toLowerCase().includes(activity.type.toLowerCase())
+                            ? activity.name
+                            : `${activity.name} (${activity.type})`;
+
+                        setTooltip({
+                            x: event.pageX,
+                            y: event.pageY,
+                            content: content
+                        });
+                        d3.select(event.currentTarget).attr("transform", "scale(1.5)");
+                    })
+                    .on("mouseleave", (event) => {
+                        setTooltip(null);
+                        d3.select(event.currentTarget).attr("transform", "scale(1)");
+                    });
+            }
+        });
+
+
+        // --- Draw City Pins ---
         locations.forEach(loc => {
             const coords = projection([loc.lng, loc.lat]);
             if (coords) {
                 const [x, y] = coords;
 
-                // Pulse effect group
                 const pinGroup = g.append("g")
                     .attr("transform", `translate(${x}, ${y})`)
                     .style("cursor", "pointer");
-
 
 
                 // Main dot
@@ -85,22 +169,22 @@ export default function TravelMap({ locations }: TravelMapProps) {
                     .attr("r", 3)
                     .attr("class", "fill-indigo-600 dark:fill-indigo-400 stroke-white dark:stroke-slate-900 stroke-1")
                     .on("mouseenter", (event) => {
-                        const [tx, ty] = d3.pointer(event, svgRef.current); // Tooltip relative to SVG
+                        const [tx, ty] = d3.pointer(event, svgRef.current);
                         setTooltip({
-                            x: event.pageX, // Global page coordinates for fixed tooltip
+                            x: event.pageX,
                             y: event.pageY,
                             content: loc.name
                         });
-                        d3.select(event.currentTarget).attr("r", 5);
+                        d3.select(event.currentTarget).attr("r", 5).attr("class", "fill-indigo-600 dark:fill-indigo-400");
                     })
                     .on("mouseleave", (event) => {
                         setTooltip(null);
-                        d3.select(event.currentTarget).attr("r", 3);
+                        d3.select(event.currentTarget).attr("r", 3).attr("class", "fill-indigo-600 dark:fill-indigo-400 stroke-white dark:stroke-slate-900 stroke-1");
                     });
             }
         });
 
-    }, [mapData, locations]);
+    }, [mapData, locations, routes, activities]);
 
     // Resize Handler
     useEffect(() => {
@@ -135,6 +219,23 @@ export default function TravelMap({ locations }: TravelMapProps) {
             <div className="absolute bottom-4 right-4 text-[10px] text-slate-400">
                 Zoom & Pan Enabled
             </div>
+
+            {/* Simple Legend */}
+            <div className="absolute top-4 left-4 p-2 bg-white/80 dark:bg-slate-900/80 backdrop-blur rounded-lg text-[10px] border border-slate-200 dark:border-slate-800">
+                <div className="flex items-center gap-2 mb-1">
+                    <span className="w-2 h-2 rounded-full bg-slate-500"></span>
+                    <span>City</span>
+                </div>
+                <div className="flex items-center gap-2 mb-1">
+                    <span className="w-2 h-0.5 bg-indigo-500 border-t border-dashed border-indigo-500 w-3"></span>
+                    <span>Flight</span>
+                </div>
+                <div className="flex items-center gap-2 mb-1">
+                    <span className="w-2 h-2 transform rotate-45 bg-emerald-500"></span>
+                    <span>Activity</span>
+                </div>
+            </div>
+
         </div>
     );
 }
