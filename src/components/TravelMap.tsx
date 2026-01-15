@@ -78,10 +78,7 @@ export default function TravelMap({ locations }: TravelMapProps) {
                     .attr("transform", `translate(${x}, ${y})`)
                     .style("cursor", "pointer");
 
-                // Pulse circle
-                pinGroup.append("circle")
-                    .attr("r", 4)
-                    .attr("class", "fill-indigo-500/30 animate-ping");
+
 
                 // Main dot
                 pinGroup.append("circle")
