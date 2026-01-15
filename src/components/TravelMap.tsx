@@ -60,7 +60,7 @@ export default function TravelMap({ locations, routes = [], activities = [] }: T
 
                 // Semantic Zoom: Adjust sizes inversely to scale
                 g.selectAll(".country").attr("stroke-width", 0.5 / transform.k);
-                g.selectAll(".travel-route").attr("stroke-width", (d: any) => (d.hovered ? 3 : 1.5) / transform.k);
+                g.selectAll(".travel-route").attr("stroke-width", (d: any) => (d.hovered ? 4 : 2.5) / transform.k);
 
                 // Standardized Semantic Zoom: Use transform scale for consistent sizing
                 g.selectAll(".travel-city-marker")
@@ -92,37 +92,50 @@ export default function TravelMap({ locations, routes = [], activities = [] }: T
             const end = locationMap.get(route.to);
 
             if (start && end) {
-                const routePath = {
-                    type: "LineString",
-                    coordinates: [
-                        [start.lng, start.lat],
-                        [end.lng, end.lat]
-                    ]
-                };
+                const s = projection([start.lng, start.lat]);
+                const e = projection([end.lng, end.lat]);
+
+                if (!s || !e) return;
+
+                // Calculate curved path (Quadratic Bezier)
+                const dx = e[0] - s[0];
+                const dy = e[1] - s[1];
+
+                // Control point offset: perpendicular to the midpoint
+                const midX = (s[0] + e[0]) / 2;
+                const midY = (s[1] + e[1]) / 2;
+
+                // Curvature factor (higher = more curved)
+                const curvature = 0.2;
+
+                // Normal vector (-dy, dx)
+                const cpX = midX - dy * curvature;
+                const cpY = midY + dx * curvature;
+
+                const pathString = `M${s[0]},${s[1]} Q${cpX},${cpY} ${e[0]},${e[1]}`;
 
                 const isFlight = route.type === 'flight';
 
                 // Route Path
                 g.append("path")
-                    .datum({ ...routePath, hovered: false })
-                    .attr("d", path as any)
+                    .datum({ hovered: false })
+                    .attr("d", pathString)
                     .attr("fill", "none")
                     .attr("stroke", isFlight ? "#6366f1" : "#f59e0b")
-                    .attr("stroke-width", 1.5)
+                    .attr("stroke-width", 2.5) // Thicker base line
                     .attr("stroke-dasharray", isFlight ? "4,4" : "none")
                     .attr("class", "travel-route opacity-60 transition-opacity duration-300")
                     .style("cursor", "pointer")
                     .on("mouseenter", (event, d: any) => {
                         d.hovered = true;
                         const k = d3.zoomTransform(svgRef.current!).k;
-                        const [tx, ty] = d3.pointer(event, svgRef.current);
                         setTooltip({
                             x: event.pageX,
                             y: event.pageY,
                             content: route.description || `${route.from} → ${route.to}`
                         });
                         d3.select(event.currentTarget)
-                            .attr("stroke-width", 3 / k)
+                            .attr("stroke-width", 4 / k) // Thicker hover
                             .attr("class", "travel-route opacity-100");
                     })
                     .on("mouseleave", (event, d: any) => {
@@ -130,7 +143,7 @@ export default function TravelMap({ locations, routes = [], activities = [] }: T
                         const k = d3.zoomTransform(svgRef.current!).k;
                         setTooltip(null);
                         d3.select(event.currentTarget)
-                            .attr("stroke-width", 1.5 / k)
+                            .attr("stroke-width", 2.5 / k) // Return to thicker base
                             .attr("class", "travel-route opacity-60 transition-opacity duration-300");
                     });
             }
@@ -157,7 +170,6 @@ export default function TravelMap({ locations, routes = [], activities = [] }: T
                         d.hovered = true;
                         const k = d3.zoomTransform(svgRef.current!).k;
                         const [tx, ty] = d3.pointer(event, svgRef.current);
-
 
                         setTooltip({
                             x: event.pageX,
@@ -259,16 +271,16 @@ export default function TravelMap({ locations, routes = [], activities = [] }: T
             {/* Simple Legend */}
             <div className="absolute top-4 left-4 p-2 bg-white/80 dark:bg-slate-900/80 backdrop-blur rounded-lg text-[10px] border border-slate-200 dark:border-slate-800">
                 <div className="flex items-center gap-2 mb-1">
-                    <span className="w-2 h-2 rounded-full bg-slate-500"></span>
-                    <span>City</span>
+                    <span className="w-2 h-2 rounded-full bg-indigo-600"></span>
+                    <span>Visited Cities</span>
                 </div>
                 <div className="flex items-center gap-2 mb-1">
-                    <span className="w-2 h-0.5 bg-indigo-500 border-t border-dashed border-indigo-500 w-3"></span>
-                    <span>Flight</span>
+                    <div className="w-4 h-0.5 bg-amber-500"></div>
+                    <span>Routes</span>
                 </div>
                 <div className="flex items-center gap-2 mb-1">
                     <span className="w-2 h-2 transform rotate-45 bg-emerald-500"></span>
-                    <span>Activity</span>
+                    <span>Highlights</span>
                 </div>
             </div>
 
