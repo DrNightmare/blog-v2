@@ -55,7 +55,21 @@ export default function TravelMap({ locations, routes = [], activities = [] }: T
         const zoom = d3.zoom<SVGSVGElement, unknown>()
             .scaleExtent([1, 8])
             .on("zoom", (event) => {
-                g.attr("transform", event.transform);
+                const { transform } = event;
+                g.attr("transform", transform);
+
+                // Semantic Zoom: Adjust sizes inversely to scale
+                g.selectAll(".country").attr("stroke-width", 0.5 / transform.k);
+                g.selectAll(".travel-route").attr("stroke-width", (d: any) => (d.hovered ? 3 : 1.5) / transform.k);
+
+                // Standardized Semantic Zoom: Use transform scale for consistent sizing
+                g.selectAll(".travel-city-marker")
+                    .attr("transform", (d: any) => `scale(${d.hovered ? 1.5 / transform.k : 1 / transform.k})`)
+                    .attr("stroke-width", transform.k);
+
+                g.selectAll(".travel-activity-marker")
+                    .attr("transform", (d: any) => `scale(${d.hovered ? 1.5 / transform.k : 1 / transform.k})`)
+                    .attr("stroke-width", transform.k);
             });
 
         svg.call(zoom);
@@ -90,26 +104,34 @@ export default function TravelMap({ locations, routes = [], activities = [] }: T
 
                 // Route Path
                 g.append("path")
-                    .datum(routePath)
+                    .datum({ ...routePath, hovered: false })
                     .attr("d", path as any)
                     .attr("fill", "none")
                     .attr("stroke", isFlight ? "#6366f1" : "#f59e0b")
                     .attr("stroke-width", 1.5)
                     .attr("stroke-dasharray", isFlight ? "4,4" : "none")
-                    .attr("class", "opacity-60 transition-opacity duration-300") // Removed pointer-events-none
-                    .style("cursor", "pointer") // Add cursor pointer
-                    .on("mouseenter", (event) => {
+                    .attr("class", "travel-route opacity-60 transition-opacity duration-300")
+                    .style("cursor", "pointer")
+                    .on("mouseenter", (event, d: any) => {
+                        d.hovered = true;
+                        const k = d3.zoomTransform(svgRef.current!).k;
                         const [tx, ty] = d3.pointer(event, svgRef.current);
                         setTooltip({
                             x: event.pageX,
                             y: event.pageY,
                             content: route.description || `${route.from} → ${route.to}`
                         });
-                        d3.select(event.currentTarget).attr("stroke-width", 3).attr("class", "opacity-100");
+                        d3.select(event.currentTarget)
+                            .attr("stroke-width", 3 / k)
+                            .attr("class", "travel-route opacity-100");
                     })
-                    .on("mouseleave", (event) => {
+                    .on("mouseleave", (event, d: any) => {
+                        d.hovered = false;
+                        const k = d3.zoomTransform(svgRef.current!).k;
                         setTooltip(null);
-                        d3.select(event.currentTarget).attr("stroke-width", 1.5).attr("class", "opacity-60 transition-opacity duration-300");
+                        d3.select(event.currentTarget)
+                            .attr("stroke-width", 1.5 / k)
+                            .attr("class", "travel-route opacity-60 transition-opacity duration-300");
                     });
             }
         });
@@ -126,14 +148,18 @@ export default function TravelMap({ locations, routes = [], activities = [] }: T
 
                 // Activity Marker (Diamond shape)
                 activityGroup.append("path")
-                    .attr("d", d3.symbol().type(d3.symbolDiamond).size(60))
-                    .attr("fill", "#10b981") // Emerald Green
+                    .datum({ hovered: false }) // Add local state
+                    .attr("class", "travel-activity-marker")
+                    .attr("d", d3.symbol().type(d3.symbolDiamond).size(80)) // Slightly larger base size
+                    .attr("fill", "#10b981")
                     .attr("stroke", "white")
                     .attr("stroke-width", 1)
-                    .on("mouseenter", (event) => {
+                    .on("mouseenter", (event, d: any) => {
+                        d.hovered = true;
+                        const k = d3.zoomTransform(svgRef.current!).k;
                         const [tx, ty] = d3.pointer(event, svgRef.current);
 
-                        // Smart tooltip: Only show type if it's not likely part of the name
+                        // Smart tooltip
                         const content = activity.name.toLowerCase().includes(activity.type.toLowerCase())
                             ? activity.name
                             : `${activity.name} (${activity.type})`;
@@ -143,11 +169,17 @@ export default function TravelMap({ locations, routes = [], activities = [] }: T
                             y: event.pageY,
                             content: content
                         });
-                        d3.select(event.currentTarget).attr("transform", "scale(1.5)");
+                        d3.select(event.currentTarget)
+                            .attr("transform", `scale(${1.5 / k})`)
+                            .attr("stroke-width", k);
                     })
-                    .on("mouseleave", (event) => {
+                    .on("mouseleave", (event, d: any) => {
+                        d.hovered = false;
+                        const k = d3.zoomTransform(svgRef.current!).k;
                         setTooltip(null);
-                        d3.select(event.currentTarget).attr("transform", "scale(1)");
+                        d3.select(event.currentTarget)
+                            .attr("transform", `scale(${1 / k})`)
+                            .attr("stroke-width", k);
                     });
             }
         });
@@ -166,20 +198,30 @@ export default function TravelMap({ locations, routes = [], activities = [] }: T
 
                 // Main dot
                 pinGroup.append("circle")
-                    .attr("r", 3)
-                    .attr("class", "fill-indigo-600 dark:fill-indigo-400 stroke-white dark:stroke-slate-900 stroke-1")
-                    .on("mouseenter", (event) => {
+                    .datum({ hovered: false })
+                    .attr("r", 4) // Fixed base radius
+                    .attr("class", "travel-city-marker fill-indigo-600 dark:fill-indigo-400 stroke-white dark:stroke-slate-900 stroke-1")
+                    .attr("stroke-width", 1)
+                    .on("mouseenter", (event, d: any) => {
+                        d.hovered = true;
+                        const k = d3.zoomTransform(svgRef.current!).k;
                         const [tx, ty] = d3.pointer(event, svgRef.current);
                         setTooltip({
                             x: event.pageX,
                             y: event.pageY,
                             content: loc.name
                         });
-                        d3.select(event.currentTarget).attr("r", 5).attr("class", "fill-indigo-600 dark:fill-indigo-400");
+                        d3.select(event.currentTarget)
+                            .attr("transform", `scale(${1.5 / k})`)
+                            .attr("stroke-width", k);
                     })
-                    .on("mouseleave", (event) => {
+                    .on("mouseleave", (event, d: any) => {
+                        d.hovered = false;
+                        const k = d3.zoomTransform(svgRef.current!).k;
                         setTooltip(null);
-                        d3.select(event.currentTarget).attr("r", 3).attr("class", "fill-indigo-600 dark:fill-indigo-400 stroke-white dark:stroke-slate-900 stroke-1");
+                        d3.select(event.currentTarget)
+                            .attr("transform", `scale(${1 / k})`)
+                            .attr("stroke-width", k);
                     });
             }
         });
