@@ -28,6 +28,8 @@ export const TRAVEL_ROUTES: TravelRoute[] = [
 export const TRAVEL_ACTIVITIES: TravelActivity[] = [
     { name: "Surfing in Weligama", lat: 5.9728, lng: 80.4288, type: "surfing", description: "Great beginner waves" },
     { name: "Ha Long Bay Cruise", lat: 20.9101, lng: 107.1839, type: "nature", description: "Limestone karsts" },
+    { name: "Lantern Festival", lat: 15.8795863, lng: 108.3319406, type: "culture", description: "Lanterns and performances" },
+    { name: "Safari at Maasai Mara", lat: -2.5031822, lng: 34.8817732, type: "nature", description: "Wildlife" }
 ];
 
 export const TRAVEL_LOCATIONS: Location[] = [
@@ -71,12 +73,6 @@ export const TRAVEL_LOCATIONS: Location[] = [
         "name": "Nairobi",
         "lat": -1.2890006,
         "lng": 36.8172812,
-        "visited": true
-    },
-    {
-        "name": "Maasai Mara",
-        "lat": -2.5031822,
-        "lng": 34.8817732,
         "visited": true
     },
     {

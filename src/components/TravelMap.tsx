@@ -150,36 +150,29 @@ export default function TravelMap({ locations, routes = [], activities = [] }: T
                 activityGroup.append("path")
                     .datum({ hovered: false }) // Add local state
                     .attr("class", "travel-activity-marker")
-                    .attr("d", d3.symbol().type(d3.symbolDiamond).size(80)) // Slightly larger base size
+                    .attr("d", d3.symbol().type(d3.symbolDiamond).size(113)) // Match circle r=6 area
                     .attr("fill", "#10b981")
-                    .attr("stroke", "white")
-                    .attr("stroke-width", 1)
+                    .attr("transform", "scale(1)") // Set initial transform
                     .on("mouseenter", (event, d: any) => {
                         d.hovered = true;
                         const k = d3.zoomTransform(svgRef.current!).k;
                         const [tx, ty] = d3.pointer(event, svgRef.current);
 
-                        // Smart tooltip
-                        const content = activity.name.toLowerCase().includes(activity.type.toLowerCase())
-                            ? activity.name
-                            : `${activity.name} (${activity.type})`;
 
                         setTooltip({
                             x: event.pageX,
                             y: event.pageY,
-                            content: content
+                            content: activity.name
                         });
                         d3.select(event.currentTarget)
-                            .attr("transform", `scale(${1.5 / k})`)
-                            .attr("stroke-width", k);
+                            .attr("transform", `scale(${1.5 / k})`);
                     })
                     .on("mouseleave", (event, d: any) => {
                         d.hovered = false;
                         const k = d3.zoomTransform(svgRef.current!).k;
                         setTooltip(null);
                         d3.select(event.currentTarget)
-                            .attr("transform", `scale(${1 / k})`)
-                            .attr("stroke-width", k);
+                            .attr("transform", `scale(${1 / k})`);
                     });
             }
         });
@@ -199,9 +192,10 @@ export default function TravelMap({ locations, routes = [], activities = [] }: T
                 // Main dot
                 pinGroup.append("circle")
                     .datum({ hovered: false })
-                    .attr("r", 4) // Fixed base radius
+                    .attr("r", 6) // Increased base radius to match activity marker visual size
                     .attr("class", "travel-city-marker fill-indigo-600 dark:fill-indigo-400 stroke-white dark:stroke-slate-900 stroke-1")
                     .attr("stroke-width", 1)
+                    .attr("transform", "scale(1)") // Set initial transform
                     .on("mouseenter", (event, d: any) => {
                         d.hovered = true;
                         const k = d3.zoomTransform(svgRef.current!).k;
