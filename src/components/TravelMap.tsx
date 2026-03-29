@@ -1,7 +1,10 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
-import * as d3 from 'd3';
+import { select } from 'd3-selection';
+import { geoNaturalEarth1, geoPath } from 'd3-geo';
+import { zoom, zoomTransform } from 'd3-zoom';
+import { symbol, symbolDiamond } from 'd3-shape';
 import * as topojson from 'topojson-client';
 import { Location, TravelRoute, TravelActivity } from '@/data/travel-locations';
 
@@ -35,7 +38,7 @@ export default function TravelMap({ locations, routes = [], activities = [] }: T
         const width = containerRef.current.clientWidth;
         const height = Math.min(width * 0.6, 600); // Aspect ratio
 
-        const svg = d3.select(svgRef.current);
+        const svg = select(svgRef.current);
         svg.selectAll("*").remove(); // Clear previous
 
         svg.attr("width", width)
@@ -43,16 +46,16 @@ export default function TravelMap({ locations, routes = [], activities = [] }: T
             .attr("viewBox", `0 0 ${width} ${height}`);
 
         // Projection
-        const projection = d3.geoNaturalEarth1()
+        const projection = geoNaturalEarth1()
             .fitSize([width, height], mapData)
             .translate([width / 2, height / 2]);
 
-        const path = d3.geoPath().projection(projection);
+        const path = geoPath().projection(projection);
 
         // Zoom setup
         const g = svg.append("g");
 
-        const zoom = d3.zoom<SVGSVGElement, unknown>()
+        const mapZoom = zoom<SVGSVGElement, unknown>()
             .scaleExtent([1, 8])
             .on("zoom", (event) => {
                 const { transform } = event;
@@ -72,7 +75,7 @@ export default function TravelMap({ locations, routes = [], activities = [] }: T
                     .attr("stroke-width", transform.k);
             });
 
-        svg.call(zoom);
+        svg.call(mapZoom);
 
         // Draw Countries
         g.selectAll("path.country")
@@ -128,21 +131,21 @@ export default function TravelMap({ locations, routes = [], activities = [] }: T
                     .style("cursor", "pointer")
                     .on("mouseenter", (event, d: any) => {
                         d.hovered = true;
-                        const k = d3.zoomTransform(svgRef.current!).k;
+                        const k = zoomTransform(svgRef.current!).k;
                         setTooltip({
                             x: event.pageX,
                             y: event.pageY,
                             content: route.description || `${route.from} → ${route.to}`
                         });
-                        d3.select(event.currentTarget)
+                        select(event.currentTarget)
                             .attr("stroke-width", 4 / k) // Thicker hover
                             .attr("class", "travel-route opacity-100");
                     })
                     .on("mouseleave", (event, d: any) => {
                         d.hovered = false;
-                        const k = d3.zoomTransform(svgRef.current!).k;
+                        const k = zoomTransform(svgRef.current!).k;
                         setTooltip(null);
-                        d3.select(event.currentTarget)
+                        select(event.currentTarget)
                             .attr("stroke-width", 2.5 / k) // Return to thicker base
                             .attr("class", "travel-route opacity-60 transition-opacity duration-300");
                     });
@@ -163,27 +166,26 @@ export default function TravelMap({ locations, routes = [], activities = [] }: T
                 activityGroup.append("path")
                     .datum({ hovered: false }) // Add local state
                     .attr("class", "travel-activity-marker")
-                    .attr("d", d3.symbol().type(d3.symbolDiamond).size(113)) // Match circle r=6 area
+                    .attr("d", symbol().type(symbolDiamond).size(113)) // Match circle r=6 area
                     .attr("fill", "#10b981")
                     .attr("transform", "scale(1)") // Set initial transform
                     .on("mouseenter", (event, d: any) => {
                         d.hovered = true;
-                        const k = d3.zoomTransform(svgRef.current!).k;
-                        const [tx, ty] = d3.pointer(event, svgRef.current);
+                        const k = zoomTransform(svgRef.current!).k;
 
                         setTooltip({
                             x: event.pageX,
                             y: event.pageY,
                             content: activity.name
                         });
-                        d3.select(event.currentTarget)
+                        select(event.currentTarget)
                             .attr("transform", `scale(${1.5 / k})`);
                     })
                     .on("mouseleave", (event, d: any) => {
                         d.hovered = false;
-                        const k = d3.zoomTransform(svgRef.current!).k;
+                        const k = zoomTransform(svgRef.current!).k;
                         setTooltip(null);
-                        d3.select(event.currentTarget)
+                        select(event.currentTarget)
                             .attr("transform", `scale(${1 / k})`);
                     });
             }
@@ -210,22 +212,21 @@ export default function TravelMap({ locations, routes = [], activities = [] }: T
                     .attr("transform", "scale(1)") // Set initial transform
                     .on("mouseenter", (event, d: any) => {
                         d.hovered = true;
-                        const k = d3.zoomTransform(svgRef.current!).k;
-                        const [tx, ty] = d3.pointer(event, svgRef.current);
+                        const k = zoomTransform(svgRef.current!).k;
                         setTooltip({
                             x: event.pageX,
                             y: event.pageY,
                             content: loc.name
                         });
-                        d3.select(event.currentTarget)
+                        select(event.currentTarget)
                             .attr("transform", `scale(${1.5 / k})`)
                             .attr("stroke-width", k);
                     })
                     .on("mouseleave", (event, d: any) => {
                         d.hovered = false;
-                        const k = d3.zoomTransform(svgRef.current!).k;
+                        const k = zoomTransform(svgRef.current!).k;
                         setTooltip(null);
-                        d3.select(event.currentTarget)
+                        select(event.currentTarget)
                             .attr("transform", `scale(${1 / k})`)
                             .attr("stroke-width", k);
                     });

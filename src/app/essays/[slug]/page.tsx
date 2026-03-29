@@ -5,6 +5,7 @@ import CustomLink from "@/components/CustomLink";
 import Pre from "@/components/CustomPre";
 import { highlight } from "sugar-high";
 import { JSX, ReactNode } from "react";
+import type { Metadata } from "next";
 
 type EssayParam = {
     slug: string;
@@ -17,6 +18,46 @@ interface CodeProps extends React.HTMLAttributes<HTMLElement> {
 export async function generateStaticParams(): Promise<EssayParam[]> {
     const essays = await getEssays();
     return essays.map(essay => ({ slug: essay.slug }));
+}
+
+export async function generateMetadata(
+    { params }: { params: Promise<EssayParam> }
+): Promise<Metadata> {
+    const { slug } = await params;
+    const essays = await getEssays();
+    const essay = essays.find((item) => item.slug === slug);
+
+    if (!essay) {
+        return {
+            title: "Essay not found",
+            description: "The requested essay could not be found.",
+        };
+    }
+
+    const title = String(essay.metadata.title || essay.slug);
+    const description = String(
+        essay.metadata.summary || "Long form writing by Arvind Prakash."
+    );
+    const url = `/essays/${essay.slug}`;
+
+    return {
+        title,
+        description,
+        alternates: {
+            canonical: url,
+        },
+        openGraph: {
+            title,
+            description,
+            type: "article",
+            url,
+        },
+        twitter: {
+            card: "summary_large_image",
+            title,
+            description,
+        },
+    };
 }
 
 function Code({ children, ...props }: CodeProps) {

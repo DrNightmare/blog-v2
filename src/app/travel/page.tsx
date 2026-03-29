@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
-import TravelMap from '@/components/TravelMap';
 import { TRAVEL_LOCATIONS, TRAVEL_ROUTES, TRAVEL_ACTIVITIES } from '@/data/travel-locations';
+import TravelMap from '@/components/TravelMapLazy';
 
 export const metadata: Metadata = {
     title: "Travel | Arvind Prakash",

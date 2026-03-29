@@ -20,8 +20,25 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Arvind Prakash",
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"
+  ),
+  title: {
+    default: "Arvind Prakash",
+    template: "%s | Arvind Prakash",
+  },
   description: "Arvind Prakash's blog",
+  openGraph: {
+    title: "Arvind Prakash",
+    description: "Arvind Prakash's blog",
+    type: "website",
+    url: "/",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Arvind Prakash",
+    description: "Arvind Prakash's blog",
+  },
 };
 
 export default function RootLayout({
