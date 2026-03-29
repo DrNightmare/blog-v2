@@ -1,5 +1,6 @@
 import booksData from './data.json';
 import CurrentReadSpotlight from '@/components/CurrentReadSpotlight';
+import LibraryJsonLd from '@/components/LibraryJsonLd';
 import { listPageMetadata } from '@/lib/sitePageMetadata';
 
 export const metadata = listPageMetadata({
@@ -38,9 +39,15 @@ const booksByGenre = groupByGenre(books);
 const currentRead = books.find(book => book.currentlyReading);
 
 export default function Library() {
+    const libraryJsonLdItems = books.map((book, i) => ({
+        title: book.title,
+        author: book.author,
+        position: i + 1,
+    }));
 
     return (
         <div className="min-h-screen py-12 px-4 sm:px-6">
+            <LibraryJsonLd items={libraryJsonLdItems} />
             <main className="max-w-4xl mx-auto">
                 <div className="text-center mb-12">
                     <h1 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">

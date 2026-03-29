@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getProjects } from "../utils";
 import { listPageMetadata } from "@/lib/sitePageMetadata";
+import ProjectsJsonLd from "@/components/ProjectsJsonLd";
 
 export const metadata = listPageMetadata({
     title: "Projects",
@@ -10,9 +11,19 @@ export const metadata = listPageMetadata({
 
 export default async function Projects() {
     const projects = await getProjects();
+    const base =
+        process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+    const projectsJsonLdItems = projects.map((project) => ({
+        name: project.title,
+        url:
+            project.externalUrl ||
+            new URL(`/projects/${project.slug}`, base).href,
+        description: project.summary,
+    }));
 
     return (
         <div className="min-h-screen py-12 px-4 sm:px-6">
+            <ProjectsJsonLd items={projectsJsonLdItems} />
             <main className="max-w-4xl mx-auto">
                 <div className="text-center mb-12">
                     <h1 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">

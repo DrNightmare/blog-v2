@@ -3,6 +3,7 @@ import { getNotesIndex, NOTES_PER_PAGE } from "../utils";
 import { getNoteMdx } from "@/content/notes/registry";
 import Link from "next/link";
 import { listPageMetadata } from "@/lib/sitePageMetadata";
+import NotesIndexJsonLd from "@/components/NotesIndexJsonLd";
 
 export const metadata = listPageMetadata({
     title: "Notes",
@@ -26,8 +27,17 @@ export default async function Notes({ searchParams }: PageProps) {
     const endIndex = startIndex + NOTES_PER_PAGE;
     const paginatedIndex = allNotes.slice(startIndex, endIndex);
 
+    const base =
+        process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+    const pageUrl = new URL(`/notes?page=${currentPage}`, base).href;
+    const notesJsonLdItems = paginatedIndex.map((entry) => ({
+        title: String(entry.metadata.title || entry.slug),
+        url: new URL(`/notes?page=${currentPage}#${entry.slug}`, base).href,
+    }));
+
     return (
         <div className="min-h-screen py-12 px-4 sm:px-6">
+            <NotesIndexJsonLd pageUrl={pageUrl} items={notesJsonLdItems} />
             <main className="max-w-3xl mx-auto">
                 <div className="text-center mb-12">
                     <h1 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">

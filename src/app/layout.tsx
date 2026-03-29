@@ -11,12 +11,13 @@ import Providers from "@/components/Providers";
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
-  weight: "100 900",
+  // Subset of variable axis: skip hairline–200; keep light (300) through black (900) for Tailwind utilities.
+  weight: "300 900",
 });
 const geistMono = localFont({
   src: "./fonts/GeistMonoVF.woff",
   variable: "--font-geist-mono",
-  weight: "100 900",
+  weight: "300 900",
 });
 
 export const metadata: Metadata = {
