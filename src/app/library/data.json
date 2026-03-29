@@ -1,6 +1,5 @@
 [
     {
-        "index": 1,
         "title": "Immune",
         "author": "Philipp Dettmer",
         "genre": "Science and Technology",
@@ -8,7 +7,6 @@
         "openLibraryUrl": "https://openlibrary.org/works/OL24410778W"
     },
     {
-        "index": 2,
         "title": "Jaya: An Illustrated Retelling of the Mahabharata",
         "author": "Devdutt Pattanaik",
         "genre": "Uncategorized",
@@ -16,7 +14,6 @@
         "openLibraryUrl": "https://openlibrary.org/works/OL19948770W"
     },
     {
-        "index": 3,
         "title": "Leonardo da Vinci",
         "author": "Walter Isaacson",
         "genre": "Biographies",
@@ -24,7 +21,6 @@
         "openLibraryUrl": "https://openlibrary.org/works/OL17802920W"
     },
     {
-        "index": 4,
         "title": "Elon Musk",
         "author": "Ashlee Vance",
         "genre": "Biographies",
@@ -32,7 +28,6 @@
         "openLibraryUrl": "https://openlibrary.org/works/OL17184556W"
     },
     {
-        "index": 5,
         "title": "Origin",
         "author": "Dan Brown",
         "genre": "Fiction",
@@ -40,7 +35,6 @@
         "openLibraryUrl": "https://openlibrary.org/works/OL17878702W"
     },
     {
-        "index": 6,
         "title": "The Arrival",
         "author": "Shaun Tan",
         "genre": "Fiction",
@@ -48,7 +42,6 @@
         "openLibraryUrl": "https://openlibrary.org/works/OL5934430W"
     },
     {
-        "index": 7,
         "title": "User Friendly",
         "author": "Cliff Kuang, Robert Fabricant",
         "genre": "Science and Technology",
@@ -56,7 +49,6 @@
         "coverUrl": "https://covers.openlibrary.org/b/id/10299704-M.jpg"
     },
     {
-        "index": 8,
         "title": "Rabbits",
         "author": "Terry Miles",
         "genre": "Fiction",
@@ -64,7 +56,6 @@
         "openLibraryUrl": "https://openlibrary.org/works/OL32795967M"
     },
     {
-        "index": 9,
         "title": "Masala Lab",
         "author": "Krish Ashok",
         "genre": "Science and Technology",
@@ -72,7 +63,6 @@
         "openLibraryUrl": "https://openlibrary.org/works/OL24316238W"
     },
     {
-        "index": 10,
         "title": "Things to Make and Do in the Fourth Dimension",
         "author": "Matt Parker",
         "genre": "Science and Technology",
@@ -80,13 +70,11 @@
         "openLibraryUrl": "https://openlibrary.org/works/OL19997031W"
     },
     {
-        "index": 11,
         "title": "Forbidden Lore: Revival",
         "author": "Unknown",
         "genre": "Fiction"
     },
     {
-        "index": 12,
         "title": "What If?",
         "author": "Randall Munroe",
         "genre": "Science and Technology",
@@ -94,7 +82,6 @@
         "openLibraryUrl": "https://openlibrary.org/works/OL17095301W"
     },
     {
-        "index": 13,
         "title": "The World According to Rick",
         "author": "Unknown",
         "genre": "Fiction",
@@ -102,7 +89,6 @@
         "openLibraryUrl": "https://openlibrary.org/works/OL9170454W"
     },
     {
-        "index": 14,
         "title": "Moonflower Murders",
         "author": "Anthony Horowitz",
         "genre": "Fiction",
@@ -110,13 +96,6 @@
         "openLibraryUrl": "https://openlibrary.org/works/OL20800266W"
     },
     {
-        "index": 15,
-        "title": "India Automated",
-        "author": "Pranjal Sharma",
-        "genre": "Science and Technology"
-    },
-    {
-        "index": 16,
         "title": "Deep Work",
         "author": "Cal Newport",
         "genre": "Psychology and Self-Development",
@@ -124,7 +103,6 @@
         "openLibraryUrl": "https://openlibrary.org/works/OL17713267W"
     },
     {
-        "index": 17,
         "title": "Heads You Win",
         "author": "Jeffrey Archer",
         "genre": "Fiction",
@@ -132,7 +110,6 @@
         "openLibraryUrl": "https://openlibrary.org/works/OL19761902W"
     },
     {
-        "index": 18,
         "title": "Dark Matter",
         "author": "Blake Crouch",
         "genre": "Fiction",
@@ -140,7 +117,6 @@
         "openLibraryUrl": "https://openlibrary.org/works/OL17358795W"
     },
     {
-        "index": 19,
         "title": "Recursion",
         "author": "Blake Crouch",
         "genre": "Fiction",
@@ -148,7 +124,6 @@
         "openLibraryUrl": "https://openlibrary.org/works/OL20073906W"
     },
     {
-        "index": 20,
         "title": "The Name of the Rose",
         "author": "Umberto Eco",
         "genre": "Fiction",
@@ -156,7 +131,6 @@
         "openLibraryUrl": "https://openlibrary.org/works/OL8996439W"
     },
     {
-        "index": 21,
         "title": "Weapons of Math Destruction",
         "author": "Cathy O'Neil",
         "genre": "Science and Technology",
@@ -164,7 +138,6 @@
         "coverUrl": "https://covers.openlibrary.org/b/id/8165878-M.jpg"
     },
     {
-        "index": 22,
         "title": "Temple",
         "author": "Matthew Reilly",
         "genre": "Fiction",
@@ -172,7 +145,6 @@
         "openLibraryUrl": "https://openlibrary.org/works/OL21868175W"
     },
     {
-        "index": 23,
         "title": "You Look Like a Thing and I Love You",
         "author": "Janelle Shane",
         "genre": "Science and Technology",
@@ -180,7 +152,6 @@
         "openLibraryUrl": "https://openlibrary.org/works/OL20889986W"
     },
     {
-        "index": 24,
         "title": "Homo Deus",
         "author": "Yuval Noah Harari",
         "genre": "Psychology and Self-Development",
@@ -188,7 +159,6 @@
         "openLibraryUrl": "https://openlibrary.org/works/OL17641518W"
     },
     {
-        "index": 25,
         "title": "One Piece (Volume 31)",
         "author": "Eiichiro Oda",
         "genre": "Uncategorized",
@@ -196,7 +166,6 @@
         "openLibraryUrl": "https://openlibrary.org/works/OL8215640W"
     },
     {
-        "index": 26,
         "title": "Stories of Your Life and Others",
         "author": "Ted Chiang",
         "genre": "Fiction",
@@ -204,7 +173,6 @@
         "openLibraryUrl": "https://openlibrary.org/works/OL6216050W"
     },
     {
-        "index": 27,
         "title": "The Complete Cosmicomics",
         "author": "Italo Calvino",
         "genre": "Fiction",
@@ -212,7 +180,6 @@
         "openLibraryUrl": "https://openlibrary.org/works/OL15693898W"
     },
     {
-        "index": 28,
         "title": "Invisible Cities",
         "author": "Italo Calvino",
         "genre": "Fiction",
@@ -220,7 +187,6 @@
         "openLibraryUrl": "https://openlibrary.org/works/OL15297W"
     },
     {
-        "index": 29,
         "title": "Exhalation",
         "author": "Ted Chiang",
         "genre": "Fiction",
@@ -228,7 +194,6 @@
         "openLibraryUrl": "https://openlibrary.org/works/OL20149336W"
     },
     {
-        "index": 30,
         "title": "How to Finish Everything You Start",
         "author": "Jan Yager",
         "genre": "Psychology and Self-Development",
@@ -236,7 +201,6 @@
         "openLibraryUrl": "https://openlibrary.org/works/OL34320168W"
     },
     {
-        "index": 31,
         "title": "Writing An Interpreter In Go",
         "author": "Thorsten Ball",
         "genre": "Uncategorized",
@@ -244,7 +208,6 @@
         "openLibraryUrl": "https://openlibrary.org/works/OL24141621W"
     },
     {
-        "index": 32,
         "title": "Measure What Matters: The Simple Idea that Drives 10x Growth",
         "author": "John Doerr",
         "genre": "Psychology and Self-Development",
@@ -252,7 +215,6 @@
         "openLibraryUrl": "https://openlibrary.org/works/OL20186311W"
     },
     {
-        "index": 33,
         "title": "Zero to Sold: How to Start, Run, and Sell a Bootstrapped Business",
         "author": "Arvid Kahl",
         "genre": "Psychology and Self-Development",
@@ -260,7 +222,6 @@
         "openLibraryUrl": "https://openlibrary.org/works/OL20896438W"
     },
     {
-        "index": 34,
         "title": "The Making of Prince of Persia",
         "author": "Jordan Mechner",
         "genre": "Uncategorized",
@@ -268,7 +229,6 @@
         "openLibraryUrl": "https://openlibrary.org/works/OL24029650W"
     },
     {
-        "index": 35,
         "title": "Mother of Learning: ARC 1",
         "author": "nobody103, Domagoj Kurmaic",
         "genre": "Fiction",
@@ -276,7 +236,6 @@
         "coverUrl": "https://covers.openlibrary.org/b/id/15118886-M.jpg"
     },
     {
-        "index": 36,
         "title": "Mother of Learning: ARC 2",
         "author": "nobody103, Domagoj Kurmaic",
         "genre": "Fiction",
@@ -284,7 +243,6 @@
         "coverUrl": "https://covers.openlibrary.org/b/id/15118888-M.jpg"
     },
     {
-        "index": 37,
         "title": "Mother of Learning: ARC 3",
         "author": "nobody103, Domagoj Kurmaic",
         "genre": "Fiction",
@@ -292,7 +250,6 @@
         "coverUrl": "https://covers.openlibrary.org/b/id/15118889-M.jpg"
     },
     {
-        "index": 38,
         "title": "Mother of Learning: ARC 4",
         "author": "nobody103, Domagoj Kurmaic",
         "genre": "Fiction",
@@ -300,7 +257,6 @@
         "coverUrl": "https://covers.openlibrary.org/b/id/15118891-M.jpg"
     },
     {
-        "index": 39,
         "title": "Quantum Computing for the Quantum Curious",
         "author": "Ciaran Hughes, Joshua Isaacson, Anastasia Perry, Ranbel F. Sun, Jessica Turner",
         "genre": "Science and Technology",
@@ -308,13 +264,11 @@
         "openLibraryUrl": "https://openlibrary.org/works/OL27082720W"
     },
     {
-        "index": 40,
         "title": "The Great Mental Models Volume 1: General Thinking Concepts",
         "author": "Shane Parrish, Rhiannon Beaubien",
         "genre": "Psychology and Self-Development"
     },
     {
-        "index": 41,
         "title": "The Art of War",
         "author": "Sun Tzu",
         "genre": "Fiction",
@@ -322,7 +276,6 @@
         "openLibraryUrl": "https://openlibrary.org/works/OL244537W"
     },
     {
-        "index": 42,
         "title": "I Contain Multitudes: The Microbes Within Us and a Grander View of Life",
         "author": "Ed Yong",
         "genre": "Science and Technology",
@@ -330,7 +283,6 @@
         "openLibraryUrl": "https://openlibrary.org/works/OL17801058W"
     },
     {
-        "index": 43,
         "title": "Are Prisons Obsolete?",
         "author": "Angela Y. Davis",
         "genre": "Science and Technology",
@@ -338,7 +290,6 @@
         "openLibraryUrl": "https://openlibrary.org/works/OL2709370W"
     },
     {
-        "index": 44,
         "title": "Conjectures and Refutations: The Growth of Scientific Knowledge",
         "author": "Karl Popper",
         "genre": "Science and Technology",
@@ -346,7 +297,6 @@
         "openLibraryUrl": "https://openlibrary.org/works/OL1984581W"
     },
     {
-        "index": 45,
         "title": "The Inevitable: Understanding the 12 Technological Forces That Will Shape Our Future",
         "author": "Kevin Kelly",
         "genre": "Science and Technology",
@@ -354,7 +304,6 @@
         "openLibraryUrl": "https://openlibrary.org/works/OL17591698W"
     },
     {
-        "index": 46,
         "title": "The Ascent Of Man",
         "author": "Jacob Bronowski",
         "genre": "Science and Technology",
@@ -362,7 +311,6 @@
         "openLibraryUrl": "https://openlibrary.org/works/OL4803881W"
     },
     {
-        "index": 47,
         "title": "Whole Earth Discipline",
         "author": "Stewart Brand",
         "genre": "Science and Technology",
@@ -370,7 +318,6 @@
         "openLibraryUrl": "https://openlibrary.org/works/OL823141W"
     },
     {
-        "index": 48,
         "title": "The Perfect Run: Book 1",
         "author": "Maxime Durand",
         "genre": "Fiction",
@@ -384,7 +331,6 @@
         }
     },
     {
-        "index": 49,
         "title": "The Perfect Run: Book 2",
         "author": "Maxime Durand",
         "genre": "Fiction",
@@ -396,7 +342,6 @@
         }
     },
     {
-        "index": 50,
         "title": "The Perfect Run: Book 3",
         "author": "Maxime Durand",
         "genre": "Fiction",

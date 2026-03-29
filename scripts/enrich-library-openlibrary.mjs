@@ -40,7 +40,7 @@ async function main() {
   const out = [];
 
   for (const book of books) {
-    const { title, author, index } = book;
+    const { title, author } = book;
     const next = { ...book };
     delete next.coverUrl;
     delete next.openLibraryUrl;
@@ -50,9 +50,7 @@ async function main() {
       const doc = data.docs?.[0];
 
       if (!doc) {
-        console.warn(
-          `[library:enrich] No match: index ${index} "${title}"`
-        );
+        console.warn(`[library:enrich] No match: "${title}" (${author})`);
         out.push(next);
         await sleep(200);
         continue;
@@ -61,7 +59,7 @@ async function main() {
       const olTitle = doc.title || doc.title_suggest?.[0] || "(unknown)";
       if (String(olTitle).toLowerCase() !== String(title).toLowerCase()) {
         console.warn(
-          `[library:enrich] index ${index}: "${title}" -> OL first hit "${olTitle}"`
+          `[library:enrich] "${title}" -> OL first hit "${olTitle}"`
         );
       }
 
@@ -78,7 +76,7 @@ async function main() {
       if (coverUrl) next.coverUrl = coverUrl;
       if (doc.key) next.openLibraryUrl = `https://openlibrary.org${doc.key}`;
     } catch (e) {
-      console.error(`[library:enrich] index ${index} "${title}":`, e.message || e);
+      console.error(`[library:enrich] "${title}" (${author}):`, e.message || e);
     }
 
     out.push(next);

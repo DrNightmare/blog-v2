@@ -11,7 +11,6 @@ export const metadata = listPageMetadata({
 });
 
 type Book = {
-    index: number;
     title: string;
     author: string;
     genre?: string;
@@ -19,7 +18,13 @@ type Book = {
     currentlyReading?: boolean;
     coverUrl?: string;
     openLibraryUrl?: string;
+    series?: { name: string; volume: number };
 };
+
+/** Stable React key; title+author is unique in this list. */
+function bookKey(book: Book): string {
+    return `${book.title}|${book.author}`;
+}
 
 // Type assertion for imported JSON
 const books: Book[] = booksData as Book[];
@@ -94,9 +99,9 @@ const BookList = ({ title, books }: { title: string; books: Book[] }) => (
         </div>
 
         <div className="grid gap-4 sm:grid-cols-2">
-            {books.map((book) => (
+                    {books.map((book) => (
                 <div
-                    key={book.index}
+                    key={bookKey(book)}
                     className="flex gap-3 p-4 rounded-xl bg-surface hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
                 >
                     {book.coverUrl ? (
