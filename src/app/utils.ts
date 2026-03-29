@@ -3,6 +3,9 @@ import matter from "gray-matter";
 import path from "path";
 import { cache } from "react";
 
+const ESSAYS_CONTENT_DIR = path.join(process.cwd(), "src", "content", "essays");
+const NOTES_CONTENT_DIR = path.join(process.cwd(), "src", "content", "notes");
+
 const FRONTMATTER_READ_BYTES = 16_384;
 
 async function parseFrontmatterWithBoundedRead(filePath: string) {
@@ -47,7 +50,7 @@ export function toIsoDatePublished(value: unknown): string {
 }
 
 export const getEssaysIndex = cache(async (): Promise<EssayIndexEntry[]> => {
-    const dir = path.join(process.cwd(), "src", "app", "essays");
+    const dir = ESSAYS_CONTENT_DIR;
     const mdxFiles = await getMDXFiles(dir);
     const results = await Promise.all(
         mdxFiles.map(async (fileName) => {
@@ -60,12 +63,12 @@ export const getEssaysIndex = cache(async (): Promise<EssayIndexEntry[]> => {
     return results;
 });
 
-export const getEssayBySlug = cache(async (slug: string) => {
-    const dir = path.join(process.cwd(), "src", "app", "essays");
-    const filePath = path.join(dir, `${slug}.mdx`);
+/** Full-file read for metadata only (MDX body is compiled from `src/content/essays`). */
+export const getEssayMetaBySlug = cache(async (slug: string) => {
+    const filePath = path.join(ESSAYS_CONTENT_DIR, `${slug}.mdx`);
     const fileContent = await readFile(filePath, "utf-8");
-    const { data: metadata, content } = matter(fileContent);
-    return { slug, metadata, content };
+    const { data: metadata } = matter(fileContent);
+    return { slug, metadata };
 });
 
 export const getEssaysSorted = cache(async () => {
@@ -90,7 +93,7 @@ export type NoteSitemapEntry = {
 };
 
 export const getNotesIndex = cache(async (): Promise<NoteIndexEntry[]> => {
-    const dir = path.join(process.cwd(), "src", "app", "notes");
+    const dir = NOTES_CONTENT_DIR;
     const mdxFiles = await getMDXFiles(dir);
     const results = await Promise.all(
         mdxFiles.map(async (fileName) => {
@@ -113,14 +116,6 @@ export const getNoteSitemapEntries = cache(async (): Promise<NoteSitemapEntry[]>
         const path = `/notes?page=${page}#${note.slug}`;
         return { title, path };
     });
-});
-
-export const getNoteBySlug = cache(async (slug: string) => {
-    const dir = path.join(process.cwd(), "src", "app", "notes");
-    const filePath = path.join(dir, `${slug}.mdx`);
-    const fileContent = await readFile(filePath, "utf-8");
-    const { data: metadata, content } = matter(fileContent);
-    return { slug, metadata, content };
 });
 
 export type SitemapNode = {

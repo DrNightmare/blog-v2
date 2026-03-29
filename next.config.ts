@@ -3,7 +3,6 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
-  transpilePackages: ['next-mdx-remote'],
   async headers() {
     return [
       {
@@ -20,7 +19,13 @@ const nextConfig: NextConfig = {
 };
 
 const withMDX = createMDX({
-  // Add markdown plugins here, as desired
-})
+  // String plugin names + serializable options (see remark-frontmatter v5: use 'yaml', not {})
+  options: {
+    remarkPlugins: [
+      ["remark-frontmatter", "yaml"],
+      ["remark-gfm"],
+    ],
+  },
+});
 
 export default withMDX(nextConfig);

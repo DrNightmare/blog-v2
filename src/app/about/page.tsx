@@ -1,4 +1,4 @@
-import AboutContent from '@/app/about/content.mdx';
+import AboutContent from '@/content/about.mdx';
 import { listPageMetadata } from '@/lib/sitePageMetadata';
 
 export const metadata = listPageMetadata({

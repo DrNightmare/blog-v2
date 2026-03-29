@@ -1,20 +1,13 @@
 import { notFound } from "next/navigation";
-import { getEssayBySlug, getEssaysIndex, toIsoDatePublished } from "../../utils";
-import { MDXRemote } from "next-mdx-remote/rsc";
+import { createElement } from "react";
+import { getEssayMetaBySlug, getEssaysIndex, toIsoDatePublished } from "../../utils";
+import { getEssayMdx } from "@/content/essays/registry";
 import EssayJsonLd from "@/components/EssayJsonLd";
-import CustomLink from "@/components/CustomLink";
-import Pre from "@/components/CustomPre";
-import { highlight } from "sugar-high";
-import { JSX, ReactNode } from "react";
 import type { Metadata } from "next";
 
 type EssayParam = {
     slug: string;
 };
-
-interface CodeProps extends React.HTMLAttributes<HTMLElement> {
-    children?: ReactNode;
-}
 
 export async function generateStaticParams(): Promise<EssayParam[]> {
     const essays = await getEssaysIndex();
@@ -69,26 +62,16 @@ export async function generateMetadata(
     };
 }
 
-function Code({ children, ...props }: CodeProps) {
-    const codeHTML = highlight(children as string)
-    return <code dangerouslySetInnerHTML={{ __html: codeHTML }} {...props} />
-}
-
-const components = {
-    a: (props: any) => (
-        <CustomLink {...props}>
-            {props.children}
-        </CustomLink>
-    ),
-    pre: Pre,
-    code: Code,
-};
-
 export default async function Essay({ params }: { params: Promise<EssayParam> }) {
     const { slug } = await params;
-    let essay: Awaited<ReturnType<typeof getEssayBySlug>>;
+    const EssayMdx = getEssayMdx(slug);
+    if (!EssayMdx) {
+        return notFound();
+    }
+
+    let essay: Awaited<ReturnType<typeof getEssayMetaBySlug>>;
     try {
-        essay = await getEssayBySlug(slug);
+        essay = await getEssayMetaBySlug(slug);
     } catch {
         return notFound();
     }
@@ -113,7 +96,7 @@ export default async function Essay({ params }: { params: Promise<EssayParam> })
                         <div className="justify-self-center">
                             <h1>{essay.metadata.title as string}</h1>
                         </div>
-                        <MDXRemote source={essay.content} components={components} />
+                        {createElement(EssayMdx)}
                     </article>
                 </div>
             </div>

@@ -1,6 +1,6 @@
-import { MDXRemote } from "next-mdx-remote/rsc";
-import { getNotesIndex, getNoteBySlug, NOTES_PER_PAGE } from "../utils";
-import CustomLink from "@/components/CustomLink";
+import { createElement } from "react";
+import { getNotesIndex, NOTES_PER_PAGE } from "../utils";
+import { getNoteMdx } from "@/content/notes/registry";
 import Link from "next/link";
 import { listPageMetadata } from "@/lib/sitePageMetadata";
 
@@ -9,14 +9,6 @@ export const metadata = listPageMetadata({
     description: "Short notes, drafts, and in-progress learnings.",
     path: "/notes",
 });
-
-const components = {
-    a: (props: any) => (
-        <CustomLink {...props}>
-            {props.children}
-        </CustomLink>
-    )
-};
 
 type PageProps = {
     searchParams: Promise<{ page?: string }>;
@@ -28,16 +20,11 @@ export default async function Notes({ searchParams }: PageProps) {
     const totalNotes = allNotes.length;
     const totalPages = Math.ceil(totalNotes / NOTES_PER_PAGE);
 
-    // Parse current page from URL, default to 1
     const currentPage = Math.max(1, Math.min(totalPages, parseInt(params.page || '1', 10) || 1));
 
-    // Calculate slice indices for current page
     const startIndex = (currentPage - 1) * NOTES_PER_PAGE;
     const endIndex = startIndex + NOTES_PER_PAGE;
     const paginatedIndex = allNotes.slice(startIndex, endIndex);
-    const paginatedNotes = await Promise.all(
-        paginatedIndex.map((entry) => getNoteBySlug(entry.slug))
-    );
 
     return (
         <div className="min-h-screen py-12 px-4 sm:px-6">
@@ -55,22 +42,25 @@ export default async function Notes({ searchParams }: PageProps) {
                 </div>
 
                 <div className="space-y-8">
-                    {paginatedNotes.map((note) => (
-                        <div key={note.slug} id={note.slug} className="bg-surface rounded-2xl border border-border p-8 shadow-sm hover:shadow-md transition-shadow">
+                    {paginatedIndex.map((entry) => {
+                        const NoteMdx = getNoteMdx(entry.slug);
+                        if (!NoteMdx) return null;
+                        return (
+                        <div key={entry.slug} id={entry.slug} className="bg-surface rounded-2xl border border-border p-8 shadow-sm hover:shadow-md transition-shadow">
                             <div className="flex items-center justify-between mb-6">
-                                <h2 className="text-2xl font-bold text-foreground">{note.metadata.title}</h2>
+                                <h2 className="text-2xl font-bold text-foreground">{entry.metadata.title as string}</h2>
                                 <time className="text-sm text-text-subtle font-medium bg-border-light px-3 py-1 rounded-full dark:bg-slate-800 dark:text-slate-400">
-                                    {note.metadata.date}
+                                    {entry.metadata.date as string}
                                 </time>
                             </div>
                             <article className="prose prose-slate prose-lg max-w-none prose-a:text-primary prose-a:no-underline hover:prose-a:underline dark:prose-invert">
-                                <MDXRemote source={note.content} components={components} />
+                                {createElement(NoteMdx)}
                             </article>
                         </div>
-                    ))}
+                        );
+                    })}
                 </div>
 
-                {/* Pagination Controls */}
                 {totalPages > 1 && (
                     <div className="flex items-center justify-center gap-4 mt-12">
                         {currentPage > 1 ? (
