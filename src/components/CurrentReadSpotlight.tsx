@@ -1,5 +1,3 @@
-'use client';
-
 import Image from 'next/image';
 
 type CurrentReadProps = {
@@ -28,25 +26,27 @@ export default function CurrentReadSpotlight({ title, author, coverUrl, openLibr
             <div className="absolute inset-0 bg-gradient-to-r from-primary/20 via-primary/10 to-primary/20 rounded-xl sm:rounded-2xl blur-xl animate-pulse" />
 
             <div className="relative bg-surface/80 backdrop-blur-sm border-2 border-primary/30 rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 shadow-lg overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/20 to-transparent animate-shimmer"
+                <div
+                    className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/20 to-transparent animate-shimmer"
                     style={{
                         backgroundSize: '200% 100%',
                     }}
                 />
 
                 <div className="relative z-10 flex flex-col sm:flex-row gap-4 sm:gap-6 sm:items-center">
-                    {coverUrl && (
+                    {coverUrl ? (
                         <div className="flex-shrink-0 mx-auto sm:mx-0">
                             <Image
                                 src={coverUrl}
                                 alt={`${title} cover`}
                                 width={96}
                                 height={144}
+                                priority
                                 className="rounded-lg shadow-md border border-border object-cover w-[72px] h-[108px] sm:w-24 sm:h-36"
                                 sizes="96px"
                             />
                         </div>
-                    )}
+                    ) : null}
 
                     <div className="space-y-4 flex-1 min-w-0 text-center sm:text-left">
                         <div className="flex items-center justify-center sm:justify-start gap-2">
