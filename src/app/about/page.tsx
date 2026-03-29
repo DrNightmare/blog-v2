@@ -1,4 +1,11 @@
 import AboutContent from '@/app/about/content.mdx';
+import { listPageMetadata } from '@/lib/sitePageMetadata';
+
+export const metadata = listPageMetadata({
+  title: 'About',
+  description: 'Background, interests, and how to get in touch.',
+  path: '/about',
+});
 
 export default function About() {
   return (

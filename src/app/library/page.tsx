@@ -1,5 +1,12 @@
 import booksData from './data.json';
 import CurrentReadSpotlight from '@/components/CurrentReadSpotlight';
+import { listPageMetadata } from '@/lib/sitePageMetadata';
+
+export const metadata = listPageMetadata({
+  title: 'Library',
+  description: 'Reading list and books by genre.',
+  path: '/library',
+});
 
 type Book = {
     index: number;

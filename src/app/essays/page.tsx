@@ -1,8 +1,15 @@
 import Link from "next/link";
-import { getEssays } from "../utils";
+import { getEssaysSorted } from "../utils";
+import { listPageMetadata } from "@/lib/sitePageMetadata";
+
+export const metadata = listPageMetadata({
+    title: "Essays",
+    description: "Long form writing on engineering, software, and ideas.",
+    path: "/essays",
+});
 
 export default async function Essays() {
-    const essays = (await getEssays()).sort((a, b) => new Date(b.metadata.date).getTime() - new Date(a.metadata.date).getTime());
+    const essays = await getEssaysSorted();
 
     return (
         <div className="min-h-screen py-12 px-4 sm:px-6">

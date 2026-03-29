@@ -1,7 +1,14 @@
 import { MDXRemote } from "next-mdx-remote/rsc";
-import { getNotes } from "../utils";
+import { getNotesIndex, getNoteBySlug } from "../utils";
 import CustomLink from "@/components/CustomLink";
 import Link from "next/link";
+import { listPageMetadata } from "@/lib/sitePageMetadata";
+
+export const metadata = listPageMetadata({
+    title: "Notes",
+    description: "Short notes, drafts, and in-progress learnings.",
+    path: "/notes",
+});
 
 const NOTES_PER_PAGE = 3;
 
@@ -19,7 +26,7 @@ type PageProps = {
 
 export default async function Notes({ searchParams }: PageProps) {
     const params = await searchParams;
-    const allNotes = (await getNotes()).slice().reverse();
+    const allNotes = (await getNotesIndex()).slice().reverse();
     const totalNotes = allNotes.length;
     const totalPages = Math.ceil(totalNotes / NOTES_PER_PAGE);
 
@@ -29,7 +36,10 @@ export default async function Notes({ searchParams }: PageProps) {
     // Calculate slice indices for current page
     const startIndex = (currentPage - 1) * NOTES_PER_PAGE;
     const endIndex = startIndex + NOTES_PER_PAGE;
-    const paginatedNotes = allNotes.slice(startIndex, endIndex);
+    const paginatedIndex = allNotes.slice(startIndex, endIndex);
+    const paginatedNotes = await Promise.all(
+        paginatedIndex.map((entry) => getNoteBySlug(entry.slug))
+    );
 
     return (
         <div className="min-h-screen py-12 px-4 sm:px-6">

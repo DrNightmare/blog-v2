@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useRef, useMemo } from 'react';
+import { useEffect, useState, useRef, useMemo, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { useTheme } from 'next-themes';
 import { useColorScheme } from '@/hooks/useColorScheme';
@@ -63,6 +63,15 @@ export default function CommandPaletteModal({ isOpen, setIsOpen }: Props) {
         );
     }, [query, commands]);
 
+    const handleSelect = useCallback((command: Command) => {
+        setIsOpen(false);
+        if (command.action) {
+            command.action();
+        } else if (command.href) {
+            router.push(command.href);
+        }
+    }, [router, setIsOpen]);
+
     // Reset state and focus input when mounted (which means opened)
     useEffect(() => {
         setQuery('');
@@ -92,16 +101,7 @@ export default function CommandPaletteModal({ isOpen, setIsOpen }: Props) {
 
         window.addEventListener('keydown', onKeyDown);
         return () => window.removeEventListener('keydown', onKeyDown);
-    }, [selectedIndex, filteredCommands, setIsOpen]);
-
-    const handleSelect = (command: Command) => {
-        setIsOpen(false);
-        if (command.action) {
-            command.action();
-        } else if (command.href) {
-            router.push(command.href);
-        }
-    };
+    }, [selectedIndex, filteredCommands, setIsOpen, handleSelect]);
 
     return (
         <div className="fixed inset-0 z-[100] overflow-y-auto p-4 sm:p-6 md:p-20">

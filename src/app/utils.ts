@@ -1,7 +1,31 @@
-import { readdir, readFile } from "fs/promises";
+import { open, readdir, readFile } from "fs/promises";
 import matter from "gray-matter";
 import path from "path";
 import { cache } from "react";
+
+const FRONTMATTER_READ_BYTES = 16_384;
+
+async function parseFrontmatterWithBoundedRead(filePath: string) {
+    const fh = await open(filePath, "r");
+    try {
+        const buf = Buffer.alloc(FRONTMATTER_READ_BYTES);
+        const { bytesRead } = await fh.read(buf, 0, FRONTMATTER_READ_BYTES, 0);
+        const partial = buf.subarray(0, bytesRead).toString("utf-8");
+        const first = partial.indexOf("---");
+        if (first === -1) {
+            const full = await readFile(filePath, "utf-8");
+            return matter(full);
+        }
+        const second = partial.indexOf("---", first + 3);
+        if (second === -1) {
+            const full = await readFile(filePath, "utf-8");
+            return matter(full);
+        }
+        return matter(partial);
+    } finally {
+        await fh.close();
+    }
+}
 
 async function getMDXFiles(dir: string) {
     const files = await readdir(dir);
@@ -36,8 +60,40 @@ export const getEssays = cache(async () => {
     return getMDXData(path.join(process.cwd(), 'src', 'app', 'essays'));
 });
 
-export const getNotes = cache(async () => {
-    return getMDXData(path.join(process.cwd(), 'src', 'app', 'notes'));
+export const getEssaysSorted = cache(async () => {
+    const essays = await getEssays();
+    return essays.slice().sort((a, b) => {
+        const da = new Date(a.metadata.date).getTime();
+        const db = new Date(b.metadata.date).getTime();
+        return db - da;
+    });
+});
+
+export type NoteIndexEntry = {
+    slug: string;
+    metadata: Record<string, unknown>;
+};
+
+export const getNotesIndex = cache(async (): Promise<NoteIndexEntry[]> => {
+    const dir = path.join(process.cwd(), "src", "app", "notes");
+    const mdxFiles = await getMDXFiles(dir);
+    const results = await Promise.all(
+        mdxFiles.map(async (fileName) => {
+            const filePath = path.join(dir, fileName);
+            const slug = path.basename(fileName, path.extname(fileName));
+            const { data: metadata } = await parseFrontmatterWithBoundedRead(filePath);
+            return { slug, metadata };
+        })
+    );
+    return results;
+});
+
+export const getNoteBySlug = cache(async (slug: string) => {
+    const dir = path.join(process.cwd(), "src", "app", "notes");
+    const filePath = path.join(dir, `${slug}.mdx`);
+    const fileContent = await readFile(filePath, "utf-8");
+    const { data: metadata, content } = matter(fileContent);
+    return { slug, metadata, content };
 });
 
 export type SitemapNode = {
@@ -92,7 +148,7 @@ export const getProjects = cache(async () => {
 
 export const getSitemapData = cache(async (): Promise<SitemapNode> => {
     const essays = await getEssays();
-    const notes = await getNotes();
+    const notes = await getNotesIndex();
     const projects = await getProjects();
 
     const essayNodes: SitemapNode[] = essays.map(essay => ({
@@ -105,8 +161,10 @@ export const getSitemapData = cache(async (): Promise<SitemapNode> => {
     const reversedNotes = notes.slice().reverse();
     const noteNodes: SitemapNode[] = reversedNotes.map((note, index) => {
         const page = Math.floor(index / 3) + 1;
+        const title =
+            (note.metadata.title as string | undefined) || note.slug;
         return {
-            title: note.metadata.title || note.slug,
+            title,
             url: `/notes?page=${page}#${note.slug}`
         };
     });

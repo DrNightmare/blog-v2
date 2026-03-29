@@ -1,5 +1,12 @@
 import Link from "next/link";
 import { getProjects } from "../utils";
+import { listPageMetadata } from "@/lib/sitePageMetadata";
+
+export const metadata = listPageMetadata({
+    title: "Projects",
+    description: "Interactive experiments, games, tools, and open source work.",
+    path: "/projects",
+});
 
 export default async function Projects() {
     const projects = await getProjects();

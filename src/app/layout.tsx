@@ -27,17 +27,29 @@ export const metadata: Metadata = {
     default: "Arvind Prakash",
     template: "%s | Arvind Prakash",
   },
-  description: "Arvind Prakash's blog",
+  description:
+    "Staff engineer building elegant systems. Essays, notes, projects, and experiments.",
   openGraph: {
     title: "Arvind Prakash",
-    description: "Arvind Prakash's blog",
+    description:
+      "Staff engineer building elegant systems. Essays, notes, projects, and experiments.",
     type: "website",
     url: "/",
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "Arvind Prakash",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Arvind Prakash",
-    description: "Arvind Prakash's blog",
+    description:
+      "Staff engineer building elegant systems. Essays, notes, projects, and experiments.",
+    images: ["/twitter-image"],
   },
 };
 

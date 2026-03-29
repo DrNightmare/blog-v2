@@ -19,6 +19,26 @@ export default function TravelMap({ locations, routes = [], activities = [] }: T
     const svgRef = useRef<SVGSVGElement>(null);
     const [tooltip, setTooltip] = useState<{ x: number; y: number; content: string } | null>(null);
     const [mapData, setMapData] = useState<any>(null);
+    const [containerWidth, setContainerWidth] = useState(0);
+
+    useEffect(() => {
+        const el = containerRef.current;
+        if (!el) return;
+
+        const update = () => setContainerWidth(el.clientWidth);
+
+        update();
+        let debounceTimer: ReturnType<typeof setTimeout> | undefined;
+        const ro = new ResizeObserver(() => {
+            if (debounceTimer) clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(update, 120);
+        });
+        ro.observe(el);
+        return () => {
+            ro.disconnect();
+            if (debounceTimer) clearTimeout(debounceTimer);
+        };
+    }, []);
 
     // Fetch Map Data
     useEffect(() => {
@@ -35,7 +55,9 @@ export default function TravelMap({ locations, routes = [], activities = [] }: T
     useEffect(() => {
         if (!mapData || !containerRef.current || !svgRef.current) return;
 
-        const width = containerRef.current.clientWidth;
+        const width =
+            containerWidth > 0 ? containerWidth : containerRef.current.clientWidth;
+        if (width <= 0) return;
         const height = Math.min(width * 0.6, 600); // Aspect ratio
 
         const svg = select(svgRef.current);
@@ -233,23 +255,7 @@ export default function TravelMap({ locations, routes = [], activities = [] }: T
             }
         });
 
-    }, [mapData, locations, routes, activities]);
-
-    // Resize Handler
-    useEffect(() => {
-        const handleResize = () => {
-            // Force re-render logic if needed, or rely on key 
-            // Ideally we just re-run the draw effect.
-            // Simplest is to just toggle a state or let the effect dependency on dimensions trigger.
-            // But layout changes happen outside react.
-            // let's reload the page or debounce... 
-            // For now, simpler: reload on resize isn't great. 
-            // We can assume the effect runs if we add window width to dependency, 
-            // but that causes full redraws. D3 is fast enough for this simple map.
-        };
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
+    }, [mapData, locations, routes, activities, containerWidth]);
 
     return (
         <div ref={containerRef} className="w-full relative overflow-hidden bg-slate-50 dark:bg-slate-900/50 rounded-2xl border border-slate-200 dark:border-slate-800">
