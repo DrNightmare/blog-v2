@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { select } from 'd3-selection';
 import { geoNaturalEarth1, geoPath } from 'd3-geo';
 import { zoom, zoomTransform } from 'd3-zoom';
@@ -154,9 +155,10 @@ export default function TravelMap({ locations, routes = [], activities = [] }: T
                     .on("mouseenter", (event, d: any) => {
                         d.hovered = true;
                         const k = zoomTransform(svgRef.current!).k;
+                        // clientX/Y match position:fixed (viewport); pageX/Y include scroll and misplace the tooltip
                         setTooltip({
-                            x: event.pageX,
-                            y: event.pageY,
+                            x: event.clientX,
+                            y: event.clientY,
                             content: route.description || `${route.from} → ${route.to}`
                         });
                         select(event.currentTarget)
@@ -196,8 +198,8 @@ export default function TravelMap({ locations, routes = [], activities = [] }: T
                         const k = zoomTransform(svgRef.current!).k;
 
                         setTooltip({
-                            x: event.pageX,
-                            y: event.pageY,
+                            x: event.clientX,
+                            y: event.clientY,
                             content: activity.name
                         });
                         select(event.currentTarget)
@@ -236,8 +238,8 @@ export default function TravelMap({ locations, routes = [], activities = [] }: T
                         d.hovered = true;
                         const k = zoomTransform(svgRef.current!).k;
                         setTooltip({
-                            x: event.pageX,
-                            y: event.pageY,
+                            x: event.clientX,
+                            y: event.clientY,
                             content: loc.name
                         });
                         select(event.currentTarget)
@@ -261,15 +263,23 @@ export default function TravelMap({ locations, routes = [], activities = [] }: T
         <div ref={containerRef} className="w-full relative overflow-hidden bg-slate-50 dark:bg-slate-900/50 rounded-2xl border border-slate-200 dark:border-slate-800">
             <svg ref={svgRef} className="w-full block touch-pan-x touch-pan-y"></svg>
 
-            {/* Tooltip */}
-            {tooltip && (
-                <div
-                    className="fixed z-50 px-3 py-1 bg-slate-900 text-white text-xs font-bold rounded shadow-lg pointer-events-none transform -translate-x-1/2 -translate-y-full mt-[-8px]"
-                    style={{ left: tooltip.x, top: tooltip.y }}
-                >
-                    {tooltip.content}
-                </div>
-            )}
+            {/* Tooltip: portaled to body so position:fixed is always viewport-based (avoids
+                wrong offsets when an ancestor creates a containing block, e.g. transform/filter). */}
+            {tooltip &&
+                typeof document !== 'undefined' &&
+                createPortal(
+                    <div
+                        className="pointer-events-none fixed z-[9999] max-w-xs px-3 py-1 bg-slate-900 text-white text-xs font-bold rounded shadow-lg"
+                        style={{
+                            left: tooltip.x,
+                            top: tooltip.y,
+                            transform: 'translate(-50%, calc(-100% - 8px))',
+                        }}
+                    >
+                        {tooltip.content}
+                    </div>,
+                    document.body
+                )}
 
             <div className="absolute bottom-4 right-4 text-[10px] text-slate-400">
                 Zoom & Pan Enabled
