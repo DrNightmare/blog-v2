@@ -115,6 +115,15 @@ export const getNotesIndex = cache(async (): Promise<NoteIndexEntry[]> => {
     return results;
 });
 
+/** 1-based list page for `/notes?page=&slug=#slug`, matching notes index sort (newest first). */
+export const getNoteListPageForSlug = cache(async (slug: string): Promise<number> => {
+    const notes = await getNotesIndex();
+    const reversed = notes.slice().reverse();
+    const idx = reversed.findIndex((n) => n.slug === slug);
+    if (idx === -1) return 1;
+    return Math.floor(idx / NOTES_PER_PAGE) + 1;
+});
+
 export const getNoteSitemapEntries = cache(async (): Promise<NoteSitemapEntry[]> => {
     const notes = await getNotesIndex();
     const reversedNotes = notes.slice().reverse();
