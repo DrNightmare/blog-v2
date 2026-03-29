@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { getEssayBySlug, getEssaysIndex } from "../../utils";
+import { getEssayBySlug, getEssaysIndex, toIsoDatePublished } from "../../utils";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import EssayJsonLd from "@/components/EssayJsonLd";
 import CustomLink from "@/components/CustomLink";
@@ -25,21 +25,20 @@ export async function generateMetadata(
     { params }: { params: Promise<EssayParam> }
 ): Promise<Metadata> {
     const { slug } = await params;
-    let essay: Awaited<ReturnType<typeof getEssayBySlug>>;
-    try {
-        essay = await getEssayBySlug(slug);
-    } catch {
+    const essays = await getEssaysIndex();
+    const entry = essays.find((e) => e.slug === slug);
+    if (!entry) {
         return {
             title: "Essay not found",
             description: "The requested essay could not be found.",
         };
     }
 
-    const title = String(essay.metadata.title || essay.slug);
+    const title = String(entry.metadata.title || entry.slug);
     const description = String(
-        essay.metadata.summary || "Long form writing by Arvind Prakash."
+        entry.metadata.summary || "Long form writing by Arvind Prakash."
     );
-    const url = `/essays/${essay.slug}`;
+    const url = `/essays/${entry.slug}`;
 
     return {
         title,
@@ -98,7 +97,7 @@ export default async function Essay({ params }: { params: Promise<EssayParam> })
     const description = String(
         essay.metadata.summary || "Long form writing by Arvind Prakash."
     );
-    const datePublished = String(essay.metadata.date ?? "");
+    const datePublished = toIsoDatePublished(essay.metadata.date);
 
     return (
         <>

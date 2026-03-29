@@ -37,6 +37,15 @@ export type EssayIndexEntry = {
     metadata: Record<string, unknown>;
 };
 
+/** ISO 8601 when parsable; otherwise original string; empty when absent. */
+export function toIsoDatePublished(value: unknown): string {
+    if (value == null || value === "") return "";
+    const s = String(value);
+    const d = new Date(s);
+    if (!Number.isNaN(d.getTime())) return d.toISOString();
+    return s;
+}
+
 export const getEssaysIndex = cache(async (): Promise<EssayIndexEntry[]> => {
     const dir = path.join(process.cwd(), "src", "app", "essays");
     const mdxFiles = await getMDXFiles(dir);
