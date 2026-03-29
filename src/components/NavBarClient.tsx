@@ -7,9 +7,11 @@ import { useState, useEffect, useRef } from 'react';
 
 import ThemeToggle from './ThemeToggle';
 import ColorSchemeSelector from './ColorSchemeSelector';
+import { MORE_NAV_LINKS } from '@/lib/siteRoutes';
 
 export default function NavBarClient() {
   const pathname = usePathname();
+  const moreNavActive = MORE_NAV_LINKS.some((link) => pathname.startsWith(link.href));
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMoreDropdownOpen, setIsMoreDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -62,7 +64,7 @@ export default function NavBarClient() {
             <button
               type="button"
               onClick={() => setIsMoreDropdownOpen(!isMoreDropdownOpen)}
-              className={`text-sm font-medium transition-colors inline-flex items-center ${pathname.startsWith('/resume') || pathname.startsWith('/sitemap')
+              className={`text-sm font-medium transition-colors inline-flex items-center ${moreNavActive
                   ? 'text-primary font-semibold'
                   : 'text-text-secondary hover:text-primary'
                 }`}
@@ -71,27 +73,21 @@ export default function NavBarClient() {
             </button>
 
             <div
-              className={`absolute top-full right-0 mt-1 w-36 bg-surface border border-border rounded-lg shadow-lg overflow-hidden transition-all duration-200 ${isMoreDropdownOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2 pointer-events-none'
+              className={`absolute top-full right-0 mt-1 min-w-36 bg-surface border border-border rounded-lg shadow-lg overflow-hidden transition-all duration-200 ${isMoreDropdownOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2 pointer-events-none'
                 }`}
             >
-              <Link
-                href="/resume"
-                className={`block px-4 py-2 text-sm transition-colors ${pathname.startsWith('/resume')
-                  ? 'text-primary font-semibold bg-background/50'
-                  : 'text-text-secondary hover:text-primary hover:bg-background/50'
-                  }`}
-              >
-                Resume
-              </Link>
-              <Link
-                href="/sitemap"
-                className={`block px-4 py-2 text-sm transition-colors ${pathname.startsWith('/sitemap')
-                  ? 'text-primary font-semibold bg-background/50'
-                  : 'text-text-secondary hover:text-primary hover:bg-background/50'
-                  }`}
-              >
-                Sitemap
-              </Link>
+              {MORE_NAV_LINKS.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`block px-4 py-2 text-sm transition-colors ${pathname.startsWith(link.href)
+                    ? 'text-primary font-semibold bg-background/50'
+                    : 'text-text-secondary hover:text-primary hover:bg-background/50'
+                    }`}
+                >
+                  {link.label}
+                </Link>
+              ))}
             </div>
           </div>
         </div>
@@ -131,8 +127,11 @@ export default function NavBarClient() {
 
             <div className="w-24 h-px bg-border/50 my-2"></div>
 
-            <MobileNavLink href="/resume" activePath={pathname}>Resume</MobileNavLink>
-            <MobileNavLink href="/sitemap" activePath={pathname}>Sitemap</MobileNavLink>
+            {MORE_NAV_LINKS.map((link) => (
+              <MobileNavLink key={link.href} href={link.href} activePath={pathname}>
+                {link.label}
+              </MobileNavLink>
+            ))}
           </nav>
 
           <div className="flex items-center gap-4 pt-8 border-t border-border/50 w-full justify-center">

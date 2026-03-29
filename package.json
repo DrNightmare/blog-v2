@@ -6,7 +6,8 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint ."
+    "lint": "eslint . && node scripts/check-content-registry.mjs",
+    "check:content": "node scripts/check-content-registry.mjs"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.1.0",

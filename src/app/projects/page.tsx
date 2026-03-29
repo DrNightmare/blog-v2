@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { ProjectCard } from "@/data/projects";
 import { getProjects } from "../utils";
 import { listPageMetadata } from "@/lib/sitePageMetadata";
 import ProjectsJsonLd from "@/components/ProjectsJsonLd";
@@ -38,7 +39,7 @@ export default async function Projects() {
                 </div>
 
                 <div className="grid gap-6 md:grid-cols-2">
-                    {projects.map((project: any) => {
+                    {projects.map((project: ProjectCard) => {
                         const isExternal = !!project.externalUrl;
                         return (
                             <Link

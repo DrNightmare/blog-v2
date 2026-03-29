@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useTheme } from 'next-themes';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { colorSchemes } from '@/config/colorSchemes';
+import { COMMAND_PALETTE_NAV } from '@/lib/siteRoutes';
 
 type Command = {
     id: string;
@@ -28,15 +29,12 @@ export default function CommandPaletteModal({ isOpen, setIsOpen }: Props) {
     const { setColorScheme } = useColorScheme();
 
     const commands: Command[] = useMemo(() => {
-        const navCommands: Command[] = [
-            { id: 'home', name: 'Home', href: '/', section: 'Navigation' },
-            { id: 'essays', name: 'Essays', href: '/essays', section: 'Navigation' },
-            { id: 'notes', name: 'Notes', href: '/notes', section: 'Navigation' },
-            { id: 'projects', name: 'Projects', href: '/projects', section: 'Navigation' },
-            { id: 'library', name: 'Library', href: '/library', section: 'Navigation' },
-            { id: 'about', name: 'About', href: '/about', section: 'Navigation' },
-            { id: 'resume', name: 'Resume', href: '/resume', section: 'Navigation' },
-        ];
+        const navCommands: Command[] = COMMAND_PALETTE_NAV.map((item) => ({
+            id: item.id,
+            name: item.name,
+            href: item.href,
+            section: 'Navigation',
+        }));
 
         const themeCommands: Command[] = [
             { id: 'theme-light', name: 'Switch to Light Mode', action: () => setTheme('light'), section: 'Theme' },

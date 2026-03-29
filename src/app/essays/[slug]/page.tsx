@@ -85,7 +85,7 @@ export default async function Essay({ params }: { params: Promise<EssayParam> })
                 <div className="flex-col">
                     <article className="prose dark:prose-invert">
                         <div className="justify-self-center">
-                            <h1>{essay.metadata.title as string}</h1>
+                            <h1>{essay.metadata.title ?? essay.slug}</h1>
                         </div>
                         {createElement(EssayMdx)}
                     </article>

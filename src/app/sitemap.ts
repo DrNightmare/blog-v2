@@ -4,6 +4,7 @@ import {
   getProjects,
   getNoteSitemapEntries,
 } from "@/app/utils";
+import { STATIC_SITEMAP_PATHS } from "@/lib/siteRoutes";
 
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
@@ -16,19 +17,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const lastModified = new Date();
 
-  const staticPaths = [
-    "",
-    "/about",
-    "/essays",
-    "/notes",
-    "/projects",
-    "/library",
-    "/resume",
-    "/travel",
-    "/sitemap",
-  ];
-
-  const entries: MetadataRoute.Sitemap = staticPaths.map((path) => ({
+  const entries: MetadataRoute.Sitemap = STATIC_SITEMAP_PATHS.map((path) => ({
     url: new URL(path, baseUrl).href,
     lastModified,
   }));

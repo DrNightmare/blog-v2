@@ -58,9 +58,9 @@ export default async function Notes({ searchParams }: PageProps) {
                         return (
                         <div key={entry.slug} id={entry.slug} className="bg-surface rounded-2xl border border-border p-8 shadow-sm hover:shadow-md transition-shadow">
                             <div className="flex items-center justify-between mb-6">
-                                <h2 className="text-2xl font-bold text-foreground">{entry.metadata.title as string}</h2>
+                                <h2 className="text-2xl font-bold text-foreground">{entry.metadata.title ?? entry.slug}</h2>
                                 <time className="text-sm text-text-subtle font-medium bg-border-light px-3 py-1 rounded-full dark:bg-slate-800 dark:text-slate-400">
-                                    {entry.metadata.date as string}
+                                    {entry.metadata.date ?? ""}
                                 </time>
                             </div>
                             <article className="prose prose-slate prose-lg max-w-none prose-a:text-primary prose-a:no-underline hover:prose-a:underline dark:prose-invert">
