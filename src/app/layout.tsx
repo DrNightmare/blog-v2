@@ -29,11 +29,11 @@ export const metadata: Metadata = {
     template: "%s | Arvind Prakash",
   },
   description:
-    "Staff engineer building elegant systems. Essays, notes, projects, and experiments.",
+    "Head of engineering building elegant systems. Essays, notes, projects, and experiments.",
   openGraph: {
     title: "Arvind Prakash",
     description:
-      "Staff engineer building elegant systems. Essays, notes, projects, and experiments.",
+      "Head of engineering building elegant systems. Essays, notes, projects, and experiments.",
     type: "website",
     url: "/",
     images: [
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Arvind Prakash",
     description:
-      "Staff engineer building elegant systems. Essays, notes, projects, and experiments.",
+      "Head of engineering building elegant systems. Essays, notes, projects, and experiments.",
     images: ["/twitter-image"],
   },
 };

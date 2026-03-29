@@ -30,14 +30,14 @@ export function listPageMetadata(opts: ListPageOpts): Metadata {
 export const homeMetadata: Metadata = {
   title: { absolute: "Arvind Prakash" },
   description:
-    "Staff engineer building elegant systems. Essays, notes, projects, and experiments.",
+    "Head of engineering building elegant systems. Essays, notes, projects, and experiments.",
   alternates: {
     canonical: "/",
   },
   openGraph: {
     title: "Arvind Prakash",
     description:
-      "Staff engineer building elegant systems. Essays, notes, projects, and experiments.",
+      "Head of engineering building elegant systems. Essays, notes, projects, and experiments.",
     type: "website",
     url: "/",
   },
@@ -45,6 +45,6 @@ export const homeMetadata: Metadata = {
     card: "summary_large_image",
     title: "Arvind Prakash",
     description:
-      "Staff engineer building elegant systems. Essays, notes, projects, and experiments.",
+      "Head of engineering building elegant systems. Essays, notes, projects, and experiments.",
   },
 };

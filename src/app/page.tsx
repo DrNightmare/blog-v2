@@ -14,7 +14,7 @@ export default function Home() {
             Hi, I'm Arvind.
           </h2>
           <p className="text-xl sm:text-2xl text-text-secondary font-light leading-relaxed max-w-2xl">
-            Staff Engineer at <span className="text-primary font-medium">Refyne</span>.
+            Head of Engineering at <span className="text-primary font-medium">Karya</span>.
             I enjoy solving complex problems, building elegant systems, and exploring the intersection of art and code.
           </p>
         </div>

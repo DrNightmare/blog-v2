@@ -9,7 +9,7 @@ import SkillBadge from '@/components/resume/SkillBadge';
 
 export const metadata: Metadata = {
     title: 'Resume | Arvind Prakash',
-    description: 'Staff Engineer Resume of Arvind Prakash',
+    description: 'Professional resume of Arvind Prakash',
 };
 
 export default function ResumePage() {
@@ -18,10 +18,19 @@ export default function ResumePage() {
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
                 <Section title="Work Experience">
                     <ExperienceCard
+                        role="HEAD OF ENGINEERING"
+                        company="Karya"
+                        location="Bangalore, India"
+                        date="Feb. 2026 – Present"
+                        descriptions={[
+                            "Leading engineering at Karya."
+                        ]}
+                    />
+                    <ExperienceCard
                         role="STAFF ENGINEER"
                         company="Refyne"
                         location="Bangalore, India"
-                        date="Nov. 2021 – Present"
+                        date="Nov. 2021 – Jan. 2026"
                         descriptions={[
                             "Led an end‑to‑end project to in‑place encrypt sensitive fields using MongoDB CSFLE, including migration across multiple fields and collections in production. This was done to ensure compliance with data security standards.",
                             "Delivered several critical features and optimizations to improve platform robustness; ran a Mongo query optimization program to reduce bottlenecks.",
