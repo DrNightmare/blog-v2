@@ -1,9 +1,17 @@
-import { getEssays, getProjects } from "@/app/utils";
+import {
+  getEssaysIndex,
+  getProjects,
+  getNoteSitemapEntries,
+} from "@/app/utils";
 
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
 export async function GET() {
-  const [essays, projects] = await Promise.all([getEssays(), getProjects()]);
+  const [essays, projects, noteEntries] = await Promise.all([
+    getEssaysIndex(),
+    getProjects(),
+    getNoteSitemapEntries(),
+  ]);
   const now = new Date().toISOString();
 
   const staticPaths = [
@@ -23,7 +31,13 @@ export async function GET() {
     .map((project) => `/projects/${project.slug}`);
 
   const essayPaths = essays.map((essay) => `/essays/${essay.slug}`);
-  const allPaths = [...staticPaths, ...essayPaths, ...internalProjectPaths];
+  const notePaths = noteEntries.map((entry) => entry.path);
+  const allPaths = [
+    ...staticPaths,
+    ...essayPaths,
+    ...notePaths,
+    ...internalProjectPaths,
+  ];
 
   const urlsXml = allPaths
     .map(

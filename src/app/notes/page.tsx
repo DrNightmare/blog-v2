@@ -1,5 +1,5 @@
 import { MDXRemote } from "next-mdx-remote/rsc";
-import { getNotesIndex, getNoteBySlug } from "../utils";
+import { getNotesIndex, getNoteBySlug, NOTES_PER_PAGE } from "../utils";
 import CustomLink from "@/components/CustomLink";
 import Link from "next/link";
 import { listPageMetadata } from "@/lib/sitePageMetadata";
@@ -9,8 +9,6 @@ export const metadata = listPageMetadata({
     description: "Short notes, drafts, and in-progress learnings.",
     path: "/notes",
 });
-
-const NOTES_PER_PAGE = 3;
 
 const components = {
     a: (props: any) => (

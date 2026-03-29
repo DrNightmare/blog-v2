@@ -32,46 +32,52 @@ async function getMDXFiles(dir: string) {
     return files.filter((file) => path.extname(file) === '.mdx');
 }
 
-async function getMDXData(dir: string) {
-    const mdxFiles = await getMDXFiles(dir);
+export type EssayIndexEntry = {
+    slug: string;
+    metadata: Record<string, unknown>;
+};
 
+export const getEssaysIndex = cache(async (): Promise<EssayIndexEntry[]> => {
+    const dir = path.join(process.cwd(), "src", "app", "essays");
+    const mdxFiles = await getMDXFiles(dir);
     const results = await Promise.all(
         mdxFiles.map(async (fileName) => {
             const filePath = path.join(dir, fileName);
-            const fileContent = await readFile(filePath, 'utf-8');
-
-            const { data: metadata, content } = matter(fileContent);
-
             const slug = path.basename(fileName, path.extname(fileName));
-
-            return {
-                metadata,
-                slug,
-                content,
-            };
+            const { data: metadata } = await parseFrontmatterWithBoundedRead(filePath);
+            return { slug, metadata };
         })
     );
-
     return results;
-}
+});
 
-// Cache the results to avoid re-reading files during the same request
-export const getEssays = cache(async () => {
-    return getMDXData(path.join(process.cwd(), 'src', 'app', 'essays'));
+export const getEssayBySlug = cache(async (slug: string) => {
+    const dir = path.join(process.cwd(), "src", "app", "essays");
+    const filePath = path.join(dir, `${slug}.mdx`);
+    const fileContent = await readFile(filePath, "utf-8");
+    const { data: metadata, content } = matter(fileContent);
+    return { slug, metadata, content };
 });
 
 export const getEssaysSorted = cache(async () => {
-    const essays = await getEssays();
+    const essays = await getEssaysIndex();
     return essays.slice().sort((a, b) => {
-        const da = new Date(a.metadata.date).getTime();
-        const db = new Date(b.metadata.date).getTime();
+        const da = new Date(a.metadata.date as string).getTime();
+        const db = new Date(b.metadata.date as string).getTime();
         return db - da;
     });
 });
 
+export const NOTES_PER_PAGE = 3;
+
 export type NoteIndexEntry = {
     slug: string;
     metadata: Record<string, unknown>;
+};
+
+export type NoteSitemapEntry = {
+    title: string;
+    path: string;
 };
 
 export const getNotesIndex = cache(async (): Promise<NoteIndexEntry[]> => {
@@ -86,6 +92,18 @@ export const getNotesIndex = cache(async (): Promise<NoteIndexEntry[]> => {
         })
     );
     return results;
+});
+
+export const getNoteSitemapEntries = cache(async (): Promise<NoteSitemapEntry[]> => {
+    const notes = await getNotesIndex();
+    const reversedNotes = notes.slice().reverse();
+    return reversedNotes.map((note, index) => {
+        const page = Math.floor(index / NOTES_PER_PAGE) + 1;
+        const title =
+            (note.metadata.title as string | undefined) || note.slug;
+        const path = `/notes?page=${page}#${note.slug}`;
+        return { title, path };
+    });
 });
 
 export const getNoteBySlug = cache(async (slug: string) => {
@@ -147,27 +165,19 @@ export const getProjects = cache(async () => {
 });
 
 export const getSitemapData = cache(async (): Promise<SitemapNode> => {
-    const essays = await getEssays();
-    const notes = await getNotesIndex();
+    const essays = await getEssaysIndex();
+    const noteEntries = await getNoteSitemapEntries();
     const projects = await getProjects();
 
-    const essayNodes: SitemapNode[] = essays.map(essay => ({
-        title: essay.metadata.title || essay.slug,
-        url: `/essays/${essay.slug}`
+    const essayNodes: SitemapNode[] = essays.map((essay) => ({
+        title: (essay.metadata.title as string | undefined) || essay.slug,
+        url: `/essays/${essay.slug}`,
     }));
 
-    // Notes are displayed in reverse order, 3 per page.
-    // We need to calculate the page number for each note to link correctly.
-    const reversedNotes = notes.slice().reverse();
-    const noteNodes: SitemapNode[] = reversedNotes.map((note, index) => {
-        const page = Math.floor(index / 3) + 1;
-        const title =
-            (note.metadata.title as string | undefined) || note.slug;
-        return {
-            title,
-            url: `/notes?page=${page}#${note.slug}`
-        };
-    });
+    const noteNodes: SitemapNode[] = noteEntries.map((entry) => ({
+        title: entry.title,
+        url: entry.path,
+    }));
 
     const projectNodes: SitemapNode[] = projects.map(project => ({
         title: project.title,

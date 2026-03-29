@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
-import { getEssays } from "../../utils";
+import { getEssayBySlug, getEssaysIndex } from "../../utils";
 import { MDXRemote } from "next-mdx-remote/rsc";
+import EssayJsonLd from "@/components/EssayJsonLd";
 import CustomLink from "@/components/CustomLink";
 import Pre from "@/components/CustomPre";
 import { highlight } from "sugar-high";
@@ -16,18 +17,18 @@ interface CodeProps extends React.HTMLAttributes<HTMLElement> {
 }
 
 export async function generateStaticParams(): Promise<EssayParam[]> {
-    const essays = await getEssays();
-    return essays.map(essay => ({ slug: essay.slug }));
+    const essays = await getEssaysIndex();
+    return essays.map((essay) => ({ slug: essay.slug }));
 }
 
 export async function generateMetadata(
     { params }: { params: Promise<EssayParam> }
 ): Promise<Metadata> {
     const { slug } = await params;
-    const essays = await getEssays();
-    const essay = essays.find((item) => item.slug === slug);
-
-    if (!essay) {
+    let essay: Awaited<ReturnType<typeof getEssayBySlug>>;
+    try {
+        essay = await getEssayBySlug(slug);
+    } catch {
         return {
             title: "Essay not found",
             description: "The requested essay could not be found.",
@@ -86,22 +87,37 @@ const components = {
 
 export default async function Essay({ params }: { params: Promise<EssayParam> }) {
     const { slug } = await params;
-    const essays = await getEssays();
-    const essay = essays.find(essay => essay.slug === slug);
-    if (!essay) {
+    let essay: Awaited<ReturnType<typeof getEssayBySlug>>;
+    try {
+        essay = await getEssayBySlug(slug);
+    } catch {
         return notFound();
     }
 
+    const title = String(essay.metadata.title || essay.slug);
+    const description = String(
+        essay.metadata.summary || "Long form writing by Arvind Prakash."
+    );
+    const datePublished = String(essay.metadata.date ?? "");
+
     return (
-        <div className="flex justify-center m-5">
-            <div className="flex-col">
-                <article className="prose dark:prose-invert">
-                    <div className="justify-self-center">
-                        <h1>{essay.metadata.title}</h1>
-                    </div>
-                    <MDXRemote source={essay.content} components={components} />
-                </article>
+        <>
+            <EssayJsonLd
+                slug={essay.slug}
+                title={title}
+                description={description}
+                datePublished={datePublished}
+            />
+            <div className="flex justify-center m-5">
+                <div className="flex-col">
+                    <article className="prose dark:prose-invert">
+                        <div className="justify-self-center">
+                            <h1>{essay.metadata.title as string}</h1>
+                        </div>
+                        <MDXRemote source={essay.content} components={components} />
+                    </article>
+                </div>
             </div>
-        </div>
+        </>
     );
 }
