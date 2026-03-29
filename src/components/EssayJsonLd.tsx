@@ -1,3 +1,5 @@
+import { getSiteBase } from "@/lib/siteUrl";
+
 type Props = {
   slug: string;
   title: string;
@@ -11,22 +13,31 @@ export default function EssayJsonLd({
   description,
   datePublished,
 }: Props) {
-  const base =
-    process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
-  const url = `${base.replace(/\/$/, "")}/essays/${slug}`;
+  const base = getSiteBase();
+  const url = `${base}/essays/${slug}`;
+  const imageUrl = `${base}/essays/${slug}/opengraph-image`;
 
-  const jsonLd = {
+  const jsonLd: Record<string, unknown> = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
+    "@id": `${url}#blogPosting`,
     headline: title,
     description,
-    datePublished,
+    image: [imageUrl],
     author: {
       "@type": "Person",
       name: "Arvind Prakash",
     },
     url,
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": url,
+    },
   };
+
+  if (datePublished) {
+    jsonLd.datePublished = datePublished;
+  }
 
   return (
     <script

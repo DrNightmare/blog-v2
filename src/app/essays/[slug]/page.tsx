@@ -32,6 +32,7 @@ export async function generateMetadata(
         entry.metadata.summary || "Long form writing by Arvind Prakash."
     );
     const url = `/essays/${entry.slug}`;
+    const publishedTime = toIsoDatePublished(entry.metadata.date);
 
     return {
         title,
@@ -44,6 +45,7 @@ export async function generateMetadata(
             description,
             type: "article",
             url,
+            ...(publishedTime ? { publishedTime } : {}),
         },
         twitter: {
             card: "summary_large_image",
