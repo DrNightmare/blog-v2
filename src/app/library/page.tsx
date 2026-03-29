@@ -111,6 +111,7 @@ const BookList = ({ title, books }: { title: string; books: Book[] }) => (
                                 alt={`${book.title} cover`}
                                 width={72}
                                 height={108}
+                                loading={book.currentlyReading ? 'eager' : 'lazy'}
                                 className="rounded-md border border-border object-cover w-16 h-24 sm:w-[72px] sm:h-[108px]"
                                 sizes="72px"
                             />

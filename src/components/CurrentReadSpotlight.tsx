@@ -42,6 +42,7 @@ export default function CurrentReadSpotlight({ title, author, coverUrl, openLibr
                                 width={96}
                                 height={144}
                                 priority
+                                loading="eager"
                                 className="rounded-lg shadow-md border border-border object-cover w-[72px] h-[108px] sm:w-24 sm:h-36"
                                 sizes="96px"
                             />
