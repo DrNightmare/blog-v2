@@ -2,6 +2,7 @@ export type LibraryJsonLdBook = {
   title: string;
   author: string;
   position: number;
+  url?: string;
 };
 
 type Props = {
@@ -17,6 +18,7 @@ export default function LibraryJsonLd({ items }: Props) {
       position: book.position,
       item: {
         "@type": "Book",
+        ...(book.url ? { url: book.url } : {}),
         name: book.title,
         author: {
           "@type": "Person",

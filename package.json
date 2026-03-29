@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint . && node scripts/check-content-registry.mjs",
-    "check:content": "node scripts/check-content-registry.mjs"
+    "check:content": "node scripts/check-content-registry.mjs",
+    "library:enrich": "node scripts/enrich-library-openlibrary.mjs"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.1.0",

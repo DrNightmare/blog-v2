@@ -3,61 +3,81 @@
         "index": 1,
         "title": "Immune",
         "author": "Philipp Dettmer",
-        "genre": "Science and Technology"
+        "genre": "Science and Technology",
+        "coverUrl": "https://covers.openlibrary.org/b/id/10954401-M.jpg",
+        "openLibraryUrl": "https://openlibrary.org/works/OL24410778W"
     },
     {
         "index": 2,
         "title": "Jaya: An Illustrated Retelling of the Mahabharata",
         "author": "Devdutt Pattanaik",
-        "genre": "Uncategorized"
+        "genre": "Uncategorized",
+        "coverUrl": "https://covers.openlibrary.org/b/id/12677170-M.jpg",
+        "openLibraryUrl": "https://openlibrary.org/works/OL19948770W"
     },
     {
         "index": 3,
         "title": "Leonardo da Vinci",
         "author": "Walter Isaacson",
-        "genre": "Biographies"
+        "genre": "Biographies",
+        "coverUrl": "https://covers.openlibrary.org/b/id/8087691-M.jpg",
+        "openLibraryUrl": "https://openlibrary.org/works/OL17802920W"
     },
     {
         "index": 4,
         "title": "Elon Musk",
         "author": "Ashlee Vance",
-        "genre": "Biographies"
+        "genre": "Biographies",
+        "coverUrl": "https://covers.openlibrary.org/b/id/8463846-M.jpg",
+        "openLibraryUrl": "https://openlibrary.org/works/OL17184556W"
     },
     {
         "index": 5,
         "title": "Origin",
         "author": "Dan Brown",
-        "genre": "Fiction"
+        "genre": "Fiction",
+        "coverUrl": "https://covers.openlibrary.org/b/id/11013590-M.jpg",
+        "openLibraryUrl": "https://openlibrary.org/works/OL17878702W"
     },
     {
         "index": 6,
         "title": "The Arrival",
         "author": "Shaun Tan",
-        "genre": "Fiction"
+        "genre": "Fiction",
+        "coverUrl": "https://covers.openlibrary.org/b/id/1230299-M.jpg",
+        "openLibraryUrl": "https://openlibrary.org/works/OL5934430W"
     },
     {
         "index": 7,
         "title": "User Friendly",
         "author": "Cliff Kuang, Robert Fabricant",
-        "genre": "Science and Technology"
+        "genre": "Science and Technology",
+        "openLibraryUrl": "https://openlibrary.org/works/OL20859147W",
+        "coverUrl": "https://covers.openlibrary.org/b/id/10299704-M.jpg"
     },
     {
         "index": 8,
         "title": "Rabbits",
         "author": "Terry Miles",
-        "genre": "Fiction"
+        "genre": "Fiction",
+        "coverUrl": "https://covers.openlibrary.org/b/id/11428379-M.jpg",
+        "openLibraryUrl": "https://openlibrary.org/works/OL32795967M"
     },
     {
         "index": 9,
         "title": "Masala Lab",
         "author": "Krish Ashok",
-        "genre": "Science and Technology"
+        "genre": "Science and Technology",
+        "coverUrl": "https://covers.openlibrary.org/b/id/10834050-M.jpg",
+        "openLibraryUrl": "https://openlibrary.org/works/OL24316238W"
     },
     {
         "index": 10,
         "title": "Things to Make and Do in the Fourth Dimension",
         "author": "Matt Parker",
-        "genre": "Science and Technology"
+        "genre": "Science and Technology",
+        "coverUrl": "https://covers.openlibrary.org/b/id/8966307-M.jpg",
+        "openLibraryUrl": "https://openlibrary.org/works/OL19997031W"
     },
     {
         "index": 11,
@@ -69,19 +89,25 @@
         "index": 12,
         "title": "What If?",
         "author": "Randall Munroe",
-        "genre": "Science and Technology"
+        "genre": "Science and Technology",
+        "coverUrl": "https://covers.openlibrary.org/b/id/9083979-M.jpg",
+        "openLibraryUrl": "https://openlibrary.org/works/OL17095301W"
     },
     {
         "index": 13,
         "title": "The World According to Rick",
         "author": "Unknown",
-        "genre": "Fiction"
+        "genre": "Fiction",
+        "coverUrl": "https://covers.openlibrary.org/b/id/8281954-M.jpg",
+        "openLibraryUrl": "https://openlibrary.org/works/OL9170454W"
     },
     {
         "index": 14,
         "title": "Moonflower Murders",
         "author": "Anthony Horowitz",
-        "genre": "Fiction"
+        "genre": "Fiction",
+        "coverUrl": "https://covers.openlibrary.org/b/id/10096871-M.jpg",
+        "openLibraryUrl": "https://openlibrary.org/works/OL20800266W"
     },
     {
         "index": 15,
@@ -93,145 +119,193 @@
         "index": 16,
         "title": "Deep Work",
         "author": "Cal Newport",
-        "genre": "Psychology and Self-Development"
+        "genre": "Psychology and Self-Development",
+        "coverUrl": "https://covers.openlibrary.org/b/id/7988607-M.jpg",
+        "openLibraryUrl": "https://openlibrary.org/works/OL17713267W"
     },
     {
         "index": 17,
         "title": "Heads You Win",
         "author": "Jeffrey Archer",
-        "genre": "Fiction"
+        "genre": "Fiction",
+        "coverUrl": "https://covers.openlibrary.org/b/id/11279314-M.jpg",
+        "openLibraryUrl": "https://openlibrary.org/works/OL19761902W"
     },
     {
         "index": 18,
         "title": "Dark Matter",
         "author": "Blake Crouch",
-        "genre": "Fiction"
+        "genre": "Fiction",
+        "coverUrl": "https://covers.openlibrary.org/b/id/7436634-M.jpg",
+        "openLibraryUrl": "https://openlibrary.org/works/OL17358795W"
     },
     {
         "index": 19,
         "title": "Recursion",
         "author": "Blake Crouch",
-        "genre": "Fiction"
+        "genre": "Fiction",
+        "coverUrl": "https://covers.openlibrary.org/b/id/8748478-M.jpg",
+        "openLibraryUrl": "https://openlibrary.org/works/OL20073906W"
     },
     {
         "index": 20,
         "title": "The Name of the Rose",
         "author": "Umberto Eco",
-        "genre": "Fiction"
+        "genre": "Fiction",
+        "coverUrl": "https://covers.openlibrary.org/b/id/8598263-M.jpg",
+        "openLibraryUrl": "https://openlibrary.org/works/OL8996439W"
     },
     {
         "index": 21,
         "title": "Weapons of Math Destruction",
         "author": "Cathy O'Neil",
-        "genre": "Science and Technology"
+        "genre": "Science and Technology",
+        "openLibraryUrl": "https://openlibrary.org/works/OL17840708W",
+        "coverUrl": "https://covers.openlibrary.org/b/id/8165878-M.jpg"
     },
     {
         "index": 22,
         "title": "Temple",
         "author": "Matthew Reilly",
-        "genre": "Fiction"
+        "genre": "Fiction",
+        "coverUrl": "https://covers.openlibrary.org/b/id/12366237-M.jpg",
+        "openLibraryUrl": "https://openlibrary.org/works/OL21868175W"
     },
     {
         "index": 23,
         "title": "You Look Like a Thing and I Love You",
         "author": "Janelle Shane",
-        "genre": "Science and Technology"
+        "genre": "Science and Technology",
+        "coverUrl": "https://covers.openlibrary.org/b/id/10220200-M.jpg",
+        "openLibraryUrl": "https://openlibrary.org/works/OL20889986W"
     },
     {
         "index": 24,
         "title": "Homo Deus",
         "author": "Yuval Noah Harari",
-        "genre": "Psychology and Self-Development"
+        "genre": "Psychology and Self-Development",
+        "coverUrl": "https://covers.openlibrary.org/b/id/7914168-M.jpg",
+        "openLibraryUrl": "https://openlibrary.org/works/OL17641518W"
     },
     {
         "index": 25,
         "title": "One Piece (Volume 31)",
         "author": "Eiichiro Oda",
-        "genre": "Uncategorized"
+        "genre": "Uncategorized",
+        "coverUrl": "https://covers.openlibrary.org/b/id/9485994-M.jpg",
+        "openLibraryUrl": "https://openlibrary.org/works/OL8215640W"
     },
     {
         "index": 26,
         "title": "Stories of Your Life and Others",
         "author": "Ted Chiang",
-        "genre": "Fiction"
+        "genre": "Fiction",
+        "coverUrl": "https://covers.openlibrary.org/b/id/524046-M.jpg",
+        "openLibraryUrl": "https://openlibrary.org/works/OL6216050W"
     },
     {
         "index": 27,
         "title": "The Complete Cosmicomics",
         "author": "Italo Calvino",
-        "genre": "Fiction"
+        "genre": "Fiction",
+        "coverUrl": "https://covers.openlibrary.org/b/id/13700427-M.jpg",
+        "openLibraryUrl": "https://openlibrary.org/works/OL15693898W"
     },
     {
         "index": 28,
         "title": "Invisible Cities",
         "author": "Italo Calvino",
-        "genre": "Fiction"
+        "genre": "Fiction",
+        "coverUrl": "https://covers.openlibrary.org/b/id/963147-M.jpg",
+        "openLibraryUrl": "https://openlibrary.org/works/OL15297W"
     },
     {
         "index": 29,
         "title": "Exhalation",
         "author": "Ted Chiang",
-        "genre": "Fiction"
+        "genre": "Fiction",
+        "coverUrl": "https://covers.openlibrary.org/b/id/8793546-M.jpg",
+        "openLibraryUrl": "https://openlibrary.org/works/OL20149336W"
     },
     {
         "index": 30,
         "title": "How to Finish Everything You Start",
         "author": "Jan Yager",
-        "genre": "Psychology and Self-Development"
+        "genre": "Psychology and Self-Development",
+        "coverUrl": "https://covers.openlibrary.org/b/id/13268814-M.jpg",
+        "openLibraryUrl": "https://openlibrary.org/works/OL34320168W"
     },
     {
         "index": 31,
         "title": "Writing An Interpreter In Go",
         "author": "Thorsten Ball",
-        "genre": "Uncategorized"
+        "genre": "Uncategorized",
+        "coverUrl": "https://covers.openlibrary.org/b/id/10539137-M.jpg",
+        "openLibraryUrl": "https://openlibrary.org/works/OL24141621W"
     },
     {
         "index": 32,
         "title": "Measure What Matters: The Simple Idea that Drives 10x Growth",
         "author": "John Doerr",
-        "genre": "Psychology and Self-Development"
+        "genre": "Psychology and Self-Development",
+        "coverUrl": "https://covers.openlibrary.org/b/id/8834906-M.jpg",
+        "openLibraryUrl": "https://openlibrary.org/works/OL20186311W"
     },
     {
         "index": 33,
         "title": "Zero to Sold: How to Start, Run, and Sell a Bootstrapped Business",
         "author": "Arvid Kahl",
-        "genre": "Psychology and Self-Development"
+        "genre": "Psychology and Self-Development",
+        "coverUrl": "https://covers.openlibrary.org/b/id/10231146-M.jpg",
+        "openLibraryUrl": "https://openlibrary.org/works/OL20896438W"
     },
     {
         "index": 34,
         "title": "The Making of Prince of Persia",
         "author": "Jordan Mechner",
-        "genre": "Uncategorized"
+        "genre": "Uncategorized",
+        "coverUrl": "https://covers.openlibrary.org/b/id/11200355-M.jpg",
+        "openLibraryUrl": "https://openlibrary.org/works/OL24029650W"
     },
     {
         "index": 35,
         "title": "Mother of Learning: ARC 1",
         "author": "nobody103, Domagoj Kurmaic",
-        "genre": "Fiction"
+        "genre": "Fiction",
+        "openLibraryUrl": "https://openlibrary.org/works/OL39284292W",
+        "coverUrl": "https://covers.openlibrary.org/b/id/15118886-M.jpg"
     },
     {
         "index": 36,
         "title": "Mother of Learning: ARC 2",
         "author": "nobody103, Domagoj Kurmaic",
-        "genre": "Fiction"
+        "genre": "Fiction",
+        "openLibraryUrl": "https://openlibrary.org/works/OL26911545W",
+        "coverUrl": "https://covers.openlibrary.org/b/id/15118888-M.jpg"
     },
     {
         "index": 37,
         "title": "Mother of Learning: ARC 3",
         "author": "nobody103, Domagoj Kurmaic",
-        "genre": "Fiction"
+        "genre": "Fiction",
+        "openLibraryUrl": "https://openlibrary.org/works/OL39739876M",
+        "coverUrl": "https://covers.openlibrary.org/b/id/15118889-M.jpg"
     },
     {
         "index": 38,
         "title": "Mother of Learning: ARC 4",
         "author": "nobody103, Domagoj Kurmaic",
-        "genre": "Fiction"
+        "genre": "Fiction",
+        "openLibraryUrl": "https://openlibrary.org/works/OL46427496M",
+        "coverUrl": "https://covers.openlibrary.org/b/id/15118891-M.jpg"
     },
     {
         "index": 39,
         "title": "Quantum Computing for the Quantum Curious",
         "author": "Ciaran Hughes, Joshua Isaacson, Anastasia Perry, Ranbel F. Sun, Jessica Turner",
-        "genre": "Science and Technology"
+        "genre": "Science and Technology",
+        "coverUrl": "https://covers.openlibrary.org/b/id/13667116-M.jpg",
+        "openLibraryUrl": "https://openlibrary.org/works/OL27082720W"
     },
     {
         "index": 40,
@@ -243,43 +317,57 @@
         "index": 41,
         "title": "The Art of War",
         "author": "Sun Tzu",
-        "genre": "Fiction"
+        "genre": "Fiction",
+        "coverUrl": "https://covers.openlibrary.org/b/id/4849549-M.jpg",
+        "openLibraryUrl": "https://openlibrary.org/works/OL244537W"
     },
     {
         "index": 42,
         "title": "I Contain Multitudes: The Microbes Within Us and a Grander View of Life",
         "author": "Ed Yong",
-        "genre": "Science and Technology"
+        "genre": "Science and Technology",
+        "coverUrl": "https://covers.openlibrary.org/b/id/8085300-M.jpg",
+        "openLibraryUrl": "https://openlibrary.org/works/OL17801058W"
     },
     {
         "index": 43,
         "title": "Are Prisons Obsolete?",
         "author": "Angela Y. Davis",
-        "genre": "Science and Technology"
+        "genre": "Science and Technology",
+        "coverUrl": "https://covers.openlibrary.org/b/id/10129501-M.jpg",
+        "openLibraryUrl": "https://openlibrary.org/works/OL2709370W"
     },
     {
         "index": 44,
         "title": "Conjectures and Refutations: The Growth of Scientific Knowledge",
         "author": "Karl Popper",
-        "genre": "Science and Technology"
+        "genre": "Science and Technology",
+        "coverUrl": "https://covers.openlibrary.org/b/id/267020-M.jpg",
+        "openLibraryUrl": "https://openlibrary.org/works/OL1984581W"
     },
     {
         "index": 45,
         "title": "The Inevitable: Understanding the 12 Technological Forces That Will Shape Our Future",
         "author": "Kevin Kelly",
-        "genre": "Science and Technology"
+        "genre": "Science and Technology",
+        "coverUrl": "https://covers.openlibrary.org/b/id/7879217-M.jpg",
+        "openLibraryUrl": "https://openlibrary.org/works/OL17591698W"
     },
     {
         "index": 46,
         "title": "The Ascent Of Man",
         "author": "Jacob Bronowski",
-        "genre": "Science and Technology"
+        "genre": "Science and Technology",
+        "coverUrl": "https://covers.openlibrary.org/b/id/6901081-M.jpg",
+        "openLibraryUrl": "https://openlibrary.org/works/OL4803881W"
     },
     {
         "index": 47,
         "title": "Whole Earth Discipline",
         "author": "Stewart Brand",
-        "genre": "Science and Technology"
+        "genre": "Science and Technology",
+        "coverUrl": "https://covers.openlibrary.org/b/id/11744008-M.jpg",
+        "openLibraryUrl": "https://openlibrary.org/works/OL823141W"
     },
     {
         "index": 48,
@@ -287,18 +375,36 @@
         "author": "Maxime Durand",
         "genre": "Fiction",
         "progressPercentage": 35,
-        "currentlyReading": true
+        "currentlyReading": true,
+        "coverUrl": "https://covers.openlibrary.org/b/id/14811808-M.jpg",
+        "openLibraryUrl": "https://openlibrary.org/works/OL53582651M",
+        "series": {
+            "name": "The Perfect Run",
+            "volume": 1
+        }
     },
     {
         "index": 49,
         "title": "The Perfect Run: Book 2",
         "author": "Maxime Durand",
-        "genre": "Fiction"
+        "genre": "Fiction",
+        "coverUrl": "https://covers.openlibrary.org/b/id/14811809-M.jpg",
+        "openLibraryUrl": "https://openlibrary.org/works/OL39374497W",
+        "series": {
+            "name": "The Perfect Run",
+            "volume": 2
+        }
     },
     {
         "index": 50,
         "title": "The Perfect Run: Book 3",
         "author": "Maxime Durand",
-        "genre": "Fiction"
+        "genre": "Fiction",
+        "coverUrl": "https://covers.openlibrary.org/b/id/14811810-M.jpg",
+        "openLibraryUrl": "https://openlibrary.org/works/OL39374504W",
+        "series": {
+            "name": "The Perfect Run",
+            "volume": 3
+        }
     }
 ]

@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import booksData from './data.json';
 import CurrentReadSpotlight from '@/components/CurrentReadSpotlight';
 import LibraryJsonLd from '@/components/LibraryJsonLd';
@@ -16,6 +17,8 @@ type Book = {
     genre?: string;
     progressPercentage?: number;
     currentlyReading?: boolean;
+    coverUrl?: string;
+    openLibraryUrl?: string;
 };
 
 // Type assertion for imported JSON
@@ -43,6 +46,7 @@ export default function Library() {
         title: book.title,
         author: book.author,
         position: i + 1,
+        ...(book.openLibraryUrl ? { url: book.openLibraryUrl } : {}),
     }));
 
     return (
@@ -61,17 +65,18 @@ export default function Library() {
                     </p>
                 </div>
 
-                {/* Current Read Spotlight */}
                 {currentRead && (
                     <CurrentReadSpotlight
                         title={currentRead.title}
                         author={currentRead.author}
+                        coverUrl={currentRead.coverUrl}
+                        openLibraryUrl={currentRead.openLibraryUrl}
                     />
                 )}
 
                 <div className="space-y-12">
-                    {Object.entries(booksByGenre).map(([genre, books]) => (
-                        <BookList key={genre} title={genre} books={books} />
+                    {Object.entries(booksByGenre).map(([genre, genreBooks]) => (
+                        <BookList key={genre} title={genre} books={genreBooks} />
                     ))}
                 </div>
             </main>
@@ -90,11 +95,39 @@ const BookList = ({ title, books }: { title: string; books: Book[] }) => (
 
         <div className="grid gap-4 sm:grid-cols-2">
             {books.map((book) => (
-                <div key={book.index} className="flex flex-col p-4 rounded-xl bg-surface hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
-                    <p className="font-semibold text-foreground mb-1">
-                        {book.title}
-                    </p>
-                    <p className="text-sm text-text-secondary mb-2">{book.author}</p>
+                <div
+                    key={book.index}
+                    className="flex gap-3 p-4 rounded-xl bg-surface hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                >
+                    {book.coverUrl ? (
+                        <div className="flex-shrink-0 w-16 sm:w-[72px]">
+                            <Image
+                                src={book.coverUrl}
+                                alt={`${book.title} cover`}
+                                width={72}
+                                height={108}
+                                className="rounded-md border border-border object-cover w-16 h-24 sm:w-[72px] sm:h-[108px]"
+                                sizes="72px"
+                            />
+                        </div>
+                    ) : null}
+                    <div className="min-w-0 flex-1 flex flex-col">
+                        <p className="font-semibold text-foreground mb-1">
+                            {book.openLibraryUrl ? (
+                                <a
+                                    href={book.openLibraryUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="hover:text-primary transition-colors"
+                                >
+                                    {book.title}
+                                </a>
+                            ) : (
+                                book.title
+                            )}
+                        </p>
+                        <p className="text-sm text-text-secondary">{book.author}</p>
+                    </div>
                 </div>
             ))}
         </div>
