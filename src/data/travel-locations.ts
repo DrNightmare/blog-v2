@@ -23,13 +23,16 @@ export interface TravelActivity {
 
 export const TRAVEL_ROUTES: TravelRoute[] = [
     { from: "Oslo", to: "Bergen", type: "train", description: "Scenic train ride" },
+    { from: "Bangkok", to: "Chiang Mai", type: "train", description: "Overnight train north" },
 ];
 
 export const TRAVEL_ACTIVITIES: TravelActivity[] = [
     { name: "Surfing in Weligama", lat: 5.9728, lng: 80.4288, type: "surfing", description: "Great beginner waves" },
     { name: "Ha Long Bay Cruise", lat: 20.9101, lng: 107.1839, type: "nature", description: "Limestone karsts" },
     { name: "Lantern Festival", lat: 15.8795863, lng: 108.3319406, type: "culture", description: "Lanterns and performances" },
-    { name: "Safari at Maasai Mara", lat: -2.5031822, lng: 34.8817732, type: "nature", description: "Wildlife" }
+    { name: "Safari at Maasai Mara", lat: -2.5031822, lng: 34.8817732, type: "nature", description: "Wildlife" },
+    { name: "Bangkok", lat: 13.7563309, lng: 100.5017651, type: "food", description: "Markets, canal neighborhoods, and Wat Pho" },
+    { name: "Chiang Mai", lat: 18.7883439, lng: 98.9853008, type: "culture", description: "Old City temples and night markets" },
 ];
 
 export const TRAVEL_LOCATIONS: Location[] = [
@@ -121,6 +124,18 @@ export const TRAVEL_LOCATIONS: Location[] = [
         "name": "Langkawi",
         "lat": 6.3700386,
         "lng": 99.7928634,
+        "visited": true
+    },
+    {
+        "name": "Bangkok",
+        "lat": 13.7563309,
+        "lng": 100.5017651,
+        "visited": true
+    },
+    {
+        "name": "Chiang Mai",
+        "lat": 18.7883439,
+        "lng": 98.9853008,
         "visited": true
     }
 ];
