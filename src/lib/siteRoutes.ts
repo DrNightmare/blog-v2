@@ -9,6 +9,7 @@ export const STATIC_SITEMAP_PATHS = [
   "/resume",
   "/travel",
   "/sitemap",
+  "/feed.xml",
 ] as const;
 
 /** Command palette: navigation targets (order is intentional for UX). */

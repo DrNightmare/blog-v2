@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { SITE_DESCRIPTION } from "@/lib/siteIdentity";
 
 type ListPageOpts = {
   title: string;
@@ -29,22 +30,19 @@ export function listPageMetadata(opts: ListPageOpts): Metadata {
 
 export const homeMetadata: Metadata = {
   title: { absolute: "Arvind Prakash" },
-  description:
-    "Head of engineering building elegant systems. Essays, notes, projects, and experiments.",
+  description: SITE_DESCRIPTION,
   alternates: {
     canonical: "/",
   },
   openGraph: {
     title: "Arvind Prakash",
-    description:
-      "Head of engineering building elegant systems. Essays, notes, projects, and experiments.",
+    description: SITE_DESCRIPTION,
     type: "website",
     url: "/",
   },
   twitter: {
     card: "summary_large_image",
     title: "Arvind Prakash",
-    description:
-      "Head of engineering building elegant systems. Essays, notes, projects, and experiments.",
+    description: SITE_DESCRIPTION,
   },
 };

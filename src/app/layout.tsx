@@ -7,6 +7,8 @@ import Footer from "@/components/Footer";
 import CommandPalette from "@/components/CommandPalette";
 
 import Providers from "@/components/Providers";
+import PersonSiteJsonLd from "@/components/PersonSiteJsonLd";
+import { SITE_DESCRIPTION } from "@/lib/siteIdentity";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -28,12 +30,15 @@ export const metadata: Metadata = {
     default: "Arvind Prakash",
     template: "%s | Arvind Prakash",
   },
-  description:
-    "Head of engineering building elegant systems. Essays, notes, projects, and experiments.",
+  description: SITE_DESCRIPTION,
+  alternates: {
+    types: {
+      "application/rss+xml": "/feed.xml",
+    },
+  },
   openGraph: {
     title: "Arvind Prakash",
-    description:
-      "Head of engineering building elegant systems. Essays, notes, projects, and experiments.",
+    description: SITE_DESCRIPTION,
     type: "website",
     url: "/",
     images: [
@@ -48,8 +53,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Arvind Prakash",
-    description:
-      "Head of engineering building elegant systems. Essays, notes, projects, and experiments.",
+    description: SITE_DESCRIPTION,
     images: ["/twitter-image"],
   },
 };
@@ -64,6 +68,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} flex flex-col min-h-screen overflow-y-scroll antialiased`}
       >
+        <PersonSiteJsonLd />
         <Providers>
           <CommandPalette />
           <Navbar />
